@@ -8,4 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 class Buku extends Model
 {
     use HasFactory;
+    protected $table = 'buku';
+    protected  $primaryKey = 'IDBuku';
+    public $incrementing = false;
+    protected $fillable = [
+        'NamaBuku',
+        'Deskripsi',
+        'GenreBuku',
+        'Bahasa',
+        'JumlahHalaman',
+        'StatusBuku',
+        'Penerbit',
+        'Penulis',
+        'LetakRak',
+        'TglMasukBuku'
+    ];
+    protected $guarded = [
+        'IDBuku',
+        'created_at',
+        'updated_at'
+    ];
 }
