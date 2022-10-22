@@ -16,12 +16,12 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('home');
 });
 
 Auth::routes();
 
-Route::resource('users', \App\Http\Controllers\UserController::class)
+Route::resource('users', UserController::class)
     ->middleware('auth');
 
 Route::get('/home', function() {
