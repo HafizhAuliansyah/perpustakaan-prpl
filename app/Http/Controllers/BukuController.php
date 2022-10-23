@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Buku;
 use Illuminate\Http\Request;
 
 class BukuController extends Controller
@@ -10,12 +11,14 @@ class BukuController extends Controller
 
     }
     public function show(){
-
+        return view('buku.all-buku', [
+            'datas' =>Buku::all()
+        ]);
     }
     public function edit(Request $request){
 
     }
     public function delete(Request $request){
-        
+
     }
 }
