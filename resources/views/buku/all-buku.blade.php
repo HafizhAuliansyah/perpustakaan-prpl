@@ -30,6 +30,15 @@
                             'data' => $datas,
                             'order' => [[1, 'asc']],
                             'columns' => [null, null, null, ['orderable' => false]],
+                            'responsive' => true,
+                            'columns'=> [
+                                [ 'responsivePriority' => 1 ],
+                                ['responsivePriority' => 2],
+                                ['responsivePriority'=> 3],
+                                ['responsivePriority'=> 4],
+                                ['responsivePriority'=> 5],
+                                ['responsivePriority'=> 6],
+                            ]
                         ];
                         $btnEdit = '<button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
                         <i class="fa fa-lg fa-fw fa-pen"></i>
@@ -39,7 +48,7 @@
                         </button>';
                         
                     @endphp
-                    <x-adminlte-datatable id="table2" :heads="$heads" head-theme="dark"
+                    <x-adminlte-datatable id="table-data" :heads="$heads" head-theme="dark" :config="$config"
                     striped hoverable bordered compressed beautify responsive>
                     @foreach($config['data'] as $data)
                     <tr>
@@ -56,7 +65,7 @@
                         <td>{{ $data->TglMasukBuku }}</td>
                         <td>
                             <a href="/buku/edit/{{ $data->IDBuku }}">{!! $btnEdit !!}</a>
-                            <a href="/buku/delete/{{ $data->IDBuku }}">{!! $btnDelete !!}</a>
+                            <a href="/buku/delete/{{ $data->IDBuku }}" onclick="notificationBeforeDelete(event, this)">{!! $btnDelete !!}</a>
                         </td>
                     </tr>
                     @endforeach
