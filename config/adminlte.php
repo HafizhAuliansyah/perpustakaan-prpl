@@ -224,10 +224,22 @@ return [
     */
 
     'menu' => [
+        'USER',
         [
             'text' => 'User',
             'url'  => '/users',
             'icon'  => 'fa fa-users',
+        ],
+        'BOOK',
+        [
+            'text' => 'Data Buku',
+            'url' => '/buku/all',
+            'icon' => 'fa fa-book',
+        ],
+        [
+            'text' => 'Add Buku',
+            'url' => '/buku/add',
+            'icon' => 'fa fa-plus',
         ],
     ],
 

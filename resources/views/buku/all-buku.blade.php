@@ -23,13 +23,21 @@
                             'Penerbit',
                             'Penulis',
                             'LetakRak',
-                            'TglMasukBuku'
+                            'TglMasukBuku',
+                            'Actions'
                         ];
                         $config = [
                             'data' => $datas,
                             'order' => [[1, 'asc']],
                             'columns' => [null, null, null, ['orderable' => false]],
-                        ]
+                        ];
+                        $btnEdit = '<button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+                        <i class="fa fa-lg fa-fw fa-pen"></i>
+                        </button>';
+                        $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow" title="Edit">
+                        <i class="fa fa-lg fa-fw fa-trash"></i>
+                        </button>';
+                        
                     @endphp
                     <x-adminlte-datatable id="table2" :heads="$heads" head-theme="dark"
                     striped hoverable bordered compressed beautify responsive>
@@ -46,6 +54,10 @@
                         <td>{{ $data->Penulis }}</td>
                         <td>{{ $data->LetakRak }}</td>
                         <td>{{ $data->TglMasukBuku }}</td>
+                        <td>
+                            <a href="/buku/edit/{{ $data->IDBuku }}">{!! $btnEdit !!}</a>
+                            <a href="/buku/delete/{{ $data->IDBuku }}">{!! $btnDelete !!}</a>
+                        </td>
                     </tr>
                     @endforeach
                     </x-adminlte-datatable>

@@ -15,10 +15,10 @@ class BukuController extends Controller
             'datas' =>Buku::all()
         ]);
     }
-    public function edit(Request $request){
+    public function edit(Buku $buku,Request $request){
 
     }
-    public function delete(Request $request){
-
+    public function delete(Buku $buku){
+        
     }
 }

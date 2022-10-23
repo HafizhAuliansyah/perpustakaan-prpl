@@ -30,11 +30,11 @@ Route::get('/home', function() {
 })->name('home')->middleware('auth');
 
 Route::controller(BukuController::class)->group(function(){
-    Route::get('/all-buku', 'show');
-    Route::get('/all-buku/part', 'showPart');
-    Route::get('/add-buku', 'addView');
-    Route::post('/add-buku', 'store');
-    Route::get('/edit-buku', 'editView');
-    Route::patch('/edit-buku', 'update');
-    Route::delete('/add-buku', 'delete');
+    Route::get('/buku/all', 'show');
+    Route::get('/buku/all/part', 'showPart');
+    Route::get('/buku/add', 'addView');
+    Route::post('/buku/add', 'store');
+    Route::get('/buku/update', 'editView');
+    Route::patch('/buku/update/{buku}', 'update');
+    Route::delete('/buku/update/{buku}', 'delete');
 });
