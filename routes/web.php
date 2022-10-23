@@ -36,5 +36,5 @@ Route::controller(BukuController::class)->group(function(){
     Route::post('/buku/add', 'store');
     Route::get('/buku/update', 'editView');
     Route::patch('/buku/update/{buku}', 'update');
-    Route::delete('/buku/update/{buku}', 'delete');
+    Route::delete('/buku/delete/{buku}', 'delete');
 });

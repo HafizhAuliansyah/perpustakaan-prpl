@@ -19,6 +19,7 @@ class BukuController extends Controller
 
     }
     public function delete(Buku $buku){
-        
+        $buku->delete();
+        return redirect('/buku/all');
     }
 }
