@@ -10,7 +10,7 @@ class BukuController extends Controller
 {
     public function addView(){
         $last_data = Buku::orderByDesc('created_at', 'desc')->first();
-        $last_count = (int)substr($last_data->IDBuku, 9);
+        $last_count = $last_data ? (int)substr($last_data->IDBuku, 9) : 0;
         $last_count += 1;
         $new_id = "B".date("dmY")."000";
         $counterlen = strlen((string)$last_count);
