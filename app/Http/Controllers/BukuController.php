@@ -45,12 +45,44 @@ class BukuController extends Controller
     }
     public function show(){
         return view('buku.all-buku', [
-            'datas' =>Buku::all()
+            'datas' =>Buku::orderBy('IDBuku')->get()
         ]);
     }
-    public function edit(Buku $buku,Request $request){
-
+    public function editView(Buku $buku){
+        return view('buku.edit-buku', ['buku' => $buku]);
     }
+    public function update(Buku $buku, Request $request){
+        try{
+            if($request->NamaBuku)
+                $buku->NamaBuku = $request->NamaBuku;
+            if($request->Deskripsi)
+                $buku->Deskripsi = $request->Deskripsi;
+            if($request->GenreBuku)  
+                $buku->GenreBuku = $request->GenreBuku;
+            if($request->Bahasa)
+                $buku->Bahasa = $request->Bahasa;
+            if( $request->JumlahHalaman)
+                $buku->JumlahHalaman = $request->JumlahHalaman;
+            if($request->StatusBuku)
+                $buku->StatusBuku = $request->StatusBuku;
+            if($request->Penerbit)
+                $buku->Penerbit = $request->Penerbit;
+            if($request->Penulis)
+                $buku->Penulis = $request->Penulis;
+            if($request->LetakRak)
+                $buku->LetakRak = $request->LetakRak;
+            $buku->save();
+            return redirect()
+                ->route('all_buku')
+                ->with('Success','Berhasil Mengubah Data Buku');
+        }catch(QueryException $err){
+            error_log($err->getMessage());
+            return redirect()
+                ->route('view_edit_buku', $buku)
+                ->with('Error','Gagal Mengedit Data Buku');
+        }
+    }
+
     public function delete(Buku $buku){
         $buku->delete();
         return redirect('/buku/all');

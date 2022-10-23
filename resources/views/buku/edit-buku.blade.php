@@ -31,22 +31,22 @@
                         $Bahasa = ['Indonesia', 'Inggris', 'Jepang', 'China', 'Arab', 'Prancis'];
                         $StatusBuku = ['Dipinjam', 'Rusak', 'Hilang', 'Tersedia'];
                     @endphp
-                    <form action={{ route('add_buku') }} method="post">
+                    <form action={{ route('edit_buku', $buku->IDBuku) }} method="post">
+                        @method('patch')
                         @csrf
-                        <input type="hidden" name="IDBuku" value="{{ $new_id }}">
                         <div class="form-group">
                             <label for="NamaBuku">Nama Buku</label>
-                            <input type="text" class="form-control" id="NamaBuku" name="NamaBuku" placeholder="Masukkan nama buku">
+                            <input type="text" class="form-control" id="NamaBuku" name="NamaBuku" placeholder="Masukkan nama buku" value="{{ $buku->NamaBuku }}">
                         </div>
                         <div class="form-group">
                             <label for="Deksripsi">Deskripsi</label>
-                            <textarea class="form-control" id="Deksripsi" rows="3" name="Deskripsi"></textarea>
+                            <textarea class="form-control" id="Deksripsi" rows="3" name="Deskripsi">{{ $buku->Deskripsi }}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="GenreBuku">Genre Buku</label>
                             <select class="form-control" id="GenreBuku" name="GenreBuku">
                                 @foreach ($GenreBuku as $genre)
-                                    <option value={{ $genre }}>{{ $genre }}</option>
+                                    <option value={{ $genre }} {{ $genre==$buku->GenreBuku? "selected" : '' }}>{{ $genre }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -54,36 +54,36 @@
                             <label for="Bahasa">Bahasa</label>
                             <select class="form-control" id="Bahasa" name="Bahasa">
                                 @foreach ($Bahasa as $bhs)
-                                    <option value={{ $bhs }}>{{ $bhs }}</option>
+                                    <option value={{ $bhs }} {{ $bhs==$buku->Bahasa? "selected" : '' }}>{{ $bhs }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="JumlahHalaman">Jumlah Halaman</label>
-                            <input type="text" class="form-control" id="JumlahHalaman" name="JumlahHalaman" placeholder="Masukkan jumlah halaman" onkeypress="return hanyaAngka(event)">
+                            <input type="text" class="form-control" id="JumlahHalaman" name="JumlahHalaman" placeholder="Masukkan jumlah halaman" onkeypress="return hanyaAngka(event)" value={{ $buku->JumlahHalaman }}>
                         </div>
                         <div class="form-group">
                             <label for="GenreBuku">Status Buku</label>
                             <select class="form-control" id="StatusBuku" name="StatusBuku">
                                 @foreach ($StatusBuku as $status)
-                                    <option value={{ $status }}>{{ $status }}</option>
+                                    <option value={{ $status }} {{ $status==$buku->StatusBuku? "selected" : '' }}>{{ $status }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="Penulis">Penulis</label>
-                            <input type="text" class="form-control" id="Penulis" name="Penulis" placeholder="Masukkan nama penulis">
+                            <input type="text" class="form-control" id="Penulis" name="Penulis" placeholder="Masukkan nama penulis" value="{{ $buku->Penulis }}">
                         </div>
                         <div class="form-group">
                             <label for="Penerbit">Penerbit</label>
-                            <input type="text" class="form-control" id="Penerbit" name="Penerbit" placeholder="Masukkan nama penerbit">
+                            <input type="text" class="form-control" id="Penerbit" name="Penerbit" placeholder="Masukkan nama penerbit" value="{{ $buku->Penerbit }}">
                         </div>
                         <div class="form-group">
                             <label for="LetakRak">Letak Rak</label>
-                            <input type="text" class="form-control" id="LetakRak" name="LetakRak" placeholder="Masukkan letak rak (Contoh : 'A1')">
+                            <input type="text" class="form-control" id="LetakRak" name="LetakRak" placeholder="Masukkan letak rak (Contoh : 'A1')" value="{{ $buku->LetakRak }}">
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-block mb-2"><i class="fa fa-save mr-2"></i>Save</button>
+                        <button type="submit" class="btn btn-primary btn-block mb-2"><i class="fa fa-pen mr-2"></i>Edit</button>
                     </form>
                 </div>
             </div>

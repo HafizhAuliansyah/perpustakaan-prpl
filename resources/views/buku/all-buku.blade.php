@@ -11,6 +11,21 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    @if (session('Success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('Success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @elseif(session('Error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('Error') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
                     @php
                         $heads = [
                             'ID',
@@ -64,7 +79,7 @@
                         <td>{{ $data->LetakRak }}</td>
                         <td>{{ $data->TglMasukBuku }}</td>
                         <td>
-                            <a href="/buku/edit/{{ $data->IDBuku }}">{!! $btnEdit !!}</a>
+                            <a href="{{ route('view_edit_buku', $data->IDBuku) }}">{!! $btnEdit !!}</a>
                             <a href="/buku/delete/{{ $data->IDBuku }}" onclick="notificationBeforeDelete(event, this)">{!! $btnDelete !!}</a>
                         </td>
                     </tr>
