@@ -63,8 +63,8 @@
                         </button>';
                         
                     @endphp
-                    <x-adminlte-datatable id="table-data" :heads="$heads" head-theme="dark" :config="$config"
-                    striped hoverable bordered compressed beautify responsive>
+                    <x-adminlte-datatable id="table-data" :heads="$heads" head-theme="dark"
+                    striped hoverable bordered compressed beautify>
                     @foreach($config['data'] as $data)
                     <tr>
                         <td>{{ $data->IDBuku }}</td>

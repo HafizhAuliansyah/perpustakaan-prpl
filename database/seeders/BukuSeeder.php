@@ -15,7 +15,7 @@ class BukuSeeder extends Seeder
      */
     public function run()
     {
-        $prefix = "B".date("dmY");
+        $prefix = "B".date("dmY")."00";
         $id = [$prefix."1", $prefix."2", $prefix."3"];
         $NamaBuku = ['Buku 1', 'Buku 2', 'Buku 3'];
         $Deskripsi = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore iure aliquid iusto veritatis tempore saepe aliquam? Illum beatae dolor possimus delectus pariatur ullam ex cumque accusamus voluptas voluptatibus magnam a consequuntur est quasi rem sit corrupti vitae doloremque atque nemo accusantium, molestias commodi tempora eius. Cumque quam possimus error voluptate.";
@@ -31,7 +31,7 @@ class BukuSeeder extends Seeder
             $buku = new Buku();
             $buku->IDBuku = $id[$i];
             $buku->NamaBuku = $NamaBuku[$i];
-            $buku->Deskripsi = $Deskripsi[$i];
+            $buku->Deskripsi = $Deskripsi;
             $buku->GenreBuku = $GenreBuku[$i];
             $buku->Bahasa = $Bahasa[$i];
             $buku->JumlahHalaman = $JumlahHalaman[$i];
