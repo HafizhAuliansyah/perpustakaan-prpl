@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BukuController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -27,3 +28,12 @@ Route::resource('users', UserController::class)
 Route::get('/home', function() {
     return view('home');
 })->name('home')->middleware('auth');
+
+Route::controller(BukuController::class)->group(function(){
+    Route::get('/all-buku', 'show');
+    Route::get('/add-buku', 'addView');
+    Route::post('/add-buku', 'store');
+    Route::get('/edit-buku', 'editView');
+    Route::patch('/edit-buku', 'update');
+    Route::delete('/add-buku', 'delete');
+});
