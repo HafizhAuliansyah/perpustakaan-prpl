@@ -18,6 +18,18 @@ class BukuController extends Controller
         return view('buku.add-buku', ['new_id' => $new_id]);
     }
     public function store(Request $request){
+        // $request->validate([
+        //     'IDBuku' => 'required|string|max:12',
+        //     'NamaBuku' => 'required|string|min:1',
+        //     'Deskripsi' => 'required|string|min:1',
+        //     'GenreBuku' => 'required|string',
+        //     'Bahasa' => 'required|string',
+        //     'JumlahHalaman' => 'required|integer|between:0,9999|',
+        //     'StatusBuku' => 'required|string|',
+        //     'Penerbit' => 'required|string',
+        //     'Penulis' => 'required|string',
+        //     'LetakRak' => 'required|string|max:2|min:2',
+        // ]);
         try{
             $buku = new Buku();
             $buku->IDBuku = $request->IDBuku;
@@ -52,6 +64,17 @@ class BukuController extends Controller
         return view('buku.edit-buku', ['buku' => $buku]);
     }
     public function update(Buku $buku, Request $request){
+           // $request->validate([
+        //     'NamaBuku' => 'string|min:1',
+        //     'Deskripsi' => 'string|min:1',
+        //     'GenreBuku' => 'string',
+        //     'Bahasa' => 'string',
+        //     'JumlahHalaman' => 'integer|between:0,9999|',
+        //     'StatusBuku' => 'string',
+        //     'Penerbit' => 'string',
+        //     'Penulis' => 'string',
+        //     'LetakRak' => 'string|max:2|min:2',
+        // ]);
         try{
             if($request->NamaBuku)
                 $buku->NamaBuku = $request->NamaBuku;
