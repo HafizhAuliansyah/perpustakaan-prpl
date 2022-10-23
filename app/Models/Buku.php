@@ -12,6 +12,9 @@ class Buku extends Model
     protected  $primaryKey = 'IDBuku';
     public $incrementing = false;
     protected $fillable = [
+        'IDBuku',
+        'created_at',
+        'updated_at',
         'NamaBuku',
         'Deskripsi',
         'GenreBuku',
