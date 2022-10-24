@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'CRUD Laravel',
+    'title' => 'Perpustakaan',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -45,12 +45,12 @@ return [
     |
     */
 
-    'logo' => '<b>CRUD</b>Laravel',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => '<b>PERPUSTAKAAN</b>',
+    'logo_img' => 'images/book.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'AdminLTE',
+    'logo_img_alt' => 'Perpustakaan',
 
     /*
     |--------------------------------------------------------------------------
@@ -224,13 +224,15 @@ return [
     */
 
     'menu' => [
-        'USER',
+        'MENU',
         [
-            'text' => 'User',
-            'url'  => '/users',
-            'icon'  => 'fa fa-users',
+            'text' => 'Dashboard',
+            'url' => '/home',
+            'icon' => 'fa fa-tachometer-alt',
         ],
-        'BOOK',
+        [
+            'header'  => 'BOOK',
+        ],
         [
             'text' => 'Data Buku',
             'url' => '/buku/all',
