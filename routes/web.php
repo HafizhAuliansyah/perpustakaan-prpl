@@ -31,15 +31,16 @@ Route::get('/home', function() {
 })->name('home')->middleware('auth');
 
 Route::middleware('auth')->group(function(){
-    Route::controller(BukuController::class)->group(function(){
-        Route::get('/buku/all', 'show')->name('all_buku');
-        Route::get('/buku/all/part', 'showPart');
-        Route::get('/buku/add', 'addView')->name('view_add_buku');
-        Route::post('/buku/add', 'store')->name('add_buku');
-        Route::get('/buku/update/{buku}', 'editView')->name('view_edit_buku');
-        Route::patch('/buku/update/{buku}', 'update')->name('edit_buku');
-        Route::delete('/buku/delete/{buku}', 'delete');
-    });
+    // Routes need authentication
+});
+Route::controller(BukuController::class)->group(function(){
+    Route::get('/buku/all', 'showPart')->name('all_buku');
+    Route::get('/buku/all/part', 'showPart')->name('part-buku');
+    Route::get('/buku/add', 'addView')->name('view_add_buku');
+    Route::post('/buku/add', 'store')->name('add_buku');
+    Route::get('/buku/update/{buku}', 'editView')->name('view_edit_buku');
+    Route::patch('/buku/update/{buku}', 'update')->name('edit_buku');
+    Route::delete('/buku/delete/{buku}', 'delete')->name('delete_buku');
 });
 
 // Route::middleware('auth')->group(function () {

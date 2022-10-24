@@ -27,64 +27,52 @@
                     </div>
                     @endif
                     @php
-                        $heads = [
-                            'ID',
-                            'NamaBuku',
-                            'Deskripsi',
-                            'GenreBuku',
-                            'Bahasa',
-                            'JumlahHalaman',
-                            'StatusBuku',
-                            'Penerbit',
-                            'Penulis',
-                            'LetakRak',
-                            'TglMasukBuku',
-                            'Actions'
-                        ];
-                        $config = [
-                            'data' => $datas,
-                            'order' => [[1, 'asc']],
-                            'columns' => [null, null, null, ['orderable' => false]],
-                            'responsive' => true,
-                            'columns'=> [
-                                [ 'responsivePriority' => 1 ],
-                                ['responsivePriority' => 2],
-                                ['responsivePriority'=> 3],
-                                ['responsivePriority'=> 4],
-                                ['responsivePriority'=> 5],
-                                ['responsivePriority'=> 6],
-                            ]
-                        ];
-                        $btnEdit = '<button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+                         $btnEdit = '<button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
                         <i class="fa fa-lg fa-fw fa-pen"></i>
                         </button>';
                         $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow" title="Edit">
                         <i class="fa fa-lg fa-fw fa-trash"></i>
                         </button>';
-                        
                     @endphp
-                    <x-adminlte-datatable id="table-data" :heads="$heads" head-theme="dark"
-                    striped hoverable bordered compressed beautify>
-                    @foreach($config['data'] as $data)
-                    <tr>
-                        <td>{{ $data->IDBuku }}</td>
-                        <td>{{ $data->NamaBuku }}</td>
-                        <td>{{ $data->Deskripsi }}</td>
-                        <td>{{ $data->GenreBuku }}</td>
-                        <td>{{ $data->Bahasa }}</td>
-                        <td>{{ $data->JumlahHalaman }}</td>
-                        <td>{{ $data->StatusBuku }}</td>
-                        <td>{{ $data->Penerbit }}</td>
-                        <td>{{ $data->Penulis }}</td>
-                        <td>{{ $data->LetakRak }}</td>
-                        <td>{{ $data->TglMasukBuku }}</td>
-                        <td>
-                            <a href="{{ route('view_edit_buku', $data->IDBuku) }}">{!! $btnEdit !!}</a>
-                            <a href="/buku/delete/{{ $data->IDBuku }}" onclick="notificationBeforeDelete(event, this)">{!! $btnDelete !!}</a>
-                        </td>
-                    </tr>
-                    @endforeach
-                    </x-adminlte-datatable>
+                    <table id="table-data" class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nama Buku</th>
+                                <th>Deskripsi</th>
+                                <th>Genre Buku</th>
+                                <th>Bahasa</th>
+                                <th>Jumlah Halaman</th>
+                                <th>Status Buku</th>
+                                <th>Penerbit</th>
+                                <th>Penulis</th>
+                                <th>Letak Rak</th>
+                                <th>Tanggal Masuk</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        {{-- <tbody>
+                            @foreach ($datas as $data)
+                                <tr>
+                                    <td>{{ $data->IDBuku }}</td>
+                                    <td>{{ $data->NamaBuku }}</td>
+                                    <td>{{ $data->Deskripsi }}</td>
+                                    <td>{{ $data->GenreBuku }}</td>
+                                    <td>{{ $data->Bahasa }}</td>
+                                    <td>{{ $data->JumlahHalaman }}</td>
+                                    <td>{{ $data->StatusBuku }}</td>
+                                    <td>{{ $data->Penerbit }}</td>
+                                    <td>{{ $data->Penulis }}</td>
+                                    <td>{{ $data->LetakRak }}</td>
+                                    <td>{{ $data->TglMasukBuku }}</td>
+                                    <td>
+                                        <a href="{{ route('view_edit_buku', $data->IDBuku) }}">{!! $btnEdit !!}</a>
+                                        <a href="/buku/delete/{{ $data->IDBuku }}" onclick="notificationBeforeDelete(event, this)">{!! $btnDelete !!}</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody> --}}
+                    </table>
                 </div>
             </div>
         </div>
@@ -104,6 +92,30 @@
                 $("#delete-form").submit();
             }
         }
-
+        $('#table-data').DataTable({
+            responsive: true,
+            ajax: {
+                url: '{{ route("part-buku") }}',
+            },
+            serverSide: true,
+            processing: true,
+            aaSorting:[[0,"asc"]],
+            columns: [
+                {data: 'IDBuku', name: 'IDBuku'},
+                {data: 'NamaBuku', name: 'NamaBuku'},
+                {data: 'Deskripsi', name: 'Deskripsi'},
+                {data: 'GenreBuku', name: 'GenreBuku'},
+                {data: 'Bahasa', name: 'Bahasa'},
+                {data: 'JumlahHalaman', name: 'JumlahHalaman'},
+                {data: 'StatusBuku', name: 'StatusBuku'},
+                {data: 'Penerbit', name: 'Penerbit'},
+                {data: 'Penulis', name: 'Penulis'},
+                {data: 'LetakRak', name: 'LetakRak'},
+                {data: 'TglMasukBuku', name: 'TglMasukBuku'},
+                {data: 'action', name: 'action'},
+            ],
+            lengthMenu: [10, 25, 50, 75, 100],
+        });
+            
     </script>
 @endpush
