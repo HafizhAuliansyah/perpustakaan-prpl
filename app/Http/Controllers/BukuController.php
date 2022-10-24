@@ -55,10 +55,27 @@ class BukuController extends Controller
         }
 
     }
-    public function show(){
+    public function showAll(){
         return view('buku.all-buku', [
             'datas' =>Buku::orderBy('IDBuku')->get()
         ]);
+    }
+    public function showPart(Request $request){
+        if ($request->ajax()) {
+            $buku = Buku::all();
+            return datatables()->of($buku)
+                ->addColumn('action', function ($row) {
+                    $html = '<a href='.route('view_edit_buku', $row->IDBuku).' class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+                    <i class="fa fa-lg fa-fw fa-pen"></i>
+                    </a>';
+                    $html.= '<a href='.route('delete_buku', $row->IDBuku).' class="btn btn-xs btn-default text-danger mx-1 shadow" title="Edit" onclick="notificationBeforeDelete(event, this)">
+                    <i class="fa fa-lg fa-fw fa-trash"></i>
+                    </a>';
+                    return $html;
+                })
+                ->toJson();
+            }
+        return view('buku.all-buku');
     }
     public function editView(Buku $buku){
         return view('buku.edit-buku', ['buku' => $buku]);
