@@ -4,6 +4,7 @@ use App\Http\Controllers\BukuController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MemberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,3 +42,11 @@ Route::middleware('auth')->group(function(){
     });
 });
 
+// Route::middleware('auth')->group(function () {
+//     Route::controller(MemberController::class)->group(function(){
+//         Route::get('member/index', 'index')->name('index_member');
+//     });
+// });
+
+Route::resource('member', MemberController::class)
+    ->middleware('auth');

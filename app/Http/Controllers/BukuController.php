@@ -80,7 +80,7 @@ class BukuController extends Controller
                 $buku->NamaBuku = $request->NamaBuku;
             if($request->Deskripsi)
                 $buku->Deskripsi = $request->Deskripsi;
-            if($request->GenreBuku)  
+            if($request->GenreBuku)
                 $buku->GenreBuku = $request->GenreBuku;
             if($request->Bahasa)
                 $buku->Bahasa = $request->Bahasa;
