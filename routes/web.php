@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UlasanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,13 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return redirect('home');
+});
+
+Route::controller(UlasanController::class)->group(function(){
+    Route::get('/ulasan/all', 'index')->name('all_ulasan');
+    Route::get('/ulasan/add', 'addView')->name('view_add_ulasan');
+    Route::post('/ulasan/add','store')->name('add_ulasan');
+    Route::delete('/ulasan/delete/{ulasan}','destroy');
 });
 
 Auth::routes();

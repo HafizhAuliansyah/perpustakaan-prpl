@@ -229,6 +229,14 @@ return [
             'url'  => '/users',
             'icon'  => 'fa fa-users',
         ],
+        [
+            'text' => 'Ulasan',
+            'url' => '/ulasan/all',
+        ],
+        [
+            'text' => 'Create Ulasan',
+            'url' => '/ulasan/add'
+        ]
     ],
 
     /*
