@@ -57,5 +57,4 @@ Route::controller(BukuController::class)->group(function(){
 //     });
 // });
 
-Route::resource('member', MemberController::class)
-    ->middleware('auth');
+Route::resource('member', MemberController::class);
