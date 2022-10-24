@@ -243,6 +243,12 @@ return [
             'url' => '/buku/add',
             'icon' => 'fa fa-plus',
         ],
+        'Member',
+        [
+            'text' => 'Data Member',
+            'url' => '/member',
+            'icon' => 'fa fa-users',
+        ]
     ],
 
     /*
