@@ -16,7 +16,7 @@ class CreateMembersTable extends Migration
         Schema::create('members', function (Blueprint $table) {
             $table->string('NIK')->primary();
             $table->string('Nama');
-            $table->enum('StatusMember', ['active', 'non-active']);
+            $table->enum('StatusMember', ['active', 'non-active', 'blacklisted']);
             $table->string('NomorTelepon')->unique();
             $table->string('Email')->unique();
             $table->timestamps();

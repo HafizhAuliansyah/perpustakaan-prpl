@@ -14,7 +14,7 @@ class CreateBukusTable extends Migration
     public function up()
     {
         Schema::create('buku', function (Blueprint $table) {
-            
+
             $table->string('IDBuku', 12)->primary();
             $table->string('NamaBuku');
             $table->text('Deskripsi');
@@ -37,6 +37,6 @@ class CreateBukusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bukus');
+        Schema::dropIfExists('buku');
     }
 }
