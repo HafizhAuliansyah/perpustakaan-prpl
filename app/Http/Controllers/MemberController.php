@@ -45,7 +45,6 @@ class MemberController extends Controller{
         //     'NomorTelepon' => 'required',
         //     'Email' => 'required'
         // ]);
-
         try{
             Member::create($request->all());
 
@@ -98,35 +97,22 @@ class MemberController extends Controller{
         //     'NomorTelepon' => 'required',
         //     'Email' => 'required'
         // ]);
-        $member = Member::find($id);
-         $member->Nama = $request->Nama;
-         $member->StatusMember = $request->StatusMember;
-         $member->NomorTelepon = $request->NomorTelepon;
-         $member->Email = $request->Email;
-        $member->save();
-        return redirect()->route('member.index')
-            ->with('success_message', 'Berhasil mengubah member');
-        // try{
-        //     if($request->Nama)
-        //         $member->Nama = $request->Nama;
-        //     if($request->StatusMember)
-        //         $member->StatusMember = $request->StatusMember;
-        //     if($request->NomorTelepon)
-        //         $member->NomorTelepon = $request->NomorTelepon;
-        //     if($request->Email)
-        //         $member->Email = $request->Email;
-
-        //     $member->save();
-        //     return redirect()
-        //         ->route('member.index')
-        //         ->with('Success','Berhasil Mengubah Data Buku');
-        // }catch(QueryException $err){
-        //     error_log($err->getMessage());
-        //     return redirect()
-        //         ->route('member.edit', $member->NIK)
-        //         ->with('Error','Gagal Mengedit Data Buku');
-        // }
-        // return redirect()->route('member.index')->with('success', 'Member updated successfully');
+            try{
+                $member = Member::find($id);
+                $member->Nama = $request->Nama;
+                $member->StatusMember = $request->StatusMember;
+                $member->NomorTelepon = $request->NomorTelepon;
+                $member->Email = $request->Email;
+                $member->updated_at = date("d-m-Y");
+                $member->save();
+                return redirect()->route('member.index')
+                   ->with('success_message', 'Berhasil mengubah member');
+            }catch(QueryException $err){
+                error_log($err->getMessage());
+                return redirect()
+                    ->route('member.edit', $member->NIK)
+                    ->with('Error','Gagal Mengedit Data Buku');
+            }
     }
 
     /**
