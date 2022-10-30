@@ -14,10 +14,10 @@ class CreateMembersTable extends Migration
     public function up()
     {
         Schema::create('members', function (Blueprint $table) {
-            $table->string('NIK')->primary();
+            $table->string('NIK', 16)->primary();
             $table->string('Nama');
             $table->enum('StatusMember', ['active', 'non-active', 'blacklisted']);
-            $table->string('NomorTelepon')->unique();
+            $table->string('NomorTelepon', 15)->unique();
             $table->string('Email')->unique();
             $table->timestamps();
         });
