@@ -6,6 +6,7 @@ use App\Models\Member;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class MemberController extends Controller{
     /**
@@ -13,12 +14,23 @@ class MemberController extends Controller{
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $members = Member::all();
-        return view('member.index', [
-            'members' => $members
-        ]);
+        if ($request->ajax()) {
+            $member = Member::all();
+            return DataTables::of($member)
+                ->addColumn('action', function ($row) {
+                    $html = '<a href='.route('member.edit',$row->NIK).' class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+                    <i class="fa fa-lg fa-fw fa-pen"></i>
+                    </a>';
+                    $html.= '<a href='.route('member.destroy', $row->NIK).' class="btn btn-xs btn-default text-danger mx-1 shadow" title="Edit" onclick="notificationBeforeDelete(event, this)">
+                    <i class="fa fa-lg fa-fw fa-trash"></i>
+                    </a>';
+                    return $html;
+                })
+                ->toJson();
+        }
+        return view('member.index');
     }
 
     /**
