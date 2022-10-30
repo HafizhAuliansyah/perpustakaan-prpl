@@ -248,6 +248,15 @@ return [
             'text' => 'Data Member',
             'url' => '/member',
             'icon' => 'fa fa-users',
+        ],
+        'Ulasan',
+        [
+            'text' => 'Ulasan',
+            'url' => '/ulasan/all',
+        ],
+        [
+            'text' => 'Create Ulasan',
+            'url' => '/ulasan/add'
         ]
     ],
 

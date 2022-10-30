@@ -5,7 +5,6 @@
 @section('content_header')
     <h1 class="m-0 text-dark">Data Buku</h1>
 @stop
-
 @section('content')
     <div class="row">
         <div class="col-12">
@@ -34,15 +33,15 @@
                         <i class="fa fa-lg fa-fw fa-trash"></i>
                         </button>';
                     @endphp
-                    <table id="table-data" class="table table-hover table-striped">
+                    <table id="table-data" class="table display table-hover table-striped display">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Nama Buku</th>
-                                <th>Deskripsi</th>
-                                <th>Genre Buku</th>
-                                <th>Bahasa</th>
-                                <th>Jumlah Halaman</th>
+                                <th data-priority="1">ID</th>
+                                <th data-priority="2">Nama Buku</th>
+                                <th data-priority="3">Deskripsi</th>
+                                <th data-priority="4">Genre Buku</th>
+                                <th data-priority="5">Bahasa</th>
+                                <th data-priority="6">Jumlah Halaman</th>
                                 <th>Status Buku</th>
                                 <th>Penerbit</th>
                                 <th>Penulis</th>
@@ -92,30 +91,44 @@
                 $("#delete-form").submit();
             }
         }
-        $('#table-data').DataTable({
-            responsive: true,
-            ajax: {
-                url: '{{ route("part-buku") }}',
-            },
-            serverSide: true,
-            processing: true,
-            aaSorting:[[0,"asc"]],
-            columns: [
-                {data: 'IDBuku', name: 'IDBuku'},
-                {data: 'NamaBuku', name: 'NamaBuku'},
-                {data: 'Deskripsi', name: 'Deskripsi'},
-                {data: 'GenreBuku', name: 'GenreBuku'},
-                {data: 'Bahasa', name: 'Bahasa'},
-                {data: 'JumlahHalaman', name: 'JumlahHalaman'},
-                {data: 'StatusBuku', name: 'StatusBuku'},
-                {data: 'Penerbit', name: 'Penerbit'},
-                {data: 'Penulis', name: 'Penulis'},
-                {data: 'LetakRak', name: 'LetakRak'},
-                {data: 'TglMasukBuku', name: 'TglMasukBuku'},
-                {data: 'action', name: 'action'},
-            ],
-            lengthMenu: [10, 25, 50, 75, 100],
+        $(document).ready(function() {
+            $('#table-data').DataTable({
+                responsive: true,
+                responsive: {
+                details: {
+                        type: 'column',
+                        target: 'tr'
+                    }
+                },
+                columnDefs: [ {
+                    className: 'control',
+                    orderable: false,
+                    targets:   0
+                } ],
+                ajax: {
+                    url: '{{ route("part-buku") }}',
+                },
+                serverSide: true,
+                processing: true,
+                aaSorting:[[0,"asc"]],
+                columns: [
+                    {data: 'IDBuku', name: 'IDBuku'},
+                    {data: 'NamaBuku', name: 'NamaBuku'},
+                    {data: 'Deskripsi', name: 'Deskripsi'},
+                    {data: 'GenreBuku', name: 'GenreBuku'},
+                    {data: 'Bahasa', name: 'Bahasa'},
+                    {data: 'JumlahHalaman', name: 'JumlahHalaman'},
+                    {data: 'StatusBuku', name: 'StatusBuku'},
+                    {data: 'Penerbit', name: 'Penerbit'},
+                    {data: 'Penulis', name: 'Penulis'},
+                    {data: 'LetakRak', name: 'LetakRak'},
+                    {data: 'TglMasukBuku', name: 'TglMasukBuku'},
+                    {data: 'action', name: 'action'},
+                ],
+                lengthMenu: [10, 25, 50, 75, 100],
+            });
         });
+        
             
     </script>
 @endpush
