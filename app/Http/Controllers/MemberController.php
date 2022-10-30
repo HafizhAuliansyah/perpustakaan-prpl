@@ -75,8 +75,9 @@ class MemberController extends Controller{
      * @param  \App\Models\Member  $member
      * @return \Illuminate\Http\Response
      */
-    public function edit(Member $member)
+    public function edit($id)
     {
+        $member = Member::where('NIK', $id)->get();
         return view('member.edit', compact('member'));
     }
 
@@ -87,7 +88,9 @@ class MemberController extends Controller{
      * @param  \App\Models\Member  $member
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Member $member)
+    // public function update(Member $member, Request $request)
+    // {
+    public function update(Request $request, $id)
     {
         // $request->validate([
         //     'NIK' => 'required',
@@ -95,10 +98,35 @@ class MemberController extends Controller{
         //     'NomorTelepon' => 'required',
         //     'Email' => 'required'
         // ]);
+        $member = Member::find($id);
+         $member->Nama = $request->Nama;
+         $member->StatusMember = $request->StatusMember;
+         $member->NomorTelepon = $request->NomorTelepon;
+         $member->Email = $request->Email;
+        $member->save();
+        return redirect()->route('member.index')
+            ->with('success_message', 'Berhasil mengubah member');
+        // try{
+        //     if($request->Nama)
+        //         $member->Nama = $request->Nama;
+        //     if($request->StatusMember)
+        //         $member->StatusMember = $request->StatusMember;
+        //     if($request->NomorTelepon)
+        //         $member->NomorTelepon = $request->NomorTelepon;
+        //     if($request->Email)
+        //         $member->Email = $request->Email;
 
-        $member->update($request->all());
-
-        return redirect()->route('member.index')->with('success', 'Member updated successfully');
+        //     $member->save();
+        //     return redirect()
+        //         ->route('member.index')
+        //         ->with('Success','Berhasil Mengubah Data Buku');
+        // }catch(QueryException $err){
+        //     error_log($err->getMessage());
+        //     return redirect()
+        //         ->route('member.edit', $member->NIK)
+        //         ->with('Error','Gagal Mengedit Data Buku');
+        // }
+        // return redirect()->route('member.index')->with('success', 'Member updated successfully');
     }
 
     /**
