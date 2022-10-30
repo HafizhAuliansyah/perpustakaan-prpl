@@ -12,28 +12,20 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <table class="table table-hover table-bordered table-stripped" id="example2">
+                    <table class="table table-hover table-bordered table-stripped" id="table-data">
                         <thead>
                         <tr>
+                            <th>No</th>
                             <th>NIK</th>
                             <th>Ulasan</th>
                         </tr>
                         </thead>
                         <tbody>
-                    @php
-                        $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow" title="Edit">
-                        <i class="fa fa-lg fa-fw fa-trash"></i>
-                        </button>';
-                        
-                    @endphp
-                        @foreach($datas as $key => $index)
+                        {{-- @foreach($datas as $key => $index)
                             <tr>
                                 <td>{{$index->NIK}}</td>
                                 <td>{{$index->masukan}}</td>
-                                <td>
-                                    <a href="/ulasan/delete/{{ $index->id }}" onclick="notificationBeforeDelete(event, this)">{!! $btnDelete !!}</a>
-                                </td>
-                        @endforeach
+                        @endforeach --}}
                         </tbody>
                     </table>
 
@@ -49,8 +41,21 @@
         @csrf
     </form>
     <script>
-        $('#example2').DataTable({
-            "responsive": true,
+       $(document).ready(function() {
+            $('#table-data').DataTable({
+                ajax: '',
+                serverSide: true,
+                processing: true,
+                aaSorting:[[0,"asc"]],
+                columns: [
+                    {data: 'no', name: 'no', render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                    }, width: '5%'},
+                    {data: 'NIK', name: 'NIK'},
+                    {data: 'masukan', name: 'masukan'},
+                ],
+                lengthMenu: [10, 25, 50, 75, 100],
+            });
         });
 
         function notificationBeforeDelete(event, el) {

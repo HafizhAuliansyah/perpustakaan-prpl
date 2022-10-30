@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ulasan;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class UlasanController extends Controller
 {
@@ -12,11 +14,15 @@ class UlasanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('ulasan.index',[
-            'datas' => Ulasan::orderBy('id')->get()
-        ]);
+        if ($request->ajax()) {
+            $ulasan = Ulasan::all();
+            return DataTables::of($ulasan)
+                ->toJson();
+        }
+        return view('ulasan.index');
+
     }
 
     public function addView(){

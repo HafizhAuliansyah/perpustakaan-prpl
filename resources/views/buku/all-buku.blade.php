@@ -36,6 +36,7 @@
                     <table id="table-data" class="table display table-hover table-striped display">
                         <thead>
                             <tr>
+                                <th>NO</th>
                                 <th data-priority="1">ID</th>
                                 <th data-priority="2">Nama Buku</th>
                                 <th data-priority="3">Deskripsi</th>
@@ -93,25 +94,14 @@
         }
         $(document).ready(function() {
             $('#table-data').DataTable({
-                responsive: true,
-                responsive: {
-                details: {
-                        type: 'column',
-                        target: 'tr'
-                    }
-                },
-                columnDefs: [ {
-                    className: 'control',
-                    orderable: false,
-                    targets:   0
-                } ],
-                ajax: {
-                    url: '{{ route("part-buku") }}',
-                },
+                ajax: '{{ route("all_buku") }}',
                 serverSide: true,
                 processing: true,
                 aaSorting:[[0,"asc"]],
                 columns: [
+                    {data: 'no', name: 'no', render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }},
                     {data: 'IDBuku', name: 'IDBuku'},
                     {data: 'NamaBuku', name: 'NamaBuku'},
                     {data: 'Deskripsi', name: 'Deskripsi'},

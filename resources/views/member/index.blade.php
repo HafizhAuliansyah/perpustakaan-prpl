@@ -55,9 +55,10 @@
                         Tambah
                     </a>
 
-                    <table class="table table-hover table-bordered table-stripped" id="example2">
+                    <table class="table table-hover table-bordered table-stripped" id="table-data">
                         <thead>
                         <tr>
+                            <th>No</th>
                             <th>NIK</th>
                             <th>Nama</th>
                             <th>Status Member</th>
@@ -67,7 +68,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($members as $member)
+                        {{-- @foreach($members as $member)
                             <tr>
                                 <td>{{$member->NIK}}</td>
                                 <td>{{$member->Nama}}</td>
@@ -83,7 +84,7 @@
                                     </a>
                                 </td>
                             </tr>
-                        @endforeach
+                        @endforeach --}}
                         </tbody>
                     </table>
 
@@ -99,8 +100,25 @@
         @csrf
     </form>
     <script>
-        $('#example2').DataTable({
-            "responsive": true,
+       $(document).ready(function() {
+            $('#table-data').DataTable({
+                ajax: '',
+                serverSide: true,
+                processing: true,
+                aaSorting:[[0,"asc"]],
+                columns: [
+                    {data: 'no', name: 'no', render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }},
+                    {data: 'NIK', name: 'NIK'},
+                    {data: 'Nama', name: 'Nama'},
+                    {data: 'StatusMember', name: 'StatusMember'},
+                    {data: 'NomorTelepon', name: 'GenreBuku'},
+                    {data: 'Email', name: 'Bahasa'},
+                    {data: 'action', name: 'action'},
+                ],
+                lengthMenu: [10, 25, 50, 75, 100],
+            });
         });
 
         function notificationBeforeDelete(event, el) {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Buku;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class BukuController extends Controller
 {
@@ -63,7 +64,7 @@ class BukuController extends Controller
     public function showPart(Request $request){
         if ($request->ajax()) {
             $buku = Buku::all();
-            return datatables()->of($buku)
+            return DataTables::of($buku)
                 ->addColumn('action', function ($row) {
                     $html = '<a href='.route('view_edit_buku', $row->IDBuku).' class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
                     <i class="fa fa-lg fa-fw fa-pen"></i>
