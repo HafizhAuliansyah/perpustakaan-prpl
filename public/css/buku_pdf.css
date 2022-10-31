@@ -1,0 +1,93 @@
+:root {
+    --green: #2a9d8f;
+    --light-grey: #edf2f4;
+}
+* {
+    font-size: 12px;
+}
+html {
+    min-height: 100px !important;
+    height: auto !important;
+}
+body {
+    width: 100%;
+    height: auto;
+}
+.header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 30px;
+}
+.title-header {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 2rem;
+    color: #2a9d8f;
+}
+.subtitle-header {
+    font-size: 1rem;
+    color: #252525;
+}
+.line-header {
+    width: 100%;
+    height: 2px;
+    background-color: #1f1f1f;
+}
+.content {
+    display: flex;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+}
+.book-card {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 300px;
+    background-color: #edf2f4;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+.book-data {
+    width: 100%;
+    padding: 0 10px;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #252525;
+    margin-bottom: 5px;
+}
+.book-data.id-buku {
+    display: flex;
+    height: 30px;
+    flex-direction: column;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    color: #ffffff;
+    background-color: #264653;
+    padding-top: 10px;
+    margin-bottom: 10px;
+}
+.table-data {
+    width: 100%;
+    padding: 0 10px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.data-title {
+    width: 25%;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.data-content {
+    max-width: 80%;
+    height: 30px;
+    color: #474747;
+}
