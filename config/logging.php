@@ -101,17 +101,18 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
-        'custom_error' => [
-            'driver' => 'single',
-            'level' => env('LOG_LEVEL', 'error'),
-            'path' => storage_path('logs/error_log.log'),
+        'custom_debug' => [
+            'driver'=> 'single',
+            'level' => 'debug',
+            'path' => storage_path('logs/debug_log.log'),
             'bubble' => false,
         ],
 
-        'custom_debug' => [
-            'driver'=> 'single',
-            'level' => env('LOG_LEVEL', 'debug'),
-            'path' => storage_path('logs/debug_log.log'),
+        'custom_error' => [
+            'driver' => 'single',
+            'level' => 'error',
+            'path' => storage_path('logs/error_log.log'),
+            'bubble' => false,
         ],
         
     ],
