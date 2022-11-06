@@ -25,6 +25,9 @@
                         </button>
                     </div>
                     @endif
+                    <div class="row mb-3">
+                        <a href="{{ route('export_buku') }}" class="btn btn-primary" role="button"><i class="fa fa-file-pdf mr-2"></i>Export to pdf</a>
+                    </div>
                     @php
                          $btnEdit = '<button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
                         <i class="fa fa-lg fa-fw fa-pen"></i>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Buku;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 use Yajra\DataTables\DataTables;
 
 class BukuController extends Controller
@@ -127,5 +128,23 @@ class BukuController extends Controller
     public function delete(Buku $buku){
         $buku->delete();
         return redirect('/buku/all');
+    }
+    public function exportPDF(){
+        $datas = Buku::all();
+        $file_name = 'DataBuku.pdf';
+        $mpdf = new \Mpdf\Mpdf([
+            'margin_left' => 10,
+            'margin_right' => 10,
+            'margin_top' => 15,
+            'margin_bottom' => 20,
+            'margin_header' => 10,
+            'margin_footer' => 10
+        ]);
+        $html = \view('buku.pdf', ['datas' => $datas]);
+        $style2 = file_get_contents(public_path('css\buku_pdf.css'));
+        $mpdf->WriteHTML($style2, \Mpdf\HTMLParserMode::HEADER_CSS);
+        $html = $html->render();
+        $mpdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
+        $mpdf->Output($file_name, 'I');
     }
 }
