@@ -34,7 +34,7 @@
             </button>
         </div>
     @endif
-    <form action="{{route('peminjaman.store')}}" method="post">
+    <form action="{{route('peminjaman.store')}}" method="post" autocomplete="off">
         @csrf
         <div class="row">
             <div class="col-12">

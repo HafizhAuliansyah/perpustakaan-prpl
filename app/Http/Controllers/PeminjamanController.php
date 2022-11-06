@@ -33,7 +33,7 @@ class PeminjamanController extends Controller
      */
     public function create()
     {
-        $bukus = Buku::all();
+        $bukus = Buku::where('StatusBuku', 'Tersedia')->get();
         $members = Member::all();
         return view('peminjaman.create', compact('bukus', 'members'));
     }
@@ -46,36 +46,42 @@ class PeminjamanController extends Controller
      */
     public function store(Request $request)
     {
-        $peminjaman = new Peminjaman();
         try{
-            $PeminjamanList = Peminjaman::where('IDPeminjaman', 'LIKE', date('dmY'))->get();
-            $PeminjamanCount = $PeminjamanList->count() + 1;
-            if($PeminjamanCount < 10){
-                $peminjaman->IDPeminjaman = 'D'.date('dmY').'0'.$PeminjamanCount;
+            $peminjaman = new Peminjaman();
+            try{
+                $PeminjamanList = Peminjaman::where('IDPeminjaman', 'LIKE', '%'.date('dmY').'%')->get();
+                $PeminjamanCount = $PeminjamanList->count() + 1;
+                if($PeminjamanCount < 10){
+                    $peminjaman->IDPeminjaman = 'D'.date('dmY').'0'.$PeminjamanCount;
+                }
+                else{
+                    $peminjaman->IDPeminjaman = 'D'.date('dmY').$PeminjamanCount;
+                }
+            }catch(QueryException $err){
+                $peminjaman->IDPeminjaman = 'D'.date('dmY').'01';
             }
-            else{
-                $peminjaman->IDPeminjaman = 'D'.date('dmY').$PeminjamanCount;
+            $peminjaman->IDBuku = $request->IDBuku;
+            $peminjaman->NIK = $request->NIK;
+            $peminjaman->TglPeminjaman = date('Y-m-d');
+            $peminjaman->StatusPeminjaman = 'belum kembali';
+            $peminjaman->TglPengembalian = $request->TglPengembalian;
+            $peminjaman->save();
+            try {
+                Buku::where('IDBuku', $request->IDBuku)->update(array('StatusBuku' => 'Dipinjam'));
+            } catch (QueryException $err) {
+                error_log($err->getMessage());
+                return redirect()
+                    ->route('peminjaman.create')
+                    ->with('Error','Gagal buku telah dipinjam');
             }
+            return redirect()->route('peminjaman.index')
+               ->with('success_message', 'Berhasil melakukan peminjaman');
         }catch(QueryException $err){
-            $peminjaman->IDPeminjaman = 'D'.date('dmY').'01';
+            error_log($err->getMessage());
+            return redirect()
+                ->route('peminjaman.create')
+                ->with('Error','Gagal membuat peminjaman buku');
         }
-        $peminjaman->IDBuku = $request->IDBuku;
-        $peminjaman->NIK = $request->NIK;
-        $peminjaman->TglPeminjaman = date('Y-m-d');
-        $peminjaman->StatusPeminjaman = 'belum kembali';
-        $peminjaman->TglPengembalian = $request->TglPengembalian;
-        $peminjaman->save();
-        return redirect()->route('peminjaman.index')
-           ->with('success_message', 'Berhasil melakukan peminjaman');
-        // try{
-
-        // }catch(QueryException $err){
-        //     error_log($err->getMessage());
-        //     return redirect()
-        //         ->route('peminjaman.create')
-        //         ->with($err->getMessage());
-        //         // ->with('Error','Gagal membuat peminjaman buku');
-        // }
     }
 
     /**
