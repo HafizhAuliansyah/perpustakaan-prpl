@@ -73,6 +73,7 @@
                             <datalist id="datalistSP">
                                 <option value='sudah kembali'>
                                 <option value='belum kembali'>
+                                <option value='batal'>
                             </datalist>
                         </div>
                         <div class="form-group">

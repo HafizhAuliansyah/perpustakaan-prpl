@@ -18,7 +18,7 @@ class CreatePeminjamansTable extends Migration
             $table->string('IDBuku', 12);
             $table->string('NIK', 16);
             $table->date('TglPeminjaman');
-            $table->enum('StatusPeminjaman', ['sudah kembali', 'belum kembali']);
+            $table->enum('StatusPeminjaman', ['sudah kembali', 'belum kembali', 'batal']);
             $table->date('TglPengembalian');
             $table->timestamps();
         });

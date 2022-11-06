@@ -173,6 +173,15 @@ class PeminjamanController extends Controller
                         ->route('peminjaman.edit')
                         ->with('Error','Gagal buku telah dipinjam');
                 }
+            }else if($request->StatusPeminjaman == 'sudah kembali'){
+                try {
+                    Buku::where('IDBuku', $request->IDBuku)->update(array('StatusBuku' => 'Tersedia'));
+                } catch (QueryException $err) {
+                    error_log($err->getMessage());
+                    return redirect()
+                        ->route('peminjaman.edit')
+                        ->with('Error','Gagal buku telah dipinjam');
+                }
             }else{
                 try {
                     Buku::where('IDBuku', $request->IDBuku)->update(array('StatusBuku' => 'Tersedia'));
