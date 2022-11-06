@@ -21,7 +21,17 @@ class PeminjamanController extends Controller
     {
         if ($request->ajax()) {
             $peminjaman = Peminjaman::all();
-            return DataTables::of($peminjaman)->toJson();
+            return DataTables::of($peminjaman)
+            ->addColumn('action', function ($row) {
+                $html = '<a href='.route('peminjaman.edit',$row->IDPeminjaman).' class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+                <i class="fa fa-lg fa-fw fa-pen"></i>
+                </a>';
+                // $html.= '<a href='.route('peminjaman.destroy', $row->IDPeminjaman).' class="btn btn-xs btn-default text-success mx-1 shadow" title="Edit" onclick="notificationBeforeDelete(event, this)">
+                // <i class="fa fa-lg fa-fw fa-check"></i>
+                // </a>';
+                return $html;
+            })
+            ->toJson();
         }
         return view('peminjaman.index');
     }
@@ -103,7 +113,19 @@ class PeminjamanController extends Controller
      */
     public function edit($id)
     {
-        //
+        $idBuku = Peminjaman::select('IDBuku')->where('IDPeminjaman', $id)->get();
+        try {
+            Buku::where('IDBuku', $idBuku)->update(array('StatusBuku' => 'Tersedia'));
+        } catch (QueryException $err) {
+            error_log($err->getMessage());
+            return redirect()
+                ->route('peminjaman.index')
+                ->with('Error','Gagal buku belum dipinjam');
+        }
+        $peminjaman = Peminjaman::where('IDPeminjaman', $id)->get();
+        $bukus = Buku::where('StatusBuku', 'Tersedia')->get();
+        $members = Member::all();
+        return view('peminjaman.edit', compact('bukus', 'members', 'peminjaman'));
     }
 
     /**
@@ -115,7 +137,60 @@ class PeminjamanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            $peminjaman = Peminjaman::find($id);
+            try{
+                if($request->IDBuku != $request->oldIDBuku){
+                    $peminjaman->IDBuku = $request->IDBuku;
+                    try {
+                        Buku::where('IDBuku', $request->oldIDBuku)->update(array('StatusBuku' => 'Tersedia'));
+                    } catch (QueryException $err) {
+                        error_log($err->getMessage());
+                        return redirect()
+                            ->route('peminjaman.edit')
+                            ->with('Error','Data Buku Error');
+                    }
+                }else{
+                    $peminjaman->IDBuku = $request->IDBuku;
+                }
+            }catch(QueryException $err){
+                error_log($err->getMessage());
+                return redirect()
+                    ->route('peminjaman.edit')
+                    ->with('Error','Data Buku Error');
+            }
+            $peminjaman->NIK = $request->NIK;
+            $peminjaman->TglPeminjaman = date('Y-m-d');
+            $peminjaman->StatusPeminjaman = $request->StatusPeminjaman;
+            $peminjaman->TglPengembalian = $request->TglPengembalian;
+            $peminjaman->save();
+            if($request->StatusPeminjaman == 'belum kembali'){
+                try {
+                    Buku::where('IDBuku', $request->IDBuku)->update(array('StatusBuku' => 'Dipinjam'));
+                } catch (QueryException $err) {
+                    error_log($err->getMessage());
+                    return redirect()
+                        ->route('peminjaman.edit')
+                        ->with('Error','Gagal buku telah dipinjam');
+                }
+            }else{
+                try {
+                    Buku::where('IDBuku', $request->IDBuku)->update(array('StatusBuku' => 'Tersedia'));
+                } catch (QueryException $err) {
+                    error_log($err->getMessage());
+                    return redirect()
+                        ->route('peminjaman.edit')
+                        ->with('Error','Gagal buku telah dipinjam');
+                }
+            }
+            return redirect()->route('peminjaman.index')
+               ->with('success_message', 'Berhasil mengubah data peminjaman');
+        }catch(QueryException $err){
+            error_log($err->getMessage());
+            return redirect()
+                ->route('peminjaman.edit', $peminjaman->IDPeminjaman)
+                ->with('Error','Gagal Mengedit Data Peminjaman');
+        }
     }
 
     /**

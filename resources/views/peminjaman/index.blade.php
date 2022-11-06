@@ -65,6 +65,7 @@
                             <th>Tanggal Peminjaman</th>
                             <th>Status Peminjaman</th>
                             <th>Tanggal Pengembalian</th>
+                            <th>Opsi</th>
                         </tr>
                         </thead>
                         {{-- <tbody>
@@ -94,6 +95,7 @@
                     {data: 'TglPeminjaman', name: 'TglPeminjaman'},
                     {data: 'StatusPeminjaman', name: 'StatusPeminjaman'},
                     {data: 'TglPengembalian', name: 'TglPengembalian'},
+                    {data: 'action', name: 'action'},
                 ],
                 lengthMenu: [10, 25, 50, 75, 100],
             });
