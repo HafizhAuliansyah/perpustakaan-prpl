@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\UlasanController;
+use App\Http\Controllers\PeminjamanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,4 +58,6 @@ Route::controller(BukuController::class)->group(function(){
 //     });
 // });
 
-Route::resource('member', MemberController::class);
+Route::resource('member', MemberController::class)->middleware('auth');
+
+Route::resource('peminjaman', PeminjamanController::class)->middleware('auth');

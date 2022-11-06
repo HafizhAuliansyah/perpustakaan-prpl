@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Index Member')
+@section('title', 'Index Peminjaman')
 
 @section('content_header')
-    <h1 class="m-0 text-dark">Index Member</h1>
+    <h1 class="m-0 text-dark">Index Peminjaman</h1>
 @stop
 
 @section('content')
@@ -51,7 +51,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    <a href="{{route('member.create')}}" class="btn btn-primary mb-2">
+                    <a href="{{route('peminjaman.create')}}" class="btn btn-primary mb-2">
                         Tambah
                     </a>
 
@@ -59,35 +59,17 @@
                         <thead>
                         <tr>
                             <th>No</th>
+                            <th>ID Peminjaman</th>
+                            <th>ID Buku</th>
                             <th>NIK</th>
-                            <th>Nama</th>
-                            <th>Status Member</th>
-                            <th>Nomor Telepon</th>
-                            <th>Email</th>
-                            <th>Opsi</th>
+                            <th>Tanggal Peminjaman</th>
+                            <th>Status Peminjaman</th>
+                            <th>Tanggal Pengembalian</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        {{-- @foreach($members as $member)
-                            <tr>
-                                <td>{{$member->NIK}}</td>
-                                <td>{{$member->Nama}}</td>
-                                <td>{{$member->StatusMember}}</td>
-                                <td>{{$member->NomorTelepon}}</td>
-                                <td>{{$member->Email}}</td>
-                                <td>
-                                    <a href="{{route('member.edit', $member->NIK)}}" class="btn btn-primary btn-xs">
-                                        Edit
-                                    </a>
-                                    <a href="{{route('member.destroy', $member->NIK)}}" onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
-                                        Delete
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach --}}
-                        </tbody>
+                        {{-- <tbody>
+                        </tbody> --}}
                     </table>
-
                 </div>
             </div>
         </div>
@@ -95,10 +77,6 @@
 @stop
 
 @push('js')
-    <form action="" id="delete-form" method="post">
-        @method('delete')
-        @csrf
-    </form>
     <script>
        $(document).ready(function() {
             $('#table-data').DataTable({
@@ -110,24 +88,16 @@
                     {data: 'no', name: 'no', render: function (data, type, row, meta) {
                             return meta.row + meta.settings._iDisplayStart + 1;
                         }},
+                    {data: 'IDPeminjaman', name: 'IDPeminjaman'},
+                    {data: 'IDBuku', name: 'IDBuku'},
                     {data: 'NIK', name: 'NIK'},
-                    {data: 'Nama', name: 'Nama'},
-                    {data: 'StatusMember', name: 'StatusMember'},
-                    {data: 'NomorTelepon', name: 'NomorTelepon'},
-                    {data: 'Email', name: 'Email'},
-                    {data: 'action', name: 'action'},
+                    {data: 'TglPeminjaman', name: 'TglPeminjaman'},
+                    {data: 'StatusPeminjaman', name: 'StatusPeminjaman'},
+                    {data: 'TglPengembalian', name: 'TglPengembalian'},
                 ],
                 lengthMenu: [10, 25, 50, 75, 100],
             });
         });
-
-        function notificationBeforeDelete(event, el) {
-            event.preventDefault();
-            if (confirm('Apakah anda yakin akan menghapus data ? ')) {
-                $("#delete-form").attr('action', $(el).attr('href'));
-                $("#delete-form").submit();
-            }
-        }
 
     </script>
 @endpush
