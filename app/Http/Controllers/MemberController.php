@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Log;
 
 class MemberController extends Controller{
     /**
@@ -16,6 +17,7 @@ class MemberController extends Controller{
      */
     public function index(Request $request)
     {
+        Log::info('Showing all member');
         if ($request->ajax()) {
             $member = Member::all();
             return DataTables::of($member)
@@ -59,10 +61,11 @@ class MemberController extends Controller{
         // ]);
         try{
             Member::create($request->all());
-
+            Log::info('Created new member');
             return redirect()->route('member.index')->with('success', 'Member created successfully');
         }catch(QueryException $err){
             error_log($err->getMessage());
+            Log::error('in MemberController on function Store : '. $err->getMessage());
             return redirect()
                 ->route('member.create')
                 ->with('Error','Gagal Menyimpan Data Baru');
@@ -117,9 +120,11 @@ class MemberController extends Controller{
                 $member->Email = $request->Email;
                 $member->updated_at = date("d-m-Y");
                 $member->save();
+                Log::info('Updated member : '.$id);
                 return redirect()->route('member.index')
                    ->with('success_message', 'Berhasil mengubah member');
             }catch(QueryException $err){
+                Log::error('in MemberController on update function : '.$err->getMessage());
                 error_log($err->getMessage());
                 return redirect()
                     ->route('member.edit', $member->NIK)
@@ -136,6 +141,7 @@ class MemberController extends Controller{
     public function destroy($id)
     {
         // $result = Member::find($member)->delete();
+        Log::info('Deleted member : '.$id);
         $result = Member::where('NIK', $id)->delete();
         // $member = DB::table('members')->where(['NIK', $id])->get();
         return redirect()->route('member.index')->with('success', 'Member deleted successfully');

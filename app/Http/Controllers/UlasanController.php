@@ -6,6 +6,7 @@ use App\Models\Ulasan;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Log;
 
 class UlasanController extends Controller
 {
@@ -16,6 +17,7 @@ class UlasanController extends Controller
      */
     public function index(Request $request)
     {
+        Log::info('Showing all Data Ulasan');
         if ($request->ajax()) {
             $ulasan = Ulasan::all();
             return DataTables::of($ulasan)
@@ -40,10 +42,12 @@ class UlasanController extends Controller
     {
         try{
             Ulasan::create($request->all());
+            Log::info('Store ulasan success');
             return redirect()->route('all_ulasan')
                             ->with('success','Ulasan Created Successfully!');
         } catch(QueryException $err){
             error_log($err->getMessage());
+            Log::error('Error at UlasanController :'.$err);
             return redirect()
                 ->route('all_ulasan')
                 ->with('Error','Gagal Menyimpan Data Baru');
@@ -68,9 +72,9 @@ class UlasanController extends Controller
     public function destroy(Ulasan $ulasan)
     {
         $ulasan->delete();
-        
+        Log::info('Deleted ulasan : '.$ulasan);
         return redirect()
             ->route('all_ulasan')
-            ->with('success','Ulasan Created Successfully!');;
+            ->with('success','Ulasan Deleted Successfully!');;
     }
 }
