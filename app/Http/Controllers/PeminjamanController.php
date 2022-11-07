@@ -44,7 +44,7 @@ class PeminjamanController extends Controller
     public function create()
     {
         $bukus = Buku::where('StatusBuku', 'Tersedia')->get();
-        $members = Member::all();
+        $members = Member::where('StatusMember', 'active')->get();
         return view('peminjaman.create', compact('bukus', 'members'));
     }
 
@@ -124,7 +124,7 @@ class PeminjamanController extends Controller
         }
         $peminjaman = Peminjaman::where('IDPeminjaman', $id)->get();
         $bukus = Buku::where('StatusBuku', 'Tersedia')->get();
-        $members = Member::all();
+        $members = Member::where('StatusMember', 'active')->get();
         return view('peminjaman.edit', compact('bukus', 'members', 'peminjaman'));
     }
 
