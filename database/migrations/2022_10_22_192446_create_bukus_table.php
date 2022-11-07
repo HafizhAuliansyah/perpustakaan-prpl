@@ -19,7 +19,7 @@ class CreateBukusTable extends Migration
             $table->string('NamaBuku');
             $table->text('Deskripsi');
             $table->enum('GenreBuku', ['Horror', 'Aksi', 'Fiksi', 'Drama', 'Romansa', 'Komedi', 'Sport', 'Teknologi', 'Sejarah', 'Politik']);
-            $table->enum('Bahasa',['Indonesia', 'Inggris', 'Jepang', 'China', 'Arab', 'Prancis']);
+            $table->string('Bahasa',20);
             $table->integer('JumlahHalaman', false, true);
             $table->enum('StatusBuku', ['Dipinjam', 'Rusak', 'Hilang', 'Tersedia']);
             $table->string('Penerbit');
