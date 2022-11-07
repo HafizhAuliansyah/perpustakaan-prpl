@@ -177,6 +177,7 @@ return [
 
         // Yajra Data Table
         Yajra\DataTables\DataTablesServiceProvider::class,
+        
     ],
 
     /*

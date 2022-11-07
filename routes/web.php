@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\UlasanController;
+use App\Http\Controllers\PeminjamanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,8 @@ Route::controller(BukuController::class)->group(function(){
     Route::get('/buku/update/{buku}', 'editView')->name('view_edit_buku');
     Route::patch('/buku/update/{buku}', 'update')->name('edit_buku');
     Route::delete('/buku/delete/{buku}', 'delete')->name('delete_buku');
+    // PDF Export
+    Route::get('/buku/pdf', 'exportPDF')->name('export_buku');
 });
 
 // Route::middleware('auth')->group(function () {
@@ -57,4 +60,6 @@ Route::controller(BukuController::class)->group(function(){
 //     });
 // });
 
-Route::resource('member', MemberController::class);
+Route::resource('member', MemberController::class)->middleware('auth');
+
+Route::resource('peminjaman', PeminjamanController::class)->middleware('auth');

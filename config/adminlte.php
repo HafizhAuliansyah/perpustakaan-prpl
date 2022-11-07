@@ -249,6 +249,12 @@ return [
             'url' => '/member',
             'icon' => 'fa fa-users',
         ],
+        'Peminjaman',
+        [
+            'text' => 'Data Peminjaman',
+            'url' => '/peminjaman',
+            'icon' => 'fa fa-book',
+        ],
         'Ulasan',
         [
             'text' => 'Ulasan',
