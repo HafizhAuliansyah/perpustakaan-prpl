@@ -17,10 +17,13 @@ class MemberSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create('id_ID');
-        for($i = 1; $i <= 10; $i++){
+        for($i = 1; $i <= 1000; $i++){
             $member = new Member();
             // $member->NIK = strval($faker->unique()->numberBetween(1000000000000001, 1000000000000010);
-            $member->NIK = strval(1000000000000000 + $i);
+            $new_nik = "1000000000000000";
+            $counterlen = strlen((string)$i);
+            $new_nik = substr_replace($new_nik, (string)$i, $counterlen * -1);
+            $member->NIK = $new_nik;
             $member->Nama = $faker->unique()->name;
             $member->StatusMember = 'active';
             $member->NomorTelepon = strval($faker->unique()->numberBetween(100000000000000, 999999999999999));

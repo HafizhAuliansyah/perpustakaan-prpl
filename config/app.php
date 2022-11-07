@@ -178,6 +178,10 @@ return [
         // Yajra Data Table
         Yajra\DataTables\DataTablesServiceProvider::class,
         
+        // Buku Helper
+        App\Providers\BukuServiceProvider::class,
+
+        
     ],
 
     /*
@@ -231,6 +235,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+
+        'BukuHelp' => App\Helpers\BukuHelper::class,
     ],
 
 ];

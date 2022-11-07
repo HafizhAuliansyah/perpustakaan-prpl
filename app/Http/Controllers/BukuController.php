@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\BukuHelper;
 use App\Models\Buku;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -12,12 +13,8 @@ use Illuminate\Support\Facades\Log;
 class BukuController extends Controller
 {
     public function addView(){
-        $last_data = Buku::orderByDesc('created_at', 'desc')->first();
-        $last_count = $last_data ? (int)substr($last_data->IDBuku, 9) : 0;
-        $last_count += 1;
-        $new_id = "B".date("dmY")."000";
-        $counterlen = strlen((string)$last_count);
-        $new_id = substr_replace($new_id, (string)$last_count, $counterlen * -1);
+       
+        $new_id = BukuHelper::generateBookID();
         Log::info('Auto incement for IDBuku Success');
         return view('buku.add-buku', ['new_id' => $new_id]);
     }

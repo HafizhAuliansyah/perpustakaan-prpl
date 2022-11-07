@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e7030fd7ce67e6ffcbe23a20d36c70cc",
+    "content-hash": "21c9f1dfab14f558deb1c69cff102985",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -730,6 +730,66 @@
                 }
             ],
             "time": "2022-07-30T15:56:11+00:00"
+        },
+        {
+            "name": "gurgentil/laravel-eloquent-sequencer",
+            "version": "1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gurgentil/laravel-eloquent-sequencer.git",
+                "reference": "e63ef867847fa8c5a5792b440a5b0bf5e05c0944"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gurgentil/laravel-eloquent-sequencer/zipball/e63ef867847fa8c5a5792b440a5b0bf5e05c0944",
+                "reference": "e63ef867847fa8c5a5792b440a5b0bf5e05c0944",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^6.0|^7.0|^8.0",
+                "php": "^7.2.5|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^3.8|^4.0|^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Gurgentil\\LaravelEloquentSequencer\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Gurgentil\\LaravelEloquentSequencer\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gustavo Rorato Gentil",
+                    "email": "gustavorgentil@outlook.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A package that allows you to create and manage sequences on Eloquent models",
+            "homepage": "https://github.com/gurgentil/laravel-eloquent-sequencer",
+            "keywords": [
+                "eloquent",
+                "laravel",
+                "order",
+                "sequence",
+                "sequenceable"
+            ],
+            "support": {
+                "issues": "https://github.com/gurgentil/laravel-eloquent-sequencer/issues",
+                "source": "https://github.com/gurgentil/laravel-eloquent-sequencer/tree/1.0.6"
+            },
+            "time": "2021-11-14T17:51:44+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
