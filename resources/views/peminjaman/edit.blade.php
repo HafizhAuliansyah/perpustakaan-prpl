@@ -81,7 +81,7 @@
                             <input type="date" class="form-control @error('TglPeminjaman') is-invalid @enderror" id="exampleTglPeminjaman" name="TglPeminjaman" value="{{date('Y-m-d')}}" disabled>
                         </div>
                         <div class="form-group">
-                            <label for="exampleTglPengembalian">Tanggal Peminjaman</label>
+                            <label for="exampleTglPengembalian">Tanggal Pengembalian</label>
                             <input type="date" class="form-control @error('TglPengembalian') is-invalid @enderror" id="exampleTglPengembalian" name="TglPengembalian" value="{{ $data->TglPengembalian??old('TglPengembalian')}}">
                         </div>
                     </div>

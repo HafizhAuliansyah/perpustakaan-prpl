@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Log;
 
 class PeminjamanController extends Controller
 {
@@ -70,7 +71,24 @@ class PeminjamanController extends Controller
             }catch(QueryException $err){
                 $peminjaman->IDPeminjaman = 'D'.date('dmY').'01';
             }
-            $peminjaman->IDBuku = $request->IDBuku;
+            try{
+                // $dataBuku = Buku::where('IDBuku', $request->IDBuku);
+                $dataBuku = DB::table('buku')->select('StatusBuku')->where('IDBuku', $request->IDBuku);
+
+                if($dataBuku == 'Tersedia'){
+                    $peminjaman->IDBuku = $request->IDBuku;
+                }else{
+                    return redirect()
+                    ->route('peminjaman.create')
+                    ->with('Error','Gagal buku telah dipinjam');
+                }
+            }
+            catch(QueryException $err){
+                error_log($err->getMessage());
+                return redirect()
+                    ->route('peminjaman.create')
+                    ->with('Error','Gagal buku telah dipinjam');
+            }
             $peminjaman->NIK = $request->NIK;
             $peminjaman->TglPeminjaman = date('Y-m-d');
             $peminjaman->StatusPeminjaman = 'belum kembali';
@@ -82,7 +100,7 @@ class PeminjamanController extends Controller
                 error_log($err->getMessage());
                 return redirect()
                     ->route('peminjaman.create')
-                    ->with('Error','Gagal buku telah dipinjam');
+                    ->with('Error','Buku telah dipinjam');
             }
             return redirect()->route('peminjaman.index')
                ->with('success_message', 'Berhasil melakukan peminjaman');
