@@ -255,6 +255,17 @@ return [
             'url' => '/peminjaman',
             'icon' => 'fa fa-book',
         ],
+        [
+            'header' => 'DENDA',
+        ],
+        [
+            'text' => 'Data Denda',
+            'url' => '/denda/all',
+        ],
+        [
+            'text' => 'Add Denda',
+            'url' => '/denda/add',
+        ],
         'Ulasan',
         [
             'text' => 'Ulasan',
