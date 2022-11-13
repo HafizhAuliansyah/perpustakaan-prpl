@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\UlasanController;
 use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\DendaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,14 @@ Route::controller(BukuController::class)->group(function(){
     Route::get('/buku/pdf', 'exportPDF')->name('export_buku');
 });
 
+Route::controller(DendaController::class)->group(function(){
+    Route::get('/denda/all', 'showPart')->name('all_denda');
+    Route::get('/denda/all/part', 'showPart')->name('part-denda');
+    Route::get('/denda/add', 'addView')->name('view_add_denda');
+    Route::post('/denda/add', 'store')->name('add_denda');
+    Route::get('/denda/update/{denda}', 'editView')->name('view_edit_denda');
+    Route::patch('/denda/update/{denda}', 'update')->name('edit_denda');
+});
 // Route::middleware('auth')->group(function () {
 //     Route::controller(MemberController::class)->group(function(){
 //         Route::get('member/index', 'index')->name('index_member');

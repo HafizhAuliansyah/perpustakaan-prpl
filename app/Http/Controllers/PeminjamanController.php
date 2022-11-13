@@ -20,6 +20,7 @@ class PeminjamanController extends Controller
      */
     public function index(Request $request)
     {
+        Log::info('Showing index of Data Peminjaman in PerminjamanController');
         if ($request->ajax()) {
             $peminjaman = Peminjaman::all();
             return DataTables::of($peminjaman)
@@ -70,21 +71,23 @@ class PeminjamanController extends Controller
                 }
             }catch(QueryException $err){
                 $peminjaman->IDPeminjaman = 'D'.date('dmY').'01';
+                Log::error('Error in PeminjamanController at store'.$err->getMessage());
             }
             try{
-                // $dataBuku = Buku::where('IDBuku', $request->IDBuku);
-                $dataBuku = DB::table('buku')->select('StatusBuku')->where('IDBuku', $request->IDBuku);
-
-                if($dataBuku == 'Tersedia'){
+                $dataBuku = Buku::where('IDBuku', $request->IDBuku)->first();
+                // $dataBuku = DB::table('buku')->select('StatusBuku')->where('IDBuku', $request->IDBuku)->get();
+                if($dataBuku->StatusBuku == 'Tersedia'){
                     $peminjaman->IDBuku = $request->IDBuku;
-                }else{
-                    return redirect()
-                    ->route('peminjaman.create')
-                    ->with('Error','Gagal buku telah dipinjam');
                 }
+                // else{
+                //     return redirect()
+                //     ->route('peminjaman.create')
+                //     ->with('Error','Gagal buku telah dipinjam');
+                // }
             }
             catch(QueryException $err){
                 error_log($err->getMessage());
+                Log::error('Error in PeminjamanController at store'.$err->getMessage());
                 return redirect()
                     ->route('peminjaman.create')
                     ->with('Error','Gagal buku telah dipinjam');
@@ -98,17 +101,20 @@ class PeminjamanController extends Controller
                 Buku::where('IDBuku', $request->IDBuku)->update(array('StatusBuku' => 'Dipinjam'));
             } catch (QueryException $err) {
                 error_log($err->getMessage());
+                Log::error('Error in PeminjamanController at store'.$err->getMessage());
                 return redirect()
                     ->route('peminjaman.create')
                     ->with('Error','Buku telah dipinjam');
             }
+            Log::info('Stored Peminjaman'.$peminjaman->IDPeminjaman);
             return redirect()->route('peminjaman.index')
                ->with('success_message', 'Berhasil melakukan peminjaman');
         }catch(QueryException $err){
+            Log::error('Error in PeminjamanController at store'.$err->getMessage());
             error_log($err->getMessage());
             return redirect()
                 ->route('peminjaman.create')
-                ->with('Error','Gagal membuat peminjaman buku');
+                ->with('Error','Gagal menginput peminjaman buku');
         }
     }
 
@@ -164,6 +170,7 @@ class PeminjamanController extends Controller
                         Buku::where('IDBuku', $request->oldIDBuku)->update(array('StatusBuku' => 'Tersedia'));
                     } catch (QueryException $err) {
                         error_log($err->getMessage());
+                        Log::error('Error in PeminjamanController at update'.$err->getMessage());
                         return redirect()
                             ->route('peminjaman.edit')
                             ->with('Error','Data Buku Error');
@@ -172,6 +179,7 @@ class PeminjamanController extends Controller
                     $peminjaman->IDBuku = $request->IDBuku;
                 }
             }catch(QueryException $err){
+                Log::error('Error in PeminjamanController at update'.$err->getMessage());
                 error_log($err->getMessage());
                 return redirect()
                     ->route('peminjaman.edit')
@@ -187,6 +195,7 @@ class PeminjamanController extends Controller
                     Buku::where('IDBuku', $request->IDBuku)->update(array('StatusBuku' => 'Dipinjam'));
                 } catch (QueryException $err) {
                     error_log($err->getMessage());
+                    Log::error('Error in PeminjamanController at update'.$err->getMessage());
                     return redirect()
                         ->route('peminjaman.edit')
                         ->with('Error','Gagal buku telah dipinjam');
@@ -196,6 +205,7 @@ class PeminjamanController extends Controller
                     Buku::where('IDBuku', $request->IDBuku)->update(array('StatusBuku' => 'Tersedia'));
                 } catch (QueryException $err) {
                     error_log($err->getMessage());
+                    Log::error('Error in PeminjamanController at update'.$err->getMessage());
                     return redirect()
                         ->route('peminjaman.edit')
                         ->with('Error','Gagal buku telah dipinjam');
@@ -205,15 +215,18 @@ class PeminjamanController extends Controller
                     Buku::where('IDBuku', $request->IDBuku)->update(array('StatusBuku' => 'Tersedia'));
                 } catch (QueryException $err) {
                     error_log($err->getMessage());
+                    Log::error('Error in PeminjamanController at update'.$err->getMessage());
                     return redirect()
                         ->route('peminjaman.edit')
                         ->with('Error','Gagal buku telah dipinjam');
                 }
             }
+            Log::info('Updated Data Peminjaman'.$peminjaman->IDPeminjaman);
             return redirect()->route('peminjaman.index')
                ->with('success_message', 'Berhasil mengubah data peminjaman');
         }catch(QueryException $err){
             error_log($err->getMessage());
+            Log::error('Error in PeminjamanController at update'.$err->getMessage());
             return redirect()
                 ->route('peminjaman.edit', $peminjaman->IDPeminjaman)
                 ->with('Error','Gagal Mengedit Data Peminjaman');

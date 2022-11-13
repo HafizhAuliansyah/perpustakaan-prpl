@@ -14,10 +14,16 @@ class CreateDendasTable extends Migration
     public function up()
     {
         Schema::create('denda', function (Blueprint $table) {
-            $table->string("IDDenda")->primary();
-            $table->string("IDPeminjaman");
-            $table->string("Keterangan");
-            $table->integer("Nominal");
+            $table->string('IDDenda')->primary();
+            $table->string('IDPeminjaman')->default(null)->nullable();
+            $table->foreign('IDPeminjaman')
+                  ->references('IDPeminjaman')
+                  ->on('peminjaman')
+                  ->restrictOnDelete();
+            $table->string('NIK',16)->nullable();
+            $table->string('Keterangan');
+            $table->string('Status');
+            $table->integer('Nominal');
             $table->timestamps();
         });
     }
