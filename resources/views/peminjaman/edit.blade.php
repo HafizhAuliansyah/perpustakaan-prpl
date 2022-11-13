@@ -85,11 +85,11 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleTglPeminjaman">Tanggal Peminjaman</label>
-                            <input type="date" class="form-control @error('TglPeminjaman') is-invalid @enderror" id="exampleTglPeminjaman" name="TglPeminjaman" value="{{date($data->TglPeminjaman)}}" disabled>
+                            <input type="date" class="form-control @error('TglPeminjaman') is-invalid @enderror" id="exampleTglPeminjaman" name="TglPeminjaman" value="{{Carbon\Carbon::parse($data->TglPeminjaman)->format('Y-m-d')}}" disabled>
                         </div>
                         <div class="form-group">
                             <label for="exampleTglPengembalian">Tanggal Pengembalian</label>
-                            <input type="date" class="form-control @error('TglPengembalian') is-invalid @enderror" id="exampleTglPengembalian" name="TglPengembalian" value="{{ $data->TglPengembalian??old('TglPengembalian')}}">
+                            <input type="date" class="form-control @error('TglPengembalian') is-invalid @enderror" id="exampleTglPengembalian" name="TglPengembalian" value="{{ $data->TglPengembalian??old('TglPengembalian')}}" min="{{Carbon\Carbon::parse($data->TglPeminjaman)->format('Y-m-d')}}" max="{{Carbon\Carbon::parse($data->TglPeminjaman)->addWeek()->format('Y-m-d')}}">
                         </div>
                     </div>
 
