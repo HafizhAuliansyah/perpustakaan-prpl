@@ -10,42 +10,27 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                @if (session('Success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('Success') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                @elseif(session('Error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ session('Error') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                @endif
+
                 @if ($errors->any())
-                    <div class="alert alert-danger alert-dismissible fade show">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
                         </ul>
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
+                        <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                 @endif
                 <div class="card-body">
                     @php
                         $GenreBuku = ['Horror', 'Aksi', 'Fiksi', 'Drama', 'Romansa', 'Komedi', 'Sport', 'Teknologi', 'Sejarah', 'Politik'];
-                        $Bahasa = ['Indonesia', 'Inggris', 'Jepang', 'China', 'Arab', 'Prancis'];
-                        $StatusBuku = ['Dipinjam', 'Rusak', 'Hilang', 'Tersedia'];
+                        $StatusBuku = ['Tersedia', 'Rusak', 'Hilang'];
                     @endphp
                     <form action={{ route('store_buku') }} method="post">
                         @csrf
-                        <input type="hidden" name="IDBuku" value="{{ $new_id }}">
+                        
                         <div class="form-group">
                             <label for="NamaBuku">Nama Buku</label>
                             <input type="text" class="form-control" id="NamaBuku" name="NamaBuku" placeholder="Masukkan nama buku">
@@ -57,6 +42,7 @@
                         <div class="form-group">
                             <label for="GenreBuku">Genre Buku</label>
                             <select class="form-control" id="GenreBuku" name="GenreBuku">
+                                <option value="">-- Pilih Genre --</option>
                                 @foreach ($GenreBuku as $genre)
                                     <option value={{ $genre }}>{{ $genre }}</option>
                                 @endforeach
@@ -64,11 +50,7 @@
                         </div>
                         <div class="form-group">
                             <label for="Bahasa">Bahasa</label>
-                            <select class="form-control" id="Bahasa" name="Bahasa">
-                                @foreach ($Bahasa as $bhs)
-                                    <option value={{ $bhs }}>{{ $bhs }}</option>
-                                @endforeach
-                            </select>
+                            <input type="text" class="form-control" id="Bahasa" name="Bahasa" placeholder="Masukkan bahasa buku">
                         </div>
                         <div class="form-group">
                             <label for="JumlahHalaman">Jumlah Halaman</label>
@@ -77,6 +59,7 @@
                         <div class="form-group">
                             <label for="GenreBuku">Status Buku</label>
                             <select class="form-control" id="StatusBuku" name="StatusBuku">
+                                <option value="">-- Pilih Status --</option>
                                 @foreach ($StatusBuku as $status)
                                     <option value={{ $status }}>{{ $status }}</option>
                                 @endforeach
@@ -95,7 +78,7 @@
                             <input type="text" class="form-control" id="LetakRak" name="LetakRak" placeholder="Masukkan letak rak (Contoh : 'A1')">
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-block mb-2"><i class="fa fa-save mr-2"></i>Save</button>
+                        <button type="submit" class="btn btn-primary btn-block mb-2 p-2"><i class="fa fa-save mr-2"></i>Save</button>
                     </form>
                 </div>
             </div>

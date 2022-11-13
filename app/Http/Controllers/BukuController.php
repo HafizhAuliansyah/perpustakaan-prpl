@@ -15,27 +15,24 @@ use Illuminate\Support\Facades\Log;
 class BukuController extends Controller
 {
     public function addView(){
-       
-        $new_id = BukuHelper::generateBookID();
         Log::info('Auto incement for IDBuku Success');
-        return view('buku.add-buku', ['new_id' => $new_id]);
+        return view('buku.add-buku');
     }
     public function store(Request $request){
-        // $request->validate([
-        //     'IDBuku' => 'required|string|max:12',
-        //     'NamaBuku' => 'required|string|min:1',
-        //     'Deskripsi' => 'required|string|min:1',
-        //     'GenreBuku' => 'required|string',
-        //     'Bahasa' => 'required|string',
-        //     'JumlahHalaman' => 'required|integer|between:0,9999|',
-        //     'StatusBuku' => 'required|string|',
-        //     'Penerbit' => 'required|string',
-        //     'Penulis' => 'required|string',
-        //     'LetakRak' => 'required|string|max:2|min:2',
-        // ]);
+        $request->validate([
+            'NamaBuku' => 'required|string|min:1',
+            'GenreBuku' => 'required|string|min:1',
+            'Bahasa' => 'required|string|min:1',
+            'JumlahHalaman' => 'required|integer|between:0,9999|',
+            'StatusBuku' => 'required|string|',
+            'Penerbit' => 'required|string|min:1',
+            'Penulis' => 'required|string|min:1',
+            'LetakRak' => 'required|string|max:2|min:2',
+        ]);
+        $new_id = BukuHelper::generateBookID();
         try{
             $buku = new Buku();
-            $buku->IDBuku = $request->IDBuku;
+            $buku->IDBuku = $new_id;
             $buku->NamaBuku = $request->NamaBuku;
             $buku->Deskripsi = $request->Deskripsi;
             $buku->GenreBuku = $request->GenreBuku;
