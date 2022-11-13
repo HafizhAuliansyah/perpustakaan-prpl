@@ -15,7 +15,7 @@ class CreateBukusTable extends Migration
     {
         Schema::create('buku', function (Blueprint $table) {
 
-            $table->string('IDBuku', 12)->primary();
+            $table->string('IDBuku', 14)->primary();
             $table->string('NamaBuku');
             $table->text('Deskripsi');
             $table->enum('GenreBuku', ['Horror', 'Aksi', 'Fiksi', 'Drama', 'Romansa', 'Komedi', 'Sport', 'Teknologi', 'Sejarah', 'Politik']);

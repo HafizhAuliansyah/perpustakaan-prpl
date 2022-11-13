@@ -7,6 +7,7 @@ use App\Models\Buku;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Log;
@@ -137,7 +138,7 @@ class BukuController extends Controller
     }
     public function exportPDF(){
         try{
-            $datas = Buku::all();
+            $datas = Buku::take(100)->get();
             $file_name = 'DataBuku.pdf';
             $mpdf = new \Mpdf\Mpdf([
                 'margin_left' => 10,
