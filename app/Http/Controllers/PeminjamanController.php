@@ -74,10 +74,9 @@ class PeminjamanController extends Controller
                 Log::error('Error in PeminjamanController at store'.$err->getMessage());
             }
             try{
-                // $dataBuku = Buku::where('IDBuku', $request->IDBuku);
-                $dataBuku = DB::table('buku')->select('StatusBuku')->where('IDBuku', $request->IDBuku);
-
-                if($dataBuku == 'Tersedia'){
+                $dataBuku = Buku::where('IDBuku', $request->IDBuku)->first();
+                // $dataBuku = DB::table('buku')->select('StatusBuku')->where('IDBuku', $request->IDBuku)->get();
+                if($dataBuku->StatusBuku == 'Tersedia'){
                     $peminjaman->IDBuku = $request->IDBuku;
                 }
                 // else{
