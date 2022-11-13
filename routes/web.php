@@ -44,15 +44,17 @@ Route::middleware('auth')->group(function(){
     // Routes need authentication
 });
 Route::controller(BukuController::class)->group(function(){
-    Route::get('/buku/all', 'showPart')->name('all_buku');
-    Route::get('/buku/all/part', 'showPart')->name('part-buku');
-    Route::get('/buku/add', 'addView')->name('view_add_buku');
-    Route::post('/buku/add', 'store')->name('add_buku');
-    Route::get('/buku/update/{buku}', 'editView')->name('view_edit_buku');
-    Route::patch('/buku/update/{buku}', 'update')->name('edit_buku');
-    Route::delete('/buku/delete/{buku}', 'delete')->name('delete_buku');
-    // PDF Export
-    Route::get('/buku/pdf', 'exportPDF')->name('export_buku');
+    Route::prefix('buku')->group(function(){
+        Route::get('/all', 'showPart')->name('all_buku');
+        Route::get('/all/part', 'showPart')->name('part-buku');
+        Route::get('/add', 'addView')->name('view_add_buku');
+        Route::post('/add', 'store')->name('add_buku');
+        Route::get('/update/{buku}', 'editView')->name('view_edit_buku');
+        Route::patch('/update/{buku}', 'update')->name('edit_buku');
+        Route::delete('/delete/{buku}', 'delete')->name('delete_buku');
+        // PDF Export
+        Route::get('/buku/pdf', 'exportPDF')->name('export_buku');
+    });
 });
 
 Route::controller(DendaController::class)->group(function(){
