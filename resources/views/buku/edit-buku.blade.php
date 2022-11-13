@@ -38,10 +38,12 @@
                     </div>
                 @endif
                 <div class="card-body">
+                    <div class="row mb-3">
+                        <a href="{{ route('all_buku') }}" class="btn btn-danger mr-3" role="button"><i class="fa fa-arrow-left mr-2"></i>Kembali</a>
+                    </div>
                     @php
                         $GenreBuku = ['Horror', 'Aksi', 'Fiksi', 'Drama', 'Romansa', 'Komedi', 'Sport', 'Teknologi', 'Sejarah', 'Politik'];
-                        $Bahasa = ['Indonesia', 'Inggris', 'Jepang', 'China', 'Arab', 'Prancis'];
-                        $StatusBuku = ['Dipinjam', 'Rusak', 'Hilang', 'Tersedia'];
+                        $StatusBuku = ['Tersedia', 'Dipinjam', 'Rusak', 'Hilang'];
                     @endphp
                     <form action={{ route('edit_buku', $buku->IDBuku) }} method="post">
                         @method('patch')
@@ -57,6 +59,7 @@
                         <div class="form-group">
                             <label for="GenreBuku">Genre Buku</label>
                             <select class="form-control" id="GenreBuku" name="GenreBuku">
+                                <option value="">-- Pilih Genre --</option>
                                 @foreach ($GenreBuku as $genre)
                                     <option value={{ $genre }} {{ $genre==$buku->GenreBuku? "selected" : '' }}>{{ $genre }}</option>
                                 @endforeach
@@ -64,11 +67,7 @@
                         </div>
                         <div class="form-group">
                             <label for="Bahasa">Bahasa</label>
-                            <select class="form-control" id="Bahasa" name="Bahasa">
-                                @foreach ($Bahasa as $bhs)
-                                    <option value={{ $bhs }} {{ $bhs==$buku->Bahasa? "selected" : '' }}>{{ $bhs }}</option>
-                                @endforeach
-                            </select>
+                            <input type="text" class="form-control" id="Bahasa" name="Bahasa" placeholder="Masukkan bahasa buku" value="{{ $buku->Bahasa }}">
                         </div>
                         <div class="form-group">
                             <label for="JumlahHalaman">Jumlah Halaman</label>

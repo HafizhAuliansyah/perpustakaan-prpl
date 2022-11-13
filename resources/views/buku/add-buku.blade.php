@@ -24,6 +24,9 @@
                     </div>
                 @endif
                 <div class="card-body">
+                    <div class="row mb-3">
+                        <a href="{{ route('all_buku') }}" class="btn btn-danger mr-3" role="button"><i class="fa fa-arrow-left mr-2"></i>Kembali</a>
+                    </div>
                     @php
                         $GenreBuku = ['Horror', 'Aksi', 'Fiksi', 'Drama', 'Romansa', 'Komedi', 'Sport', 'Teknologi', 'Sejarah', 'Politik'];
                         $StatusBuku = ['Tersedia', 'Rusak', 'Hilang'];

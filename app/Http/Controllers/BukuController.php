@@ -85,17 +85,16 @@ class BukuController extends Controller
         return view('buku.edit-buku', ['buku' => $buku]);
     }
     public function update(Buku $buku, Request $request){
-           // $request->validate([
-        //     'NamaBuku' => 'string|min:1',
-        //     'Deskripsi' => 'string|min:1',
-        //     'GenreBuku' => 'string',
-        //     'Bahasa' => 'string',
-        //     'JumlahHalaman' => 'integer|between:0,9999|',
-        //     'StatusBuku' => 'string',
-        //     'Penerbit' => 'string',
-        //     'Penulis' => 'string',
-        //     'LetakRak' => 'string|max:2|min:2',
-        // ]);
+        $request->validate([
+            'NamaBuku' => 'required|string|min:1',
+            'GenreBuku' => 'required|string|min:1',
+            'Bahasa' => 'required|string|min:1',
+            'JumlahHalaman' => 'required|integer|between:0,9999|',
+            'StatusBuku' => 'required|string|',
+            'Penerbit' => 'required|string|min:1',
+            'Penulis' => 'required|string|min:1',
+            'LetakRak' => 'required|string|max:2|min:2',
+        ]);
         try{
             if($request->NamaBuku)
                 $buku->NamaBuku = $request->NamaBuku;
