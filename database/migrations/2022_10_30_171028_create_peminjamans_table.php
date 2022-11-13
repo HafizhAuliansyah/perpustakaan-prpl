@@ -15,8 +15,10 @@ class CreatePeminjamansTable extends Migration
     {
         Schema::create('peminjaman', function (Blueprint $table) {
             $table->string('IDPeminjaman')->primary();
-            $table->string('IDBuku', 12);
+            $table->string('IDBuku', 14);
+            $table->foreign('IDBuku')->references('IDBuku')->on('buku');
             $table->string('NIK', 16);
+            $table->foreign('NIK')->references('NIK')->on('member');
             $table->date('TglPeminjaman');
             $table->enum('StatusPeminjaman', ['sudah kembali', 'belum kembali', 'batal']);
             $table->date('TglPengembalian');

@@ -13,7 +13,7 @@ class CreateMembersTable extends Migration
      */
     public function up()
     {
-        Schema::create('members', function (Blueprint $table) {
+        Schema::create('member', function (Blueprint $table) {
             $table->string('NIK', 16)->primary();
             $table->string('Nama');
             $table->enum('StatusMember', ['active', 'non-active', 'blacklisted']);
@@ -30,6 +30,6 @@ class CreateMembersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('members');
+        Schema::dropIfExists('member');
     }
 }

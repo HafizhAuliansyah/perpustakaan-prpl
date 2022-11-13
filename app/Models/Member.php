@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Member extends Model
 {
     use HasFactory;
+    protected $table = 'member';
+    protected  $primaryKey = 'NIK';
+    public $incrementing = false;
 
     protected $fillable = [
         'NIK',
@@ -16,8 +19,4 @@ class Member extends Model
         'NomorTelepon',
         'Email',
     ];
-
-    protected $primaryKey = 'NIK';
-
-    public $incrementing = false;
 }
