@@ -71,26 +71,25 @@ class PeminjamanController extends Controller
                 }
             }catch(QueryException $err){
                 $peminjaman->IDPeminjaman = 'D'.date('dmY').'01';
-                Log::error('Error in PeminjamanController at store'.$err->getMessage());
+                Log::error('Error in PeminjamanController at store , Error : '.$err->getMessage());
             }
             try{
-                $dataBuku = Buku::where('IDBuku', $request->IDBuku)->first();
-                // $dataBuku = DB::table('buku')->select('StatusBuku')->where('IDBuku', $request->IDBuku)->get();
+                $dataBuku = Buku::find($request->IDBuku);
                 if($dataBuku->StatusBuku == 'Tersedia'){
                     $peminjaman->IDBuku = $request->IDBuku;
                 }
-                // else{
-                //     return redirect()
-                //     ->route('peminjaman.create')
-                //     ->with('Error','Gagal buku telah dipinjam');
-                // }
+                else{
+                    return redirect()
+                    ->route('peminjaman.create')
+                    ->with('Error','Gagal buku telah dipinjam');
+                }
             }
             catch(QueryException $err){
                 error_log($err->getMessage());
-                Log::error('Error in PeminjamanController at store'.$err->getMessage());
+                Log::error('Error in PeminjamanController at store, Error : '.$err->getMessage());
                 return redirect()
                     ->route('peminjaman.create')
-                    ->with('Error','Gagal buku telah dipinjam');
+                    ->with('Error','Kesalahan dalam pencarian data buku');
             }
             $peminjaman->NIK = $request->NIK;
             $peminjaman->TglPeminjaman = date('Y-m-d');
@@ -101,16 +100,16 @@ class PeminjamanController extends Controller
                 Buku::where('IDBuku', $request->IDBuku)->update(array('StatusBuku' => 'Dipinjam'));
             } catch (QueryException $err) {
                 error_log($err->getMessage());
-                Log::error('Error in PeminjamanController at store'.$err->getMessage());
+                Log::error('Error in PeminjamanController at store, Error : '.$err->getMessage());
                 return redirect()
                     ->route('peminjaman.create')
-                    ->with('Error','Buku telah dipinjam');
+                    ->with('Error','Gagal mengupdate data buku');
             }
-            Log::info('Stored Peminjaman'.$peminjaman->IDPeminjaman);
+            Log::info('Stored Peminjaman '.$peminjaman->IDPeminjaman);
             return redirect()->route('peminjaman.index')
                ->with('success_message', 'Berhasil melakukan peminjaman');
         }catch(QueryException $err){
-            Log::error('Error in PeminjamanController at store'.$err->getMessage());
+            Log::error('Error in PeminjamanController at store, Error :'.$err->getMessage());
             error_log($err->getMessage());
             return redirect()
                 ->route('peminjaman.create')
