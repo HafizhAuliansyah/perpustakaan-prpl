@@ -79,11 +79,12 @@ class PeminjamanController extends Controller
 
                 if($dataBuku == 'Tersedia'){
                     $peminjaman->IDBuku = $request->IDBuku;
-                }else{
-                    return redirect()
-                    ->route('peminjaman.create')
-                    ->with('Error','Gagal buku telah dipinjam');
                 }
+                // else{
+                //     return redirect()
+                //     ->route('peminjaman.create')
+                //     ->with('Error','Gagal buku telah dipinjam');
+                // }
             }
             catch(QueryException $err){
                 error_log($err->getMessage());
@@ -114,7 +115,7 @@ class PeminjamanController extends Controller
             error_log($err->getMessage());
             return redirect()
                 ->route('peminjaman.create')
-                ->with('Error','Gagal membuat peminjaman buku');
+                ->with('Error','Gagal menginput peminjaman buku');
         }
     }
 

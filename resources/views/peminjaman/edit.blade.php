@@ -67,18 +67,25 @@
                             </datalist>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInput">Status Peminjaman</label>
-                            <input class="form-control @error('StatusPeminjaman') is-invalid @enderror" list="datalistSP" name="StatusPeminjaman" id="exampleDataList" placeholder="Status Peminjaman" value="{{$data->StatusPeminjaman}}">
-                            @error('StatusPeminjaman') <span class="text-danger">{{$message}}</span> @enderror
-                            <datalist id="datalistSP">
-                                <option value='sudah kembali'>
-                                <option value='belum kembali'>
-                                <option value='batal'>
-                            </datalist>
+                            <label for="StatusPeminjamanInput">Status Peminjaman</label>
+                            <select class="form-control" id="StatusPeminjamanInput" name="StatusPeminjaman">
+                                <option {{old('StatusPeminjaman') == 'sudah kembali' || $data->StatusPeminjaman == 'sudah kembali' ? 'selected' : ''}} value='sudah kembali'>Sudah Kembali</option>
+                                <option {{old('StatusPeminjaman') == 'belum kembali' || $data->StatusPeminjaman == 'belum kembali' ? 'selected' : ''}} value='belum kembali'>Belum Kembali</option>
+                                <option {{old('StatusPeminjaman') == 'batal' || $data->StatusPeminjaman == 'batal' ? 'selected' : ''}} value='batal'>Batal</option>
+                                {{-- <option @if (old('StatusPeminjaman') == 'sudah kembali' || $data->StatusPeminjaman == 'sudah kembali' )
+                                    selected
+                                @endif value='sudah kembali'>Sudah Kembali</option>
+                                <option @if (old('StatusPeminjaman') == 'belum kembali' || $data->StatusPeminjaman == 'belum kembali')
+                                    selected
+                                @endif value='belum kembali'>Belum Kembali</option>
+                                <option @if (old('StatusPeminjaman') == 'batal' || $data->StatusPeminjaman == 'batal')
+                                    selected
+                                @endif value='batal'>Batal</option> --}}
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="exampleTglPeminjaman">Tanggal Peminjaman</label>
-                            <input type="date" class="form-control @error('TglPeminjaman') is-invalid @enderror" id="exampleTglPeminjaman" name="TglPeminjaman" value="{{date('Y-m-d')}}" disabled>
+                            <input type="date" class="form-control @error('TglPeminjaman') is-invalid @enderror" id="exampleTglPeminjaman" name="TglPeminjaman" value="{{date($data->TglPeminjaman)}}" disabled>
                         </div>
                         <div class="form-group">
                             <label for="exampleTglPengembalian">Tanggal Pengembalian</label>

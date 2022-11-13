@@ -67,7 +67,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleTglPengembalian">Tanggal Pengembalian</label>
-                            <input type="date" class="form-control @error('TglPengembalian') is-invalid @enderror" id="exampleTglPengembalian" name="TglPengembalian" value="{{old('TglPengembalian')}}">
+                            <input type="date" class="form-control @error('TglPengembalian') is-invalid @enderror" id="exampleTglPengembalian" name="TglPengembalian" value="{{old('TglPengembalian')}}" max="{{date('Y-m-d', strtotime("+7 day"))}}">
                         </div>
                     </div>
 
