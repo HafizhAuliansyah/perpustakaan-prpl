@@ -49,10 +49,10 @@ class BukuController extends Controller
             $buku->save();
             Log::info('Data Buku Created : '.$buku->IDBuku);
             return redirect()
-                ->route('view_add_buku')
-                ->with('Success','Berhasil Menyimpan Data Baru');
+                ->route('all_buku')
+                ->with('success_message','Berhasil Menyimpan Data Baru');
         }catch(QueryException $err){
-            Log::error('Error in BukuController at store : '.$err->getMessage());
+            Log::error('Error in BukuController at store. Error : '.$err->getMessage());
             error_log($err->getMessage());
             return redirect()
                 ->route('view_add_buku')
@@ -68,7 +68,7 @@ class BukuController extends Controller
     }
     public function showPart(Request $request){
         if ($request->ajax()) {
-            $buku = Buku::all();
+            $buku = Buku::orderBy('IDBuku')->get();
             Log::info('Showed part Data Buku');
             return DataTables::of($buku)
                 ->addColumn('action', function ($row) {

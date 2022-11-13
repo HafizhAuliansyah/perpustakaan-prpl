@@ -48,7 +48,7 @@ Route::controller(BukuController::class)->group(function(){
         Route::get('/all', 'showPart')->name('all_buku');
         Route::get('/all/part', 'showPart')->name('part-buku');
         Route::get('/add', 'addView')->name('view_add_buku');
-        Route::post('/add', 'store')->name('add_buku');
+        Route::post('/store', 'store')->name('store_buku');
         Route::get('/update/{buku}', 'editView')->name('view_edit_buku');
         Route::patch('/update/{buku}', 'update')->name('edit_buku');
         Route::delete('/delete/{buku}', 'delete')->name('delete_buku');

@@ -43,7 +43,7 @@
                         $Bahasa = ['Indonesia', 'Inggris', 'Jepang', 'China', 'Arab', 'Prancis'];
                         $StatusBuku = ['Dipinjam', 'Rusak', 'Hilang', 'Tersedia'];
                     @endphp
-                    <form action={{ route('add_buku') }} method="post">
+                    <form action={{ route('store_buku') }} method="post">
                         @csrf
                         <input type="hidden" name="IDBuku" value="{{ $new_id }}">
                         <div class="form-group">
