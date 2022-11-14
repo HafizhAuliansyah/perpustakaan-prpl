@@ -30,7 +30,7 @@
         <div class="card content-switch">
             <div class="card-header p-0">
                 <div class="row w-100 m-0">
-                    <a href="#" class="col-md-6 header-switch {{ $title=='Cari Buku'? 'active' : ' ' }}">
+                    <a href="{{ route('pengunjung.cari') }}" class="col-md-6 header-switch {{ $title=='Cari Buku'? 'active' : ' ' }}">
                         Cari Buku
                     </a>
                     <a href="#" class="col-md-6 header-switch">

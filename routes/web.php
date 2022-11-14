@@ -24,7 +24,8 @@ use App\Http\Controllers\PerpustakaanController;
 Route::get('/', function () {
     return redirect('home');
 });
-Route::get('/perpustakaan/cari-buku', [PerpustakaanController::class, 'cariBuku']);
+Route::get('/perpustakaan/cari-buku', [PerpustakaanController::class, 'cariBuku'])->name('pengunjung.cari');
+Route::get('/perpustakaan/all-buku', [PerpustakaanController::class, 'showAll'])->name('pengunjung.all_buku');
 Route::get('/perpustakaan/ulasan', [PerpustakaanController::class, 'ulasan']);
 
 Route::controller(UlasanController::class)->group(function(){
