@@ -40,22 +40,14 @@
                 <div class="card-body">
                     @php
                         $status = ['Lunas', 'Belum Lunas'];
-                        $keterangan = ['Merusak Buku', 'Menghilangkan Buku', 'Merusak Fasilitas', 'Membawa Makanan/Minuman', 'Buang Sampah Sembarang'];
+                        $keterangan = [ 'Merusak Buku', 'Menghilangkan Buku', 'Tenggat Pengembalian'];
                     @endphp
                     <form action={{ route('edit_denda', $denda->IDDenda) }} method="post">
                         @method('patch')
                         @csrf
                         <div class="form-group">
-                            <label for="NIK">NIK</label>
-                            <input type="text" class="form-control" id="NIK" name="NIK" placeholder="Masukkan NIK" value="{{ $denda->NIK }}" readonly>
-                        </div>
-                        <div class="form-group">
                             <label for="Keterangan">Keterangan</label>
-                            <select class="form-control" id="Keterangan" name="Keterangan" >
-                                @foreach ($keterangan as $keteranganDenda)
-                                    <option value="{{ $keteranganDenda }}" "{{ $keteranganDenda==$denda->Keterangan? "selected" : '' }}">{{ $keteranganDenda }}</option>
-                                @endforeach
-                            </select>
+                            <input type="text" class="form-control" id="Keterangan" name="Keterangan" placeholder="Masukkan Keterangan Denda" readonly value="{{ $denda->Keterangan }}">
                         </div>
                         <div class="form-group">
                             <label for="Nominal">Nominal</label>
