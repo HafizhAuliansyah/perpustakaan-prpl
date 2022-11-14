@@ -267,11 +267,7 @@ return [
             'url' => '/ulasan/all',
             'icon' => 'fa fa-comment',
         ],
-        [
-            'text' => 'Create Ulasan',
-            'url' => '/ulasan/add',
-            'icon' => 'fa fa-comment-dots',
-        ]
+    
     ],
 
     /*
