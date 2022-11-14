@@ -8,6 +8,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\UlasanController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\DendaController;
+use App\Http\Controllers\PerpustakaanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,8 @@ use App\Http\Controllers\DendaController;
 Route::get('/', function () {
     return redirect('home');
 });
+Route::get('/perpustakaan/cari-buku', [PerpustakaanController::class, 'cariBuku']);
+Route::get('/perpustakaan/ulasan', [PerpustakaanController::class, 'ulasan']);
 
 Route::controller(UlasanController::class)->group(function(){
     Route::get('/ulasan/all', 'index')->name('all_ulasan');
@@ -41,19 +44,18 @@ Route::get('/home', function() {
 })->name('home')->middleware('auth');
 
 Route::middleware('auth')->group(function(){
-    // Routes need authentication
-});
-Route::controller(BukuController::class)->group(function(){
-    Route::prefix('buku')->group(function(){
-        Route::get('/all', 'showPart')->name('all_buku');
-        Route::get('/all/part', 'showPart')->name('part-buku');
-        Route::get('/add', 'addView')->name('view_add_buku');
-        Route::post('/store', 'store')->name('store_buku');
-        Route::get('/update/{buku}', 'editView')->name('view_edit_buku');
-        Route::patch('/update/{buku}', 'update')->name('edit_buku');
-        Route::delete('/delete/{buku}', 'delete')->name('delete_buku');
-        // PDF Export
-        Route::get('/buku/pdf', 'exportPDF')->name('export_buku');
+    Route::controller(BukuController::class)->group(function(){
+        Route::prefix('buku')->group(function(){
+            Route::get('/all', 'showPart')->name('all_buku');
+            Route::get('/all/part', 'showPart')->name('part-buku');
+            Route::get('/add', 'addView')->name('view_add_buku');
+            Route::post('/store', 'store')->name('store_buku');
+            Route::get('/update/{buku}', 'editView')->name('view_edit_buku');
+            Route::patch('/update/{buku}', 'update')->name('edit_buku');
+            Route::delete('/delete/{buku}', 'delete')->name('delete_buku');
+            // PDF Export
+            Route::get('/buku/pdf', 'exportPDF')->name('export_buku');
+        });
     });
 });
 
@@ -74,3 +76,4 @@ Route::controller(DendaController::class)->group(function(){
 Route::resource('member', MemberController::class)->middleware('auth');
 
 Route::resource('peminjaman', PeminjamanController::class)->middleware('auth');
+
