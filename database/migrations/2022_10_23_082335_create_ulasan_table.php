@@ -15,8 +15,6 @@ class CreateUlasanTable extends Migration
     {
         Schema::create('ulasan', function (Blueprint $table) {
             $table->id();
-            $table->string('NIK')
-                  ->foreign();
             $table->text('masukan');
             $table->timestamps();
         });
