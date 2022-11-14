@@ -38,7 +38,7 @@
                     </div>
                 @endif
                 @php
-                    $keterangan = [ 'Merusak Buku', 'Menghilangkan Buku', 'Tenggat Pengembalian', 'Merusak Fasilitas', 'Membawa Makanan/Minuman', 'Buang Sampah Sembarang'];
+                    $keterangan = [ 'Merusak Buku', 'Menghilangkan Buku', 'Tenggat Pengembalian'];
                 @endphp
 
                 <div class="card-body">
@@ -47,20 +47,22 @@
                         <input type="hidden" name="IDDenda" value="{{ $new_id }}">
                         <input type="hidden" name="Status" value="Belum Lunas">
                         <div class="form-group">
-                            <label for="NIK">NIK</label>
-                            <input type="text" class="form-control" id="NIK" name="NIK" placeholder="Masukkan NIK">
+                            <label for="Peminjaman" id="peminjamanLabel">Peminjaman</label>
+                            <input type="text" class="form-control @error('IDPeminjaman') is-invalid @enderror" datalist="dataListPeminjaman" class="form-control" id="IDPeminjaman" name="IDPeminjaman" placeholder="Masukkan IDPeminjaman">
+                            @error('IDPeminjaman') <span class="text-danger">{{$message}}</span> @enderror
+                            <datalist id="dataListPeminjaman">
+                                @foreach ($peminjamans as $peminjaman)
+                                    <option value={{$peminjaman->IDPeminjaman}}>
+                                @endforeach
+                            </datalist>
                         </div>
                         <div class="form-group">
                             <label for="Keterangan">Keterangan</label>
-                            <select class="form-control" id="Keterangan" name="Keterangan">
+                            <select class="form-control" id="Keterangan" name="Keterangan" onchange="hideNominal()">
                                 @foreach ($keterangan as $keteranganDenda)
                                     <option value="{{ $keteranganDenda }}">{{ $keteranganDenda }}</option>
                                 @endforeach
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="Peminjaman" id="peminjamanLabel">Peminjaman</label>
-                            <input type="text" class="form-control" id="IDPeminjaman" name="IDPeminjaman" placeholder="Masukkan IDPeminjaman">
                         </div>
                         <div class="form-group">
                             <label for="Nominal" id="nominalLabel">Nominal</label>
@@ -84,19 +86,13 @@
     function hideNominal(){
         let keterangan = document.getElementById("Keterangan");
         let nominal = document.getElementById("Nominal");
-        let idPeminjaman = document.getElementById("IDPeminjaman");
-        let peminjamanLabel = document.getElementById("peminjamanLabel");
         let nominalLabel = document.getElementById("nominalLabel");
         if(keterangan.value === 'Tenggat Pengembalian'){
             nominal.style.visibility = 'hidden';
             nominalLabel.style.visibility = 'hidden';
-            idPeminjaman.style.visibility = 'visible';
-            peminjamanLabel.style.visibility = 'visible';
         } else{
             nominal.style.visibility = 'visible';
             nominalLabel.style.visibility = 'visible';
-            idPeminjaman.style.visibility = 'hidden';
-            peminjamanLabel.style.visibility = 'hidden';
         }
     }
 </script>

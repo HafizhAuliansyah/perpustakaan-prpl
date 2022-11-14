@@ -50,7 +50,8 @@ class DendaController extends Controller
     public function addView()
     {
         $new_id = DendaHelper::generateDendaID();
-        return view('denda.add-denda', ['new_id' => $new_id]);
+        $peminjamans = Peminjaman::where('StatusPeminjaman', 'belum kembali')->get();
+        return view('denda.add-denda', ['new_id' => $new_id, 'peminjamans' => $peminjamans]);
     }
 
     /**
@@ -64,14 +65,21 @@ class DendaController extends Controller
         try{
             $denda = new Denda();
             $denda->IDDenda = $request->IDDenda;
-            $denda->NIK = $request->NIK;
-            if($request->Keterangan === "Tenggat Peminjaman"){
+            if($request->Keterangan == "Tenggat Pengembalian"){
+                Log::info('Masuk ke if');
                 $peminjaman = Peminjaman::find($request->IDPeminjaman);
                 if($peminjaman){
                     $now = Carbon::now();
                     $pengembalian = Carbon::parse($peminjaman->TglPengembalian);
                     $diff = $pengembalian->floatDiffInWeeks($now);
-                    $denda->Nominal = $diff*10000;
+                    Log::info('Diff in weeks :'.$diff);
+                    if($diff < 1){
+                        return redirect()
+                            ->route('view_add_denda')
+                            ->with('Error', 'Tenggat Kurang Dari Seminggu!');
+                    }
+                    $denda->Nominal = ceil($diff*10000);
+                    Log::info('Nominal : '.$denda->Nominal);
                     $denda->IDPeminjaman = $request->IDPeminjaman;
                 } else{
                     return redirect()
@@ -79,7 +87,7 @@ class DendaController extends Controller
                         ->with('Error', 'Data Peminjaman Tidak Ada!');
                 }
             }else {
-                $denda->IDPeminjaman = null;
+                $denda->IDPeminjaman = $request->IDPeminjaman;
                 $denda->Nominal = $request->Nominal;
             }
             $denda->Keterangan = $request->Keterangan;
@@ -103,8 +111,6 @@ class DendaController extends Controller
 
     public function update(Denda $denda, Request $request){
         try{
-            if($request->NIK)
-                $denda->NIK = $request->NIK;
             if($request->Keterangan)
                 $denda->Keterangan = $request->Keterangan;
             if($request->Status)
