@@ -38,8 +38,9 @@
                     </div>
                 @endif
                 @php
-                    $keterangan = ['Merusak Buku', 'Menghilangkan Buku', 'Merusak Fasilitas', 'Membawa Makanan/Minuman', 'Buang Sampah Sembarang'];
+                    $keterangan = [ 'Merusak Buku', 'Menghilangkan Buku', 'Tenggat Pengembalian', 'Merusak Fasilitas', 'Membawa Makanan/Minuman', 'Buang Sampah Sembarang'];
                 @endphp
+
                 <div class="card-body">
                     <form action={{ route('add_denda') }} method="post">
                         @csrf
@@ -58,7 +59,11 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="Nominal">Nominal</label>
+                            <label for="Peminjaman" id="peminjamanLabel">Peminjaman</label>
+                            <input type="text" class="form-control" id="IDPeminjaman" name="IDPeminjaman" placeholder="Masukkan IDPeminjaman">
+                        </div>
+                        <div class="form-group">
+                            <label for="Nominal" id="nominalLabel">Nominal</label>
                             <input type="text" class="form-control" id="Nominal" name="Nominal" placeholder="Masukkan Nominal Denda" onkeypress="return hanyaAngka(event)">
                         </div>
                         <button type="submit" class="btn btn-primary btn-block mb-2"><i class="fa fa-save mr-2"></i>Save</button>
@@ -70,10 +75,29 @@
 @stop
 @push('js')
 <script>
+
     function hanyaAngka(evt) {
        var charCode = evt.which ? evt.which : event.keyCode;
        if (charCode > 31 && (charCode < 48 || charCode > 57)) return false;
        return true;
+    }
+    function hideNominal(){
+        let keterangan = document.getElementById("Keterangan");
+        let nominal = document.getElementById("Nominal");
+        let idPeminjaman = document.getElementById("IDPeminjaman");
+        let peminjamanLabel = document.getElementById("peminjamanLabel");
+        let nominalLabel = document.getElementById("nominalLabel");
+        if(keterangan.value === 'Tenggat Pengembalian'){
+            nominal.style.visibility = 'hidden';
+            nominalLabel.style.visibility = 'hidden';
+            idPeminjaman.style.visibility = 'visible';
+            peminjamanLabel.style.visibility = 'visible';
+        } else{
+            nominal.style.visibility = 'visible';
+            nominalLabel.style.visibility = 'visible';
+            idPeminjaman.style.visibility = 'hidden';
+            peminjamanLabel.style.visibility = 'hidden';
+        }
     }
 </script>
 @endpush

@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Denda;
+use App\Models\Peminjaman;
 use App\Helpers\DendaHelper;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\View;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 
 class DendaController extends Controller
@@ -63,14 +65,25 @@ class DendaController extends Controller
             $denda = new Denda();
             $denda->IDDenda = $request->IDDenda;
             $denda->NIK = $request->NIK;
-            $denda->Keterangan = $request->Keterangan;
-            $denda->Nominal = $request->Nominal;
-            $denda->Status = $request->Status;
-            if($request->IDPeminjaman){
-                $denda->IDPeminjaman = $request->IDPeminjaman;
-            } else {
+            if($request->Keterangan === "Tenggat Peminjaman"){
+                $peminjaman = Peminjaman::find($request->IDPeminjaman);
+                if($peminjaman){
+                    $now = Carbon::now();
+                    $pengembalian = Carbon::parse($peminjaman->TglPengembalian);
+                    $diff = $pengembalian->floatDiffInWeeks($now);
+                    $denda->Nominal = $diff*10000;
+                    $denda->IDPeminjaman = $request->IDPeminjaman;
+                } else{
+                    return redirect()
+                        ->route('view_add_denda')
+                        ->with('Error', 'Data Peminjaman Tidak Ada!');
+                }
+            }else {
                 $denda->IDPeminjaman = null;
+                $denda->Nominal = $request->Nominal;
             }
+            $denda->Keterangan = $request->Keterangan;
+            $denda->Status = $request->Status;
             $denda->save();
             Log::info('Data Denda Created : '.$denda->IDDenda);
             return redirect()
