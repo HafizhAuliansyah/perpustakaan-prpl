@@ -33,7 +33,7 @@
                     <a href="{{ route('pengunjung.cari') }}" class="col-md-6 header-switch {{ $title=='Cari Buku'? 'active' : ' ' }}">
                         Cari Buku
                     </a>
-                    <a href="#" class="col-md-6 header-switch">
+                    <a href="{{ route('pengunjung.ulasan') }}" class="col-md-6 header-switch {{ $title=='Ulasan'? 'active' : ' ' }}">
                         Ulasan
                     </a>
                 </div>

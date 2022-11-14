@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Buku;
+use App\Models\Ulasan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Database\QueryException;
 
 class PerpustakaanController extends Controller
 {
@@ -22,6 +24,21 @@ class PerpustakaanController extends Controller
             }
     }
     public function ulasan(){
-
+        $title = "Ulasan";
+        return view('perpustakaan_ulasan', ['title' => $title]);
+    }
+    public function saveUlasan(Request $request){
+        try{
+            Ulasan::create($request->all());
+            Log::info('Store ulasan success');
+            return redirect()->route('pengunjung.ulasan')
+                            ->with('success','Ulasan Created Successfully!');
+        } catch(QueryException $err){
+            error_log($err->getMessage());
+            Log::error('Error at UlasanController :'.$err);
+            return redirect()
+                ->route('pengunjung.ulasan')
+                ->with('Error','Gagal Menyimpan Data Baru');
+        }
     }
 }

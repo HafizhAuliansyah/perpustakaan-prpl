@@ -26,7 +26,8 @@ Route::get('/', function () {
 });
 Route::get('/perpustakaan/cari-buku', [PerpustakaanController::class, 'cariBuku'])->name('pengunjung.cari');
 Route::get('/perpustakaan/all-buku', [PerpustakaanController::class, 'showAll'])->name('pengunjung.all_buku');
-Route::get('/perpustakaan/ulasan', [PerpustakaanController::class, 'ulasan']);
+Route::get('/perpustakaan/ulasan', [PerpustakaanController::class, 'ulasan'])->name('pengunjung.ulasan');
+Route::post('/perpustakaan/ulasan', [PerpustakaanController::class, 'saveUlasan'])->name('pengunjung.save.ulasan');
 
 Route::controller(UlasanController::class)->group(function(){
     Route::get('/ulasan/all', 'index')->name('all_ulasan');
