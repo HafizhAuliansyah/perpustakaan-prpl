@@ -39,18 +39,28 @@ class TenggatPeminjamanJob implements ShouldQueue
     {
         $waktuSekarang = CarbonImmutable::now(new DateTimeZone('Asia/Jakarta'));
         try{
-            $peminjamTenggat = DB::table('peminjaman')->select()->where('TglPengembalian', );
+            $peminjamTenggat = DB::table('peminjaman')->select()->where('TglPengembalian', $waktuSekarang->toDateString());
         }catch(QueryExceptyion $err){
-            
+            Log::error('Error in TenggatPeminjamJobs at get peminjam : '.$err->getMessage());
         }
         try{
-            $new_id = BukuHelper::generateBookID();
-            $denda = new Denda();
-            $denda->IDDenda = $new_id;
-            $denda->
-
-        }catch(QueryExceptyion $err){
-
+            if($peminjamTenggat){
+                foreach($peminjamTenggat as $peminjam){
+                    $new_id = DendaHelper::generateBookID();
+                    $denda = new Denda();
+                    $denda->IDDenda = $new_id;
+                    $denda->IDPeminjam = $peminjam->IDPeminjam;
+                    $denda->NIK = $peminjam->NIK;
+                    $denda->Keterangan = 'Tenggat Pengembalian';
+                    $denda->Status = 'Belum Lunas';
+                    $denda->Nominal = 10000;
+                    $denda->save();
+                    Log::info('Created Denda with TenggatPeminjamanJobs :'.$denda->IDDenda);
+                }
+            }
+            Log::info('TenggatPeminjamanJobs work');
+        }catch(QueryException $err){
+            Log::error('Error in TenggatPeminjamanJobs :'.$err->getMessage());
         }
     }
 }

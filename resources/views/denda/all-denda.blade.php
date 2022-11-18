@@ -39,7 +39,6 @@
                                 <th>NO</th>
                                 <th data-priority="1">ID</th>
                                 <th data-priority="2">IDPeminjaman</th>
-                                <th data-priority="3">NIK</th>
                                 <th data-priority="4">Keterangan</th>
                                 <th data-priority="5">Nominal</th>
                                 <th data-priority="6">Status</th>
@@ -51,7 +50,6 @@
                                 <tr>
                                     <td>{{ $data->IDDenda }}</td>
                                     <td>{{ $data->IDPeminjaman }}</td>
-                                    <td>{{ $data->NIK }}</td>
                                     <td>{{ $data->Keterangan }}</td>
                                     <td>{{ $data->Nominal }}</td>
                                     <td>{{ $data->Status }}</td>
@@ -93,7 +91,6 @@
                         }},
                     {data: 'IDDenda', name: 'IDDenda'},
                     {data: 'IDPeminjaman', name: 'IDPeminjaman'},
-                    {data: 'NIK', name: 'NIK'},
                     {data: 'Keterangan', name: 'Keterangan'},
                     {data: 'Nominal', name: 'Nominal'},
                     {data: 'Status', name: 'Status'},

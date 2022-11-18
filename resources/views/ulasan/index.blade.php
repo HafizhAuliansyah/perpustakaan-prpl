@@ -16,7 +16,6 @@
                         <thead>
                         <tr>
                             <th>No</th>
-                            <th>NIK</th>
                             <th>Ulasan</th>
                         </tr>
                         </thead>
@@ -51,7 +50,6 @@
                     {data: 'no', name: 'no', render: function (data, type, row, meta) {
                             return meta.row + meta.settings._iDisplayStart + 1;
                     }, width: '5%'},
-                    {data: 'NIK', name: 'NIK'},
                     {data: 'masukan', name: 'masukan'},
                 ],
                 lengthMenu: [10, 25, 50, 75, 100],

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Peminjaman;
 use App\Models\Member;
 use App\Models\Buku;
+use App\Models\Denda;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -99,6 +100,28 @@ class PeminjamanController extends Controller
             $peminjaman->TglPengembalian = Carbon::now()->addDays($request->hariPinjam)->format('Y-m-d');
             $peminjaman->TglSelesai = NULL;
             $peminjaman->save();
+            $peminjam = Member::find($request->NIK);
+            if($peminjam){
+                try{
+                    $peminjaman->NIK = $request->NIK;
+                    $peminjaman->TglPeminjaman = date('Y-m-d');
+                    $peminjaman->StatusPeminjaman = 'belum kembali';
+                    $peminjaman->TglPengembalian = $request->TglPengembalian;
+                    $peminjaman->save();
+                }catch(QueryException $err){
+                    error_log($err->getMessage());
+                    Log::error('Error in PeminjamanController at store when save peminjaman, Error : '.$err->getMessage());
+                    return redirect()
+                        ->route('peminjaman.create')
+                        ->with('Error','Gagal Menyimpan Peminjaman');
+                }
+
+            } else{
+                return redirect()
+                    ->route('peminjaman.create')
+                    ->with('Error', 'Peminjam Belum Menjadi Member!');
+            }
+
             try {
                 Buku::where('IDBuku', $request->IDBuku)->update(array('StatusBuku' => 'Dipinjam'));
             } catch (QueryException $err) {

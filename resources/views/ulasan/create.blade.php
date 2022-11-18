@@ -29,10 +29,6 @@
                     <form action={{ route('add_ulasan') }} method="post">
                         @csrf
                         <div class="form-group">
-                            <label for="NIK">NIK</label>
-                            <input type="text" class="form-control" id="NIK" name="NIK" placeholder="Masukkan NIK">
-                        </div>
-                        <div class="form-group">
                             <label for="Masukan">Masukan</label>
                             <textarea class="form-control" id="Masukan" rows="3" name="masukan"></textarea>
                         </div>

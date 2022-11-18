@@ -20,8 +20,7 @@ class CreateDendasTable extends Migration
                   ->references('IDPeminjaman')
                   ->on('peminjaman')
                   ->restrictOnDelete();
-            $table->string('NIK',16)->nullable();
-            $table->text('Keterangan');
+            $table->string('Keterangan');
             $table->string('Status');
             $table->integer('Nominal');
             $table->timestamps();
