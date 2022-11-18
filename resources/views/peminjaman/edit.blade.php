@@ -72,28 +72,35 @@
                                 <option {{old('StatusPeminjaman') == 'sudah kembali' || $data->StatusPeminjaman == 'sudah kembali' ? 'selected' : ''}} value='sudah kembali'>Sudah Kembali</option>
                                 <option {{old('StatusPeminjaman') == 'belum kembali' || $data->StatusPeminjaman == 'belum kembali' ? 'selected' : ''}} value='belum kembali'>Belum Kembali</option>
                                 <option {{old('StatusPeminjaman') == 'batal' || $data->StatusPeminjaman == 'batal' ? 'selected' : ''}} value='batal'>Batal</option>
-                                {{-- <option @if (old('StatusPeminjaman') == 'sudah kembali' || $data->StatusPeminjaman == 'sudah kembali' )
-                                    selected
-                                @endif value='sudah kembali'>Sudah Kembali</option>
-                                <option @if (old('StatusPeminjaman') == 'belum kembali' || $data->StatusPeminjaman == 'belum kembali')
-                                    selected
-                                @endif value='belum kembali'>Belum Kembali</option>
-                                <option @if (old('StatusPeminjaman') == 'batal' || $data->StatusPeminjaman == 'batal')
-                                    selected
-                                @endif value='batal'>Batal</option> --}}
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="exampleTglPeminjaman">Tanggal Peminjaman</label>
-                            <input type="date" class="form-control @error('TglPeminjaman') is-invalid @enderror" id="exampleTglPeminjaman" name="TglPeminjaman" value="{{Carbon\Carbon::parse($data->TglPeminjaman)->format('Y-m-d')}}" disabled>
+                            <input type="date" class="form-control @error('TglPeminjaman') is-invalid @enderror" id="exampleTglPeminjaman" name="TglPeminjaman" value="{{$data->TglPeminjaman}}" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleHariPinjam">Hari Peminjaman</label>
+                            {{-- <input type="date" class="form-control @error('TglPengembalian') is-invalid @enderror" id="exampleTglPengembalian" name="TglPengembalian" value="{{old('TglPengembalian')}}" min="{{Carbon\Carbon::now()->format('Y-m-d')}}" max="{{Carbon\Carbon::now()->addWeek()->format('Y-m-d')}}"> --}}
+                            <select class="form-control" id="exampleHariPinjam" name="HariPinjam" onchange="updateTglPengembalian(event)">
+                                @for ($i = 1; $i < 8; $i++)
+                                    <option value={{$i}}>{{$i." Hari"}}</option>
+                                @endfor
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="exampleTglPengembalian">Tanggal Pengembalian</label>
-                            <input type="date" class="form-control @error('TglPengembalian') is-invalid @enderror" id="exampleTglPengembalian" name="TglPengembalian" value="{{ $data->TglPengembalian??old('TglPengembalian')}}" min="{{Carbon\Carbon::parse($data->TglPeminjaman)->format('Y-m-d')}}" max="{{Carbon\Carbon::parse($data->TglPeminjaman)->addWeek()->format('Y-m-d')}}">
+                            <input type="date" class="form-control @error('TglPengembalian') is-invalid @enderror" id="exampleTglPengembalian" name="TglPengembalian" value="{{$data->TglPengembalian}}" disabled>
+                            @php
+                                $tglPinjam = $data->TglPengembalian;
+                            @endphp
                         </div>
+
+                        <div class="form-group">
+                            <label for="exampleTglSelesai">Tanggal Selesai Peminjaman</label>
+                            <input type="date" class="form-control @error('TglSelesai') is-invalid @enderror" id="exampleTglSelesai" name="TglSelesai" value="" min="{{$data->TglSelesai}}">
+                        </div>
+
                     </div>
-
-
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">Update</button>
                         <a href="{{route('peminjaman.index')}}" class="btn btn-default">
@@ -105,4 +112,16 @@
         </div>
     </form>
     @endforeach
+
+    {{-- Scripts --}}
+    <script type = "text/JavaScript" src="https://momentjs.com/downloads/moment.js"></script>
+    <script type = "text/JavaScript" src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+    <script type = "text/JavaScript">
+        function updateTglPengembalian(event) {
+            let borrowingDay = @json($tglPinjam);
+            let day = document.getElementById("exampleHariPinjam").value;
+            let borrowingLimitDay = moment(borrowingDay).add(day, 'days').format('yyyy-MM-DD');
+            document.getElementById("exampleTglPengembalian").value = borrowingLimitDay;
+        }
+    </script>
 @stop

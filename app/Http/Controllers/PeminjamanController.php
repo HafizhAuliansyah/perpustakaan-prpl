@@ -10,6 +10,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Carbon;
 
 class PeminjamanController extends Controller
 {
@@ -58,6 +59,7 @@ class PeminjamanController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         try{
             $peminjaman = new Peminjaman();
             try{
@@ -94,7 +96,8 @@ class PeminjamanController extends Controller
             $peminjaman->NIK = $request->NIK;
             $peminjaman->TglPeminjaman = date('Y-m-d');
             $peminjaman->StatusPeminjaman = 'belum kembali';
-            $peminjaman->TglPengembalian = $request->TglPengembalian;
+            $peminjaman->TglPengembalian = Carbon::now()->addDays($request->hariPinjam)->format('Y-m-d');
+            $peminjaman->TglSelesai = NULL;
             $peminjaman->save();
             try {
                 Buku::where('IDBuku', $request->IDBuku)->update(array('StatusBuku' => 'Dipinjam'));
@@ -187,7 +190,8 @@ class PeminjamanController extends Controller
             $peminjaman->NIK = $request->NIK;
             $peminjaman->TglPeminjaman = date('Y-m-d');
             $peminjaman->StatusPeminjaman = $request->StatusPeminjaman;
-            $peminjaman->TglPengembalian = $request->TglPengembalian;
+            $peminjaman->TglPengembalian = Carbon::now()->addDays($request->hariPinjam)->format('Y-m-d');
+            $peminjaman->TglSelesai = $request->TglSelesai;
             $peminjaman->save();
             if($request->StatusPeminjaman == 'belum kembali'){
                 try {
@@ -228,7 +232,7 @@ class PeminjamanController extends Controller
             Log::error('Error in PeminjamanController at update'.$err->getMessage());
             return redirect()
                 ->route('peminjaman.edit', $peminjaman->IDPeminjaman)
-                ->with('Error','Gagal Mengedit Data Peminjaman');
+                ->with('Error','Gagal Mengedit Data Peminjaman'.$err->getMessage());
         }
     }
 

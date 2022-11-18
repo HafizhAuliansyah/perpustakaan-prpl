@@ -22,6 +22,7 @@ class CreatePeminjamansTable extends Migration
             $table->date('TglPeminjaman');
             $table->enum('StatusPeminjaman', ['sudah kembali', 'belum kembali', 'batal']);
             $table->date('TglPengembalian');
+            $table->date('TglSelesai')->nullable()->default(null);
             $table->timestamps();
         });
     }
