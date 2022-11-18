@@ -106,7 +106,8 @@ class PeminjamanController extends Controller
                     $peminjaman->NIK = $request->NIK;
                     $peminjaman->TglPeminjaman = date('Y-m-d');
                     $peminjaman->StatusPeminjaman = 'belum kembali';
-                    $peminjaman->TglPengembalian = $request->TglPengembalian;
+                    $peminjaman->TglPengembalian = Carbon::now()->addDays($request->hariPinjam)->format('Y-m-d');
+                    $peminjaman->TglSelesai = NULL;
                     $peminjaman->save();
                 }catch(QueryException $err){
                     error_log($err->getMessage());
