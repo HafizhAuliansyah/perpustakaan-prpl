@@ -96,7 +96,7 @@
                     {data: 'StatusPeminjaman', name: 'StatusPeminjaman'},
                     {data: 'TglPeminjaman', name: 'TglPeminjaman'},
                     {data: 'TglPengembalian', name: 'TglPengembalian'},
-                    {data: 'TglSelesai', name: 'TglSelesai'},
+                    {data: 'TglSelesai', name: 'TglSelesai', defaultContent: '-'},
                     {data: 'action', name: 'action'},
                 ],
                 lengthMenu: [10, 25, 50, 75, 100],

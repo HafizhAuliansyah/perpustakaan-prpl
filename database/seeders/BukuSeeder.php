@@ -33,13 +33,14 @@ class BukuSeeder extends Seeder
         $data_buku= json_decode(file_get_contents($path), true); 
 
         for ($i=0; $i < count($data_buku); $i++) { 
+            $Genre = $GenreBuku[array_rand($GenreBuku)];
             for ($j=0; $j < 10; $j++) { 
                 $buku = new Buku();
                 $buku->IDBuku = BukuHelper::generateBookID();
                 $buku->NamaBuku = $data_buku[$i]['title'];
                 $buku->Deskripsi = $Deskripsi;
                 // Random Genre
-                $Genre = $GenreBuku[array_rand($GenreBuku)];
+                
                 $buku->GenreBuku = $Genre;
 
                 $buku->Bahasa = $data_buku[$i]['language'];

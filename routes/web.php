@@ -24,16 +24,13 @@ use App\Http\Controllers\PerpustakaanController;
 Route::get('/', function () {
     return redirect('home');
 });
-Route::get('/perpustakaan/cari-buku', [PerpustakaanController::class, 'cariBuku'])->name('pengunjung.cari');
-Route::get('/perpustakaan/all-buku', [PerpustakaanController::class, 'showAll'])->name('pengunjung.all_buku');
-Route::get('/perpustakaan/ulasan', [PerpustakaanController::class, 'ulasan'])->name('pengunjung.ulasan');
-Route::post('/perpustakaan/ulasan', [PerpustakaanController::class, 'saveUlasan'])->name('pengunjung.save.ulasan');
-
-Route::controller(UlasanController::class)->group(function(){
-    Route::get('/ulasan/all', 'index')->name('all_ulasan');
-    Route::get('/ulasan/add', 'addView')->name('view_add_ulasan');
-    Route::post('/ulasan/add','store')->name('add_ulasan');
-    Route::delete('/ulasan/delete/{ulasan}','destroy');
+Route::controller(PerpustakaanController::class)->group(function(){
+    Route::prefix('perpustakaan')->group(function(){
+        Route::get('/cari-buku', [PerpustakaanController::class, 'cariBuku'])->name('pengunjung.cari');
+        Route::get('/all-buku', [PerpustakaanController::class, 'showAll'])->name('pengunjung.all_buku');
+        Route::get('/ulasan', [PerpustakaanController::class, 'ulasan'])->name('pengunjung.ulasan');
+        Route::post('/ulasan', [PerpustakaanController::class, 'saveUlasan'])->name('pengunjung.save.ulasan');
+    });
 });
 
 Auth::routes();
@@ -56,19 +53,25 @@ Route::middleware('auth')->group(function(){
             Route::patch('/update/{buku}', 'update')->name('edit_buku');
             Route::delete('/delete/{buku}', 'delete')->name('delete_buku');
             // PDF Export
-            Route::get('/buku/pdf', 'exportPDF')->name('export_buku');
+            Route::post('/pdf', 'exportPDF')->name('export_buku');
         });
+    });
+    Route::controller(UlasanController::class)->group(function(){
+        Route::get('/ulasan/all', 'index')->name('all_ulasan');
+        Route::get('/ulasan/add', 'addView')->name('view_add_ulasan');
+        Route::post('/ulasan/add','store')->name('add_ulasan');
+        Route::delete('/ulasan/delete/{ulasan}','destroy');
+    });
+    Route::controller(DendaController::class)->group(function(){
+        Route::get('/denda/all', 'showPart')->name('all_denda');
+        Route::get('/denda/all/part', 'showPart')->name('part-denda');
+        Route::get('/denda/add', 'addView')->name('view_add_denda');
+        Route::post('/denda/add', 'store')->name('add_denda');
+        Route::get('/denda/update/{denda}', 'editView')->name('view_edit_denda');
+        Route::patch('/denda/update/{denda}', 'update')->name('edit_denda');
     });
 });
 
-Route::controller(DendaController::class)->group(function(){
-    Route::get('/denda/all', 'showPart')->name('all_denda');
-    Route::get('/denda/all/part', 'showPart')->name('part-denda');
-    Route::get('/denda/add', 'addView')->name('view_add_denda');
-    Route::post('/denda/add', 'store')->name('add_denda');
-    Route::get('/denda/update/{denda}', 'editView')->name('view_edit_denda');
-    Route::patch('/denda/update/{denda}', 'update')->name('edit_denda');
-});
 // Route::middleware('auth')->group(function () {
 //     Route::controller(MemberController::class)->group(function(){
 //         Route::get('member/index', 'index')->name('index_member');

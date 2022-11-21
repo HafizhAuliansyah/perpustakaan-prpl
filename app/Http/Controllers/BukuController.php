@@ -132,10 +132,34 @@ class BukuController extends Controller
         $buku->delete();
         return redirect('/buku/all');
     }
-    public function exportPDF(){
+    public function exportPDF(Request $request){
         try{
-            $datas = Buku::take(100)->get();
+            $datas = Buku::select("*");
+            if($request->nama){
+                $datas->where('NamaBuku','LIKE','%'.$request->nama.'%');
+            }
+            if(!empty($request->bahasa)){
+                $datas->where('Bahasa',$request->bahasa);
+            }
+            if(!empty($request->genre)){
+                $datas->where('GenreBuku',$request->genre);
+            }
+            if(!empty($request->status)){
+                $datas->where('StatusBuku',$request->status);
+            }
+            if(!empty($request->penulis)){
+                $datas->where('Penulis',$request->penulis);
+            }
+            if(!empty($request->penerbit)){
+                $datas->where('Penerbit',$request->penerbit);
+            }
+            if(!empty($request->letakrak)){
+                $datas->where('LetakRak',$request->letakrak);
+            }
+            $datas = $datas->get();
+            $count_datas = $datas->count();
             $file_name = 'DataBuku.pdf';
+            ini_set("pcre.backtrack_limit", "5000000");
             $mpdf = new \Mpdf\Mpdf([
                 'margin_left' => 10,
                 'margin_right' => 10,
@@ -144,7 +168,7 @@ class BukuController extends Controller
                 'margin_header' => 10,
                 'margin_footer' => 10
             ]);
-            $html = \view('buku.pdf', ['datas' => $datas]);
+            $html = \view('buku.pdf', ['datas' => $datas, 'jumlah'=> $count_datas]);
             $style2 = file_get_contents(public_path('css\buku_pdf.css'));
             $mpdf->WriteHTML($style2, \Mpdf\HTMLParserMode::HEADER_CSS);
             $html = $html->render();
