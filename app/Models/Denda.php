@@ -12,7 +12,6 @@ class Denda extends Model
     protected $fillable = [
         'IDDenda',
         'IDPeminjaman',
-        'NIK',
         'Keterangan',
         'Status',
         'Nominal'

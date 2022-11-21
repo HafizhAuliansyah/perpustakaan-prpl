@@ -66,9 +66,23 @@
                             <input type="date" class="form-control @error('TglPeminjaman') is-invalid @enderror" id="exampleTglPeminjaman" name="TglPeminjaman" value="{{Carbon\Carbon::now()->format('Y-m-d')}}" disabled>
                         </div>
                         <div class="form-group">
-                            <label for="exampleTglPengembalian">Tanggal Pengembalian</label>
-                            <input type="date" class="form-control @error('TglPengembalian') is-invalid @enderror" id="exampleTglPengembalian" name="TglPengembalian" value="{{old('TglPengembalian')}}" min="{{Carbon\Carbon::now()->format('Y-m-d')}}" max="{{Carbon\Carbon::now()->addWeek()->format('Y-m-d')}}">
+                            <label for="exampleHariPinjam">Hari Peminjaman</label>
+                            {{-- <input type="date" class="form-control @error('TglPengembalian') is-invalid @enderror" id="exampleTglPengembalian" name="TglPengembalian" value="{{old('TglPengembalian')}}" min="{{Carbon\Carbon::now()->format('Y-m-d')}}" max="{{Carbon\Carbon::now()->addWeek()->format('Y-m-d')}}"> --}}
+                            <select class="form-control" id="exampleHariPinjam" name="HariPinjam" onchange="updateTglPengembalian(event)">
+                                @for ($i = 1; $i < 8; $i++)
+                                    <option value={{$i}}>{{$i." Hari"}}</option>
+                                @endfor
+                            </select>
                         </div>
+                        <div class="form-group">
+                            <label for="exampleTglPengembalian">Tanggal Pengembalian</label>
+                            <input type="date" class="form-control @error('TglPengembalian') is-invalid @enderror" id="exampleTglPengembalian" name="TglPengembalian" value="{{Carbon\Carbon::now()->addDays(1)->format('Y-m-d')}}" disabled>
+                        </div>
+                        {{-- <div class="form-group">
+                            <label for="exampleTglPengembalian">Tanggal Pengembalian</label> --}}
+                            {{-- <input type="date" class="form-control @error('TglPengembalian') is-invalid @enderror" id="exampleTglPengembalian" name="TglPengembalian" value="{{old('TglPengembalian')}}" min="{{Carbon\Carbon::now()->format('Y-m-d')}}" max="{{Carbon\Carbon::now()->addWeek()->format('Y-m-d')}}"> --}}
+                            {{-- <input type="date" class="form-control @error('TglPengembalian') is-invalid @enderror" id="exampleTglPengembalian" name="TglPengembalian" value="{{Carbon\Carbon::now()->addDays(1)->format('Y-m-d')}}" disabled>
+                        </div> --}}
                     </div>
 
                     <div class="card-footer">
@@ -80,4 +94,15 @@
                 </div>
             </div>
         </div>
+
+        {{-- Scripts --}}
+        <script type = "text/JavaScript" src="https://momentjs.com/downloads/moment.js"></script>
+        <script type = "text/JavaScript" src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+        <script type = "text/JavaScript">
+            function updateTglPengembalian(event) {
+                let day = document.getElementById("exampleHariPinjam").value;
+                let borrowingDay = moment().add(day, 'days').format('yyyy-MM-DD');
+                document.getElementById("exampleTglPengembalian").value = borrowingDay;
+            }
+        </script>
 @stop
