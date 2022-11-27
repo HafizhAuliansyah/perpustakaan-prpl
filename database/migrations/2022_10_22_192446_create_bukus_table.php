@@ -26,6 +26,8 @@ class CreateBukusTable extends Migration
             $table->string('Penulis');
             $table->string('LetakRak', 2);
             $table->date('TglMasukBuku');
+            $table->String('Cover');
+            $table->QRCode('String');
             $table->timestamps();
         });
     }
