@@ -62,9 +62,10 @@
                             <th>ID Peminjaman</th>
                             <th>ID Buku</th>
                             <th>NIK</th>
-                            <th>Tanggal Peminjaman</th>
                             <th>Status Peminjaman</th>
+                            <th>Tanggal Peminjaman</th>
                             <th>Tanggal Pengembalian</th>
+                            <th>Tanggal Selesai Pengembalian</th>
                             <th>Opsi</th>
                         </tr>
                         </thead>
@@ -92,9 +93,10 @@
                     {data: 'IDPeminjaman', name: 'IDPeminjaman'},
                     {data: 'IDBuku', name: 'IDBuku'},
                     {data: 'NIK', name: 'NIK'},
-                    {data: 'TglPeminjaman', name: 'TglPeminjaman'},
                     {data: 'StatusPeminjaman', name: 'StatusPeminjaman'},
+                    {data: 'TglPeminjaman', name: 'TglPeminjaman'},
                     {data: 'TglPengembalian', name: 'TglPengembalian'},
+                    {data: 'TglSelesai', name: 'TglSelesai', defaultContent: '-'},
                     {data: 'action', name: 'action'},
                 ],
                 lengthMenu: [10, 25, 50, 75, 100],

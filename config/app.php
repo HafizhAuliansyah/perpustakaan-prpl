@@ -177,11 +177,11 @@ return [
 
         // Yajra Data Table
         Yajra\DataTables\DataTablesServiceProvider::class,
-        
+
         // Buku Helper
         App\Providers\BukuServiceProvider::class,
 
-        
+
     ],
 
     /*
@@ -205,6 +205,7 @@ return [
         'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
         'Bus' => Illuminate\Support\Facades\Bus::class,
         'Cache' => Illuminate\Support\Facades\Cache::class,
+        'Carbon' => Illuminate\Support\Carbon::class,
         'Config' => Illuminate\Support\Facades\Config::class,
         'Cookie' => Illuminate\Support\Facades\Cookie::class,
         'Crypt' => Illuminate\Support\Facades\Crypt::class,

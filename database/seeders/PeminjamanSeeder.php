@@ -32,6 +32,7 @@ class PeminjamanSeeder extends Seeder
             $peminjaman->TglPeminjaman = "31-10-2022";
             $peminjaman->StatusPeminjaman = "belum kembali";
             $peminjaman->TglPengembalian = "31-10-2022";
+            $peminjaman->TglSelesai = null;
             $peminjaman->save();
 
             // Update Status Buku yang Terpinjam

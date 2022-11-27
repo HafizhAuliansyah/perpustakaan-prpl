@@ -13,25 +13,14 @@
         <hr class="line-header">
     </section>
     <section class="content">
+        <div class="body-header">
+            <div class="subtitle-body">Jumlah Data : {{ $jumlah }}</div>
+
+        </div>
         @foreach ($datas as $data)
             <div class="book-card">
                 <div class="book-data id-buku">#{{ $data->IDBuku }}</div>
-                {{-- <div class="book-data">Judul : {{ $data->NamaBuku }}</div>
-                <div class="book-data">Deskripsi : {{ $data->Deskripsi }}</div>
-                <div class="book-data">Genre : {{ $data->GenreBuku }}</div>
-                <div class="book-data">Bahasa : {{ $data->Bahasa }}</div>
                 
-                <div class="book-data">Jumlah Halaman : {{ $data->JumlahHalaman }}</div>
-                
-                <div class="book-data">Status : {{ $data->StatusBuku }}</div>
-                
-                <div class="book-data">Penerbit : {{ $data->Penerbit }}</div>
-                
-                <div class="book-data">Penulis : {{ $data->Penulis }}</div>
-                
-                <div class="book-data">Letak Rak : {{ $data->LetakRak }}</div>
-                
-                <div class="book-data">Tanggal Masuk : {{ $data->TglMasukBuku }}</div> --}}
                 <table class="table-data">
                     <tr>
                         <td class="data-title">Judul</td>

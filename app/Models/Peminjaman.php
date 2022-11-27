@@ -19,6 +19,7 @@ class Peminjaman extends Model
         'TglPeminjaman',
         'StatusPeminjaman',
         'TglPengembalian',
+        'TglSelesai',
     ];
     protected $guarded = [
         'IDPeminjaman',

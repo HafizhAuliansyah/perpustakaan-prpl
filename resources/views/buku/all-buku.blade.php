@@ -27,7 +27,7 @@
                     @endif
                     <div class="row mb-3">
                         <a href="{{ route('view_add_buku') }}" class="btn btn-success mr-3" role="button"><i class="fa fa-plus mr-2"></i>Tambah Buku</a>
-                        <a href="{{ route('export_buku') }}" class="btn btn-primary" role="button"><i class="fa fa-file-pdf mr-2"></i>Export to pdf</a>
+                        <button type="button" class="btn btn-primary" role="button" data-toggle="modal" data-target="#modal_filter_pdf"><i class="fa fa-file-pdf mr-2"></i>Export to pdf</button>
                     </div>
                     <table id="table-data" class="table display table-hover table-striped display">
                         <thead>
@@ -73,6 +73,70 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modal_filter_pdf" tabindex="-1" role="dialog" aria-labelledby="modal_export" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modal_export">Filter Export</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            @php
+                $StatusBuku = ['Tersedia', 'Rusak', 'Hilang'];
+                $GenreBuku = ['Horror', 'Aksi', 'Fiksi', 'Drama', 'Romansa', 'Komedi', 'Sport', 'Teknologi', 'Sejarah', 'Politik'];
+            @endphp
+            <form action="{{ route('export_buku') }}" method="post">
+                @csrf
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="NamaBuku">Inisial Nama Buku</label>
+                        <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan nama buku">
+                    </div>
+                    <div class="form-group">
+                        <label for="Bahasa">Bahasa</label>
+                        <input type="text" class="form-control" id="Bahasa" name="bahasa" placeholder="Masukkan bahasa buku">
+                    </div>
+                    <div class="form-group">
+                        <label for="GenreBuku">Genre Buku</label>
+                        <select class="form-control" id="genre" name="genre">
+                            <option value="">-- Pilih Genre --</option>
+                            @foreach ($GenreBuku as $genre)
+                                <option value={{ $genre }}>{{ $genre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="GenreBuku">Status Buku</label>
+                        <select class="form-control" id="status" name="status">
+                            <option value="">-- Pilih Status --</option>
+                            @foreach ($StatusBuku as $status)
+                                <option value={{ $status }}>{{ $status }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="Penulis">Penulis</label>
+                        <input type="text" class="form-control" id="Penulis" name="penulis" placeholder="Masukkan nama penulis">
+                    </div>
+                    <div class="form-group">
+                        <label for="Penerbit">Penerbit</label>
+                        <input type="text" class="form-control" id="Penerbit" name="penerbit" placeholder="Masukkan nama penerbit">
+                    </div>
+                    <div class="form-group">
+                        <label for="LetakRak">Letak Rak</label>
+                        <input type="text" class="form-control" id="LetakRak" name="letakrak" placeholder="Masukkan letak rak (Contoh : 'A1')">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                   
+                    <button type="submit" class="btn btn-primary">Export</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
 @stop
 @push('js')
     <form action="" id="delete-form" method="post">
