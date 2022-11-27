@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Member;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Log;
@@ -151,5 +152,41 @@ class MemberController extends Controller{
         // if ($member) $member->delete();
         // return redirect()->route('member.index')
         //     ->with('success', 'Member deleted successfully');
+    }
+    public function exportPDF(Request $request){
+        $datas = Member::select(
+            '*',
+            DB::raw("to_char(created_at, 'DD-MM-YYYY') as tgl_daftar"),
+            );
+        if(!empty($request->status)){
+            $datas->where('StatusMember',$request->status);
+        }
+        if(!empty($request->DaftarFrom) && !empty($request->DaftarUntil)){
+            $from = date($request->DaftarFrom);
+            $to = date($request->DaftarUntil);
+            $datas->whereBetween('created_at', [$from, $to]);
+        }
+        $datas = $datas->get();
+        $count_datas = $datas->count();
+        $file_name = 'ListMember.pdf';
+        ini_set("pcre.backtrack_limit", "5000000");
+        $mpdf = new \Mpdf\Mpdf([
+            'margin_left' => 10,
+            'margin_right' => 10,
+            'margin_top' => 15,
+            'margin_bottom' => 20,
+            'margin_header' => 10,
+            'margin_footer' => 10,
+            'format' => 'A4-L',
+            'orientation' => 'L'
+
+        ]);
+        $html = \view('member.pdf', ['datas' => $datas, 'jumlah'=> $count_datas]);
+        $style2 = file_get_contents(public_path('css\member_pdf.css'));
+        $mpdf->SetTitle('List Member');
+        $mpdf->WriteHTML($style2, \Mpdf\HTMLParserMode::HEADER_CSS);
+        $html = $html->render();
+        $mpdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
+        $mpdf->Output($file_name, 'I');
     }
 }

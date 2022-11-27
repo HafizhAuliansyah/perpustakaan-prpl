@@ -17,6 +17,8 @@ class MemberSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create('id_ID');
+        $min_date = strtotime("2021-01-01");
+        $max_date = strtotime(date('Y-m-d'));
         for($i = 1; $i <= 1000; $i++){
             $member = new Member();
             // $member->NIK = strval($faker->unique()->numberBetween(1000000000000001, 1000000000000010);
@@ -28,6 +30,10 @@ class MemberSeeder extends Seeder
             $member->StatusMember = 'active';
             $member->NomorTelepon = strval($faker->unique()->numberBetween(100000000000000, 999999999999999));
             $member->Email = $faker->unique()->email;
+            // Random Created Date
+            $rand_date = rand($min_date, $max_date);
+            $member->created_at = date('Y-m-d', $rand_date);
+
             $member->save();
         }
     }

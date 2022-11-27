@@ -166,7 +166,9 @@ class BukuController extends Controller
                 'margin_top' => 15,
                 'margin_bottom' => 20,
                 'margin_header' => 10,
-                'margin_footer' => 10
+                'margin_footer' => 10,
+                'format' => 'A4-P',
+                'orientation' => 'P'
             ]);
             $html = \view('buku.pdf', ['datas' => $datas, 'jumlah'=> $count_datas]);
             $style2 = file_get_contents(public_path('css\buku_pdf.css'));

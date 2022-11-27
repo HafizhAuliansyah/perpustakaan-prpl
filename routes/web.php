@@ -70,6 +70,9 @@ Route::middleware('auth')->group(function(){
         Route::get('/denda/update/{denda}', 'editView')->name('view_edit_denda');
         Route::patch('/denda/update/{denda}', 'update')->name('edit_denda');
     });
+    Route::resource('member', MemberController::class);
+    // PDF Export
+    Route::post('member/pdf', [MemberController::class, 'exportPDF'])->name('export_member');
 });
 
 // Route::middleware('auth')->group(function () {
@@ -78,7 +81,7 @@ Route::middleware('auth')->group(function(){
 //     });
 // });
 
-Route::resource('member', MemberController::class)->middleware('auth');
+
 
 Route::resource('peminjaman', PeminjamanController::class)->middleware('auth');
 
