@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class LaporanPeminjaman extends Model
 {
+    use LogsActivity;
+
     use HasFactory;
     protected $table = 'laporan_peminjaman';
     protected $fillable = [
@@ -27,4 +30,12 @@ class LaporanPeminjaman extends Model
     protected  $primaryKey = 'IDLaporan';
 
     public $incrementing = false;
+    protected static $logName = 'laporanPeminjaman';
+    protected static $logFillable = true;
+    protected static $logUnguarded = true;
+    protected static $logOnlyDirty = true;
+    public function getDescriptionForEvent (string $eventName) : string
+    {
+        return $this->IDLaporan." {$eventName} By : ".Auth::user()->name;
+    }
 }
