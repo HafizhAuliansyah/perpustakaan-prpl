@@ -157,6 +157,11 @@ class BukuController extends Controller
             if(!empty($request->letakrak)){
                 $datas->where('LetakRak',$request->letakrak);
             }
+            if(!empty($request->EnterFrom) && !empty($request->EnterUntil)){
+                $from = date($request->EnterFrom);
+                $to = date($request->EnterUntil);
+                $datas->whereBetween('TglMasukBuku', [$from, $to]);
+            }
             $datas = $datas->get();
             $count_datas = $datas->count();
             $file_name = 'DataBuku.pdf';

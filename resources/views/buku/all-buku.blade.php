@@ -125,6 +125,17 @@
                         <label for="LetakRak">Letak Rak</label>
                         <input type="text" class="form-control" id="LetakRak" name="letakrak" placeholder="Masukkan letak rak (Contoh : 'A1')">
                     </div>
+                    <label class="col-form-label col-form-label-lg">Tanggal Masuk Buku</label>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="fromTgl" class="col-form-label col-form-label-sm">From</label>
+                            <input type="date" class="form-control" id="fromTgl" name="EnterFrom">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="untilTgl" class="col-form-label col-form-label-sm">Until</label>
+                            <input type="date" class="form-control" id="untilTgl" name="EnterUntil">
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                    
