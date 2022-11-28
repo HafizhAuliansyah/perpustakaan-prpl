@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Log;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class BukuController extends Controller
 {
@@ -43,6 +44,10 @@ class BukuController extends Controller
             $buku->Penulis = $request->Penulis;
             $buku->LetakRak = $request->LetakRak;
             $buku->TglMasukBuku = date("d-m-Y");
+            $buku->Cover = 'default.jpg';
+            $qrPath = public_path('images/buku/qr_code/'.$new_id.'.svg');
+            QrCode::format('svg')->backgroundColor(255,255,255)->size(200)->generate($new_id, $qrPath);
+            $buku->QRCode = $new_id.'.svg';
             $buku->save();
             Log::info('Data Buku Created : '.$buku->IDBuku);
             return redirect()
