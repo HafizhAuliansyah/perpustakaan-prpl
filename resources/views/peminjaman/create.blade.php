@@ -43,7 +43,8 @@
 
                         <div class="form-group">
                             <label for="exampleInput">ID Buku</label>
-                            <input class="form-control @error('IDBuku') is-invalid @enderror" list="datalistBuku" name="IDBuku" id="exampleDataList" placeholder="Cari ID Buku">
+                            <div id="reader" width="600px"></div>
+                            <input class="form-control @error('IDBuku') is-invalid @enderror" list="datalistBuku" name="IDBuku" id="inputIDBuku" placeholder="Cari ID Buku">
                             @error('IDBuku') <span class="text-danger">{{$message}}</span> @enderror
                             <datalist id="datalistBuku">
                                 @foreach ($bukus as $buku)
@@ -104,5 +105,25 @@
                 let borrowingDay = moment().add(day, 'days').format('yyyy-MM-DD');
                 document.getElementById("exampleTglPengembalian").value = borrowingDay;
             }
+        </script>
+        <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+        <script>
+            function onScanSuccess(decodedText, decodedResult) {
+            // handle the scanned code as you like, for example:
+            // console.log(`Code matched = ${decodedText}`, decodedResult);
+                $('#inputIDBuku').val(decodedText);
+        }
+
+            function onScanFailure(error) {
+            // handle scan failure, usually better to ignore and keep scanning.
+            // for example:
+            console.warn(`Code scan error = ${error}`);
+            }
+
+            let html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader",
+            { fps: 10, qrbox: {width: 250, height: 250} },
+            /* verbose= */ false);
+            html5QrcodeScanner.render(onScanSuccess, onScanFailure);    
         </script>
 @stop
