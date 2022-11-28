@@ -35,15 +35,13 @@
                                 <th>NO</th>
                                 <th data-priority="1">ID</th>
                                 <th data-priority="2">Nama Buku</th>
-                                <th data-priority="3">Deskripsi</th>
-                                <th data-priority="4">Genre Buku</th>
-                                <th data-priority="5">Bahasa</th>
-                                <th data-priority="6">Jumlah Halaman</th>
+                                <th data-priority="3">Genre Buku</th>
+                                <th data-priority="4">Bahasa</th>
+                                <th data-priority="5">Jumlah Halaman</th>
                                 <th>Status Buku</th>
                                 <th>Penerbit</th>
                                 <th>Penulis</th>
                                 <th>Letak Rak</th>
-                                <th>Tanggal Masuk</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -164,7 +162,7 @@
                         }},
                     {data: 'IDBuku', name: 'IDBuku'},
                     {data: 'NamaBuku', name: 'NamaBuku'},
-                    {data: 'Deskripsi', name: 'Deskripsi'},
+                   
                     {data: 'GenreBuku', name: 'GenreBuku'},
                     {data: 'Bahasa', name: 'Bahasa'},
                     {data: 'JumlahHalaman', name: 'JumlahHalaman'},
@@ -172,7 +170,6 @@
                     {data: 'Penerbit', name: 'Penerbit'},
                     {data: 'Penulis', name: 'Penulis'},
                     {data: 'LetakRak', name: 'LetakRak'},
-                    {data: 'TglMasukBuku', name: 'TglMasukBuku'},
                     {data: 'action', name: 'action'},
                 ],
                 lengthMenu: [10, 25, 50, 75, 100],

@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function(){
             Route::get('/add', 'addView')->name('view_add_buku');
             Route::post('/store', 'store')->name('store_buku');
             Route::get('/update/{buku}', 'editView')->name('view_edit_buku');
+            Route::get('/detail/{buku}', 'detail')->name('detail_buku');
             Route::patch('/update/{buku}', 'update')->name('edit_buku');
             Route::delete('/delete/{buku}', 'delete')->name('delete_buku');
             // PDF Export

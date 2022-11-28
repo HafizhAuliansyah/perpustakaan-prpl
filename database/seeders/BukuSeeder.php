@@ -63,10 +63,10 @@ class BukuSeeder extends Seeder
                 $buku->LetakRak = $Rak;
 
                 $buku->TglMasukBuku = $TglMasukBuku;
-                $buku->Cover = '/default.jpg';
+                $buku->Cover = 'default.jpg';
                 $qrPath = public_path('images/buku/qr_code/'.$newID.'.svg');
                 QrCode::format('svg')->backgroundColor(255,255,255)->size(200)->generate($newID, $qrPath);
-                $buku->QRCode = $newID.'.jpg';
+                $buku->QRCode = $newID.'.svg';
                 $buku->created_at = $TglMasukBuku;
                 $buku->save();
             }

@@ -69,7 +69,8 @@ class BukuController extends Controller
             Log::info('Showed part Data Buku');
             return DataTables::of($buku)
                 ->addColumn('action', function ($row) {
-                    $html = '<a href='.route('view_edit_buku', $row->IDBuku).' class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+                    $html = '<a href='.route('detail_buku', $row->IDBuku).' class="btn btn-xs btn-default text-primary mx-1 shadow" title="Detail"><i class="fa fa-lg fa-fw fa-eye"></i></a>';
+                    $html.= '<a href='.route('view_edit_buku', $row->IDBuku).' class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
                     <i class="fa fa-lg fa-fw fa-pen"></i>
                     </a>';
                     $html.= '<a href='.route('delete_buku', $row->IDBuku).' class="btn btn-xs btn-default text-danger mx-1 shadow" title="Edit" onclick="notificationBeforeDelete(event, this)">
@@ -183,5 +184,8 @@ class BukuController extends Controller
                 ->with('Error','Gagal Export PDF');
         }
         
+    }
+    public function detail(Buku $buku){
+        return view('buku.detail',['buku' => $buku]);
     }
 }
