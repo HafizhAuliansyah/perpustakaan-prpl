@@ -82,7 +82,12 @@ Route::middleware('auth')->group(function(){
 //     });
 // });
 
-
-
 Route::resource('peminjaman', PeminjamanController::class)->middleware('auth');
 
+Route::get('/send-email-queue', function(){
+    $details['email'] = 'williamshakespear000@gmail.com';
+    $details['name'] = 'William Shakespear';
+
+    dispatch(new App\Jobs\WelcomeEmailJob($details));
+    return response()->json(['message' => 'Mail Send Successfully!!']);
+});
