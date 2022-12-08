@@ -74,6 +74,7 @@ Route::middleware('auth')->group(function(){
     Route::resource('member', MemberController::class);
     // PDF Export
     Route::post('member/pdf', [MemberController::class, 'exportPDF'])->name('export_member');
+    Route::resource('peminjaman', PeminjamanController::class);
 });
 
 // Route::middleware('auth')->group(function () {
@@ -82,7 +83,6 @@ Route::middleware('auth')->group(function(){
 //     });
 // });
 
-Route::resource('peminjaman', PeminjamanController::class)->middleware('auth');
 
 Route::get('/send-email-queue', function(){
     $details['email'] = 'williamshakespear000@gmail.com';
