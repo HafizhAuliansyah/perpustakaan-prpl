@@ -63,7 +63,14 @@ class MemberController extends Controller{
         try{
             Member::create($request->all());
             Log::info('Created new member');
+
+            $details['email'] = $request->Email;
+            $details['name'] = $request->Nama;
+
+            dispatch(new \App\Jobs\WelcomeEmailJob($details));
+
             return redirect()->route('member.index')->with('success', 'Member created successfully');
+
         }catch(QueryException $err){
             error_log($err->getMessage());
             Log::error('in MemberController on function Store : '. $err->getMessage());
