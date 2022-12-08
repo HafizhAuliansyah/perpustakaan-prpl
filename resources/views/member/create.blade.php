@@ -65,12 +65,12 @@
                                   Non Aktif
                                 </label>
                             </div>
-                            <div class="form-check">
+                            {{-- <div class="form-check">
                                 <input class="form-check-input" type="radio" value="blacklisted" name="StatusMember" id="flexRadioDefault2">
                                 <label class="form-check-label" for="flexRadioDefault2">
                                   Black List
                                 </label>
-                            </div>
+                            </div> --}}
                             {{-- <input type="text" class="form-control @error('StatusMember') is-invalid @enderror" id="exampleInputStatusMember" placeholder="Masukkan Status Member" name="StatusMember" value="{{old('StatusMember')}}">
                             @error('StatusMember') <span class="text-danger">{{$message}}</span> @enderror --}}
                         </div>
