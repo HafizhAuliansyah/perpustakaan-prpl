@@ -80,8 +80,8 @@ Route::middleware('auth')->group(function(){
             Route::get('/create', 'create')->name('peminjaman.create');
             Route::post('/store', 'store')->name('peminjaman.store');
             Route::get('/show', 'show')->name('peminjaman.show');
-            Route::get('/edit', 'edit')->name('peminjaman.edit');
-            Route::patch('/update', 'update')->name('peminjaman.update');
+            Route::get('/edit/{id}', 'edit')->name('peminjaman.edit');
+            Route::put('/update/{id}', 'update')->name('peminjaman.update');
             Route::delete('/delete', 'delete')->name('peminjaman.delete');
             Route::get('/warningmail', 'warningmail')->name('peminjaman.warningmail');
         });

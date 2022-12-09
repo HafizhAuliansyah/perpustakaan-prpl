@@ -69,7 +69,7 @@
                         <div class="form-group">
                             <label for="exampleHariPinjam">Hari Peminjaman</label>
                             {{-- <input type="date" class="form-control @error('TglPengembalian') is-invalid @enderror" id="exampleTglPengembalian" name="TglPengembalian" value="{{old('TglPengembalian')}}" min="{{Carbon\Carbon::now()->format('Y-m-d')}}" max="{{Carbon\Carbon::now()->addWeek()->format('Y-m-d')}}"> --}}
-                            <select class="form-control" id="exampleHariPinjam" name="HariPinjam" onchange="updateTglPengembalian(event)">
+                            <select class="form-control" id="exampleHariPinjam" name="hariPinjam" onchange="updateTglPengembalian(event)">
                                 @for ($i = 1; $i < 8; $i++)
                                     <option value={{$i}}>{{$i." Hari"}}</option>
                                 @endfor

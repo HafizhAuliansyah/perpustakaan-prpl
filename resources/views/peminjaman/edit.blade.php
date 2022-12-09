@@ -45,7 +45,7 @@
 
                         <div class="form-group">
                             <label for="exampleInput">ID Buku</label>
-                            <input class="form-control @error('IDBuku') is-invalid @enderror" list="datalistBuku" name="IDBuku" id="exampleDataList" placeholder="Cari ID Buku" value="{{$data->IDBuku}}">
+                            <input class="form-control @error('IDBuku') is-invalid @enderror" list="datalistBuku" name="IDBuku" id="exampleDataList" placeholder="Cari ID Buku" value="{{$data->IDBuku}}" readonly>
                             @error('IDBuku') <span class="text-danger">{{$message}}</span> @enderror
                             <datalist id="datalistBuku">
                                 @foreach ($bukus as $buku)
@@ -58,7 +58,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInput">NIK</label>
-                            <input class="form-control @error('NIK') is-invalid @enderror" list="datalistMember" name="NIK" id="exampleDataList" placeholder="Cari NIK" value="{{$data->NIK}}">
+                            <input class="form-control @error('NIK') is-invalid @enderror" list="datalistMember" name="NIK" id="exampleDataList" placeholder="Cari NIK" value="{{$data->NIK}}" readonly>
                             @error('NIK') <span class="text-danger">{{$message}}</span> @enderror
                             <datalist id="datalistMember">
                                 @foreach ($members as $member)
@@ -77,22 +77,29 @@
                         <div class="form-group">
                             <label for="exampleTglPeminjaman">Tanggal Peminjaman</label>
                             <input type="date" class="form-control @error('TglPeminjaman') is-invalid @enderror" id="exampleTglPeminjaman" name="TglPeminjaman" value="{{$data->TglPeminjaman}}" disabled>
+                            @php
+                                $tglPinjam = $data->TglPeminjaman;
+                            @endphp
                         </div>
                         <div class="form-group">
                             <label for="exampleHariPinjam">Hari Peminjaman</label>
                             {{-- <input type="date" class="form-control @error('TglPengembalian') is-invalid @enderror" id="exampleTglPengembalian" name="TglPengembalian" value="{{old('TglPengembalian')}}" min="{{Carbon\Carbon::now()->format('Y-m-d')}}" max="{{Carbon\Carbon::now()->addWeek()->format('Y-m-d')}}"> --}}
-                            <select class="form-control" id="exampleHariPinjam" name="HariPinjam" onchange="updateTglPengembalian(event)">
+                            <select class="form-control" id="exampleHariPinjam" name="hariPinjam" onchange="updateTglPengembalian(event)">
+                                @php
+                                    $interval = strtotime($data->TglPengembalian) - strtotime($data->TglPeminjaman);
+                                    $interval = round($interval / (60*60*24));
+                                @endphp
+                                
                                 @for ($i = 1; $i < 8; $i++)
-                                    <option value={{$i}}>{{$i." Hari"}}</option>
+                                    <option value={{$i}} {{ $interval==$i?'selected':'' }}>{{$i." Hari"}}</option>
                                 @endfor
                             </select>
+
                         </div>
                         <div class="form-group">
                             <label for="exampleTglPengembalian">Tanggal Pengembalian</label>
                             <input type="date" class="form-control @error('TglPengembalian') is-invalid @enderror" id="exampleTglPengembalian" name="TglPengembalian" value="{{$data->TglPengembalian}}" disabled>
-                            @php
-                                $tglPinjam = $data->TglPengembalian;
-                            @endphp
+                            
                         </div>
 
                         <div class="form-group">

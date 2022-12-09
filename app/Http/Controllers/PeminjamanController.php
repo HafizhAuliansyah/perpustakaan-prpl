@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\PeringatanPeminjamanMail;
 use App\Models\Peminjaman;
 use App\Models\Member;
 use App\Models\Buku;
@@ -37,7 +38,8 @@ class PeminjamanController extends Controller
             })
             ->toJson();
         }
-        return view('peminjaman.index');
+        $count_send_warning = Peminjaman::where('StatusPeminjaman','belum kembali')->count();
+        return view('peminjaman.index',["count_send_warning" => $count_send_warning]);
     }
 
     /**
@@ -94,19 +96,14 @@ class PeminjamanController extends Controller
                     ->route('peminjaman.create')
                     ->with('Error','Kesalahan dalam pencarian data buku');
             }
-            $peminjaman->NIK = $request->NIK;
-            $peminjaman->TglPeminjaman = date('Y-m-d');
-            $peminjaman->StatusPeminjaman = 'belum kembali';
-            $peminjaman->TglPengembalian = Carbon::now()->addDays($request->hariPinjam)->format('Y-m-d');
-            $peminjaman->TglSelesai = NULL;
-            $peminjaman->save();
             $peminjam = Member::find($request->NIK);
             if($peminjam){
                 try{
                     $peminjaman->NIK = $request->NIK;
                     $peminjaman->TglPeminjaman = date('Y-m-d');
                     $peminjaman->StatusPeminjaman = 'belum kembali';
-                    $peminjaman->TglPengembalian = Carbon::now()->addDays($request->hariPinjam)->format('Y-m-d');
+                    $tglKembali = Carbon::now()->addDays((int)$request->hariPinjam)->format('Y-m-d');
+                    $peminjaman->TglPengembalian = $tglKembali;
                     $peminjaman->TglSelesai = NULL;
                     $peminjaman->save();
                 }catch(QueryException $err){
@@ -214,7 +211,8 @@ class PeminjamanController extends Controller
             $peminjaman->NIK = $request->NIK;
             $peminjaman->TglPeminjaman = date('Y-m-d');
             $peminjaman->StatusPeminjaman = $request->StatusPeminjaman;
-            $peminjaman->TglPengembalian = Carbon::now()->addDays($request->hariPinjam)->format('Y-m-d');
+            $tglKembali =Carbon::now()->addDays((int)$request->hariPinjam)->format('Y-m-d');
+            $peminjaman->TglPengembalian = $tglKembali;
             $peminjaman->TglSelesai = $request->TglSelesai;
             $peminjaman->save();
             if($request->StatusPeminjaman == 'belum kembali'){
@@ -269,5 +267,10 @@ class PeminjamanController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function warningmail()
+    {
+        $job = new PeringatanPeminjamanMail();
+        $this->dispatch($job);
     }
 }
