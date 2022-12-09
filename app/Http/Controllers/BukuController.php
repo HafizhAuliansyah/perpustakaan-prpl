@@ -172,7 +172,9 @@ class BukuController extends Controller
     }
 
     public function delete(Buku $buku){
-        unlink(public_path('images/buku/cover/'.$buku->Cover));
+        if($buku->Cover != 'default.jpg')
+            unlink(public_path('images/buku/cover/'.$buku->Cover));
+            
         unlink(public_path('images/buku/qr_code/'.$buku->QRCode));
         $buku->delete();
         return redirect('/buku/all');
