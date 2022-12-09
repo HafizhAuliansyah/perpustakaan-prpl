@@ -30,7 +30,9 @@ class Buku extends Model
         'Penerbit',
         'Penulis',
         'LetakRak',
-        'TglMasukBuku'
+        'TglMasukBuku',
+        'Cover',
+        'QRCode'
     ];
     protected $guarded = [
         'IDBuku',
