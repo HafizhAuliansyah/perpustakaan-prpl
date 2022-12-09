@@ -272,5 +272,8 @@ class PeminjamanController extends Controller
     {
         $job = new PeringatanPeminjamanMail();
         $this->dispatch($job);
+        return redirect()->route('peminjaman.index')
+               ->with('success_message', 'Berhasil mengirim email peringatan');
     }
+
 }
