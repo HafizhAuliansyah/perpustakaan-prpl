@@ -74,7 +74,19 @@ Route::middleware('auth')->group(function(){
     Route::resource('member', MemberController::class);
     // PDF Export
     Route::post('member/pdf', [MemberController::class, 'exportPDF'])->name('export_member');
-    Route::resource('peminjaman', PeminjamanController::class);
+    Route::controller(PeminjamanController::class)->group(function(){
+        Route::prefix('peminjaman')->group(function(){
+            Route::get('/', 'index')->name('peminjaman.index');
+            Route::get('/create', 'create')->name('peminjaman.create');
+            Route::post('/store', 'store')->name('peminjaman.store');
+            Route::get('/show', 'show')->name('peminjaman.show');
+            Route::get('/edit', 'edit')->name('peminjaman.edit');
+            Route::patch('/update', 'update')->name('peminjaman.update');
+            Route::delete('/delete', 'delete')->name('peminjaman.delete');
+            Route::get('/warningmail', 'warningmail')->name('peminjaman.warningmail');
+        });
+    });
+    // Route::resource('peminjaman', PeminjamanController::class);
 });
 
 // Route::middleware('auth')->group(function () {
