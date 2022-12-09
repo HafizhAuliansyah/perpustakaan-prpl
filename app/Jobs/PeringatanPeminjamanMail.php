@@ -38,6 +38,7 @@ class PeringatanPeminjamanMail implements ShouldQueue
     {
         $peminjam = Peminjaman::select('NIK')
                     ->where('StatusPeminjaman','belum kembali')
+                    ->groupBy('NIK')
                     ->get();
         foreach ($peminjam as $p) {
             $datas = Buku::select("*")
