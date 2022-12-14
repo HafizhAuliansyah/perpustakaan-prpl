@@ -53,7 +53,7 @@ Route::middleware('auth')->group(function(){
             Route::get('/detail/{buku}', 'detail')->name('detail_buku');
             Route::patch('/update/{buku}', 'update')->name('edit_buku');
             Route::delete('/delete/{buku}', 'delete')->name('delete_buku');
-            Route::get('/buku/{buku}', 'getAjaxBuku')->name('ajax_buku');
+            Route::get('/get-ajax-buku/{buku}', 'getAjaxBuku')->name('ajax_buku');
             // PDF Export
             Route::post('/pdf', 'exportPDF')->name('export_buku');
         });

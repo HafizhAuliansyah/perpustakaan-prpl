@@ -5,6 +5,9 @@
 @section('content_header')
     <h1 class="m-0 text-dark">Peminjaman Buku</h1>
 @stop
+@push('css')
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+@endpush
 
 @section('content')
     @if (session('Success'))
@@ -51,6 +54,39 @@
                                     <option value={{$buku->IDBuku}}>
                                 @endforeach
                             </datalist>
+                            <div class="invalid-feedback" id="notFoundHint">
+                               Buku Tidak Ditemukan, Periksa kesesuaian IDBuku !
+                            </div>
+                            <div class="collapse" id="collapseDataBuku">
+                                <div class="card card-body text-white bg-success">
+                                    <div class="row" id="rowGetDataBuku">
+                                        <div class="col-md-6 ">
+                                            <h5 class="font-weight-bold">Judul Buku</h5>
+                                        </div>
+                                        <div class="col-md-6" id="getNamaBuku">
+                                            -
+                                        </div>
+                                        <div class="col-md-6 ">
+                                            <h5 class="font-weight-bold">Penulis Buku</h5>
+                                         </div>
+                                         <div class="col-md-6" id="getPenulis">
+                                             -
+                                         </div>
+                                         <div class="col-md-6 ">
+                                            <h5 class="font-weight-bold">Penerbit Buku</h5>
+                                         </div>
+                                         <div class="col-md-6" id="getPenerbit">
+                                             -
+                                         </div>
+                                         <div class="col-md-6">
+                                            <h5 class="font-weight-bold">Cover</h5>
+                                         </div>
+                                         <div class="col-md-6" id="getPenerbit">
+                                            <img src="/images/buku/cover/" class="cover_buku" id="getCover">
+                                         </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="exampleInput">NIK</label>
@@ -117,13 +153,46 @@
             function onScanFailure(error) {
             // handle scan failure, usually better to ignore and keep scanning.
             // for example:
-            console.warn(`Code scan error = ${error}`);
+            // console.warn(`Code scan error = ${error}`);
             }
 
             let html5QrcodeScanner = new Html5QrcodeScanner(
             "reader",
             { fps: 30, qrbox: {width: 300, height: 300} },
             /* verbose= */ false);
-            html5QrcodeScanner.render(onScanSuccess, onScanFailure);    
+            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+                
         </script>
 @stop
+@push('js')
+<script>
+    $(document).ready(function(){
+        $("#notFoundHint").hide();
+        $("#inputIDBuku").on('input',function(){
+           var idBuku = $("#inputIDBuku").val();
+           getDataBuku(idBuku);
+        });
+        function getDataBuku(id){
+            $.ajax({
+                url: "/buku/get-ajax-buku/" + id,
+                type: 'get',
+                dataType: 'json',
+                success: function(response){
+                    $("#notFoundHint").hide();
+                    $("#getNamaBuku").text(response.NamaBuku);
+                    $("#getPenulis").text(response.Penulis);
+                    $("#getPenerbit").text(response.Penerbit);
+                    $('#getCover').attr('src', '/images/buku/cover/'+response.Cover);
+                    $("#collapseDataBuku").collapse('show');
+                },
+                error: function(xhr, textStatus, errorThrown){
+                    if(xhr.status == 404){
+                        $("#notFoundHint").show();
+                        $("#collapseDataBuku").collapse('hide');
+                    }
+                }
+            })
+        }
+    });
+</script>
+@endpush
