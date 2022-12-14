@@ -28,9 +28,12 @@ class PeminjamanController extends Controller
             $peminjaman = Peminjaman::all();
             return DataTables::of($peminjaman)
             ->addColumn('action', function ($row) {
-                $html = '<a href='.route('peminjaman.edit',$row->IDPeminjaman).' class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+                $html = '<div class="row"><a href='.route('peminjaman.edit',$row->IDPeminjaman).' class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
                 <i class="fa fa-lg fa-fw fa-pen"></i>
-                </a>';
+                </a>
+                <a href='.route('view_add_denda',$row->IDPeminjaman).' class="btn btn-xs btn-default text-danger mx-1 shadow" title="Denda">
+                <i class="fas fa-lg fa-fw fa-file-invoice-dollar"></i>
+                </a></div>';
                 // $html.= '<a href='.route('peminjaman.destroy', $row->IDPeminjaman).' class="btn btn-xs btn-default text-success mx-1 shadow" title="Edit" onclick="notificationBeforeDelete(event, this)">
                 // <i class="fa fa-lg fa-fw fa-check"></i>
                 // </a>';
