@@ -45,7 +45,7 @@
                         $GenreBuku = ['Horror', 'Aksi', 'Fiksi', 'Drama', 'Romansa', 'Komedi', 'Sport', 'Teknologi', 'Sejarah', 'Politik'];
                         $StatusBuku = ['Tersedia', 'Dipinjam', 'Rusak', 'Hilang'];
                     @endphp
-                    <form action={{ route('edit_buku', $buku->IDBuku) }} method="post">
+                    <form action={{ route('edit_buku', $buku->IDBuku) }} method="post" enctype="multipart/form-data">
                         @method('patch')
                         @csrf
                         <div class="form-group">
@@ -93,7 +93,16 @@
                             <label for="LetakRak">Letak Rak</label>
                             <input type="text" class="form-control" id="LetakRak" name="LetakRak" placeholder="Masukkan letak rak (Contoh : 'A1')" value="{{ $buku->LetakRak }}">
                         </div>
-
+                        <div class="col-md-6">
+                            <h5 class="font-weight-bold">Cover</h5>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="{{url('/images/buku/cover/'.$buku->Cover )}}" class="cover_buku" style="width: 200px; height: auto; margin: 10px 0;">
+                        </div>
+                        <div class="form-group">
+                            <label for="cover_buku">Cover Buku</label>
+                            <input type="file" class="form-control-file" id="cover_buku" name="Cover" accept=".jpg,.png">
+                          </div>
                         <button type="submit" class="btn btn-primary btn-block mb-2"><i class="fa fa-pen mr-2"></i>Edit</button>
                     </form>
                 </div>

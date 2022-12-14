@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\BukuHelper;
 use App\Models\Buku;
+use ErrorException;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -16,7 +17,6 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class BukuController extends Controller
 {
     public function addView(){
-        Log::info('Auto incement for IDBuku Success');
         return view('buku.add-buku');
     }
     public function store(Request $request){
@@ -31,6 +31,24 @@ class BukuController extends Controller
             'LetakRak' => 'required|string|max:2|min:2',
         ]);
         $new_id = BukuHelper::generateBookID();
+        Log::info('Auto incement for IDBuku Success');
+
+        $cover_name = 'default.jpg';
+        $cover_buku = null;
+        if($request->file('Cover')){
+            try{   
+                $cover_buku= $request->file('Cover');
+                $cover_name = $new_id.'.'.$cover_buku->getClientOriginalExtension();
+                $cover_buku->move(public_path('/images/buku/cover'), $cover_name);
+    
+            }catch(ErrorException $err){
+                Log::error('Error in BukuController at store. Error : '.$err->getMessage());
+                error_log($err->getMessage());
+                return redirect()
+                    ->route('view_add_buku')
+                    ->with('Error','Gagal Menyimpan Data Baru');
+            }
+        }
         try{
             $buku = new Buku();
             $buku->IDBuku = $new_id;
@@ -44,14 +62,14 @@ class BukuController extends Controller
             $buku->Penulis = $request->Penulis;
             $buku->LetakRak = $request->LetakRak;
             $buku->TglMasukBuku = date("d-m-Y");
-            $buku->Cover = 'default.jpg';
+            $buku->Cover = $cover_name;
             $qrPath = public_path('images/buku/qr_code/'.$new_id.'.svg');
             QrCode::format('svg')->backgroundColor(255,255,255)->size(200)->generate($new_id, $qrPath);
             $buku->QRCode = $new_id.'.svg';
             $buku->save();
             Log::info('Data Buku Created : '.$buku->IDBuku);
             return redirect()
-                ->route('all_buku')
+                ->route('detail_buku', $new_id)
                 ->with('success_message','Berhasil Menyimpan Data Baru');
         }catch(QueryException $err){
             Log::error('Error in BukuController at store. Error : '.$err->getMessage());
@@ -102,6 +120,7 @@ class BukuController extends Controller
             'LetakRak' => 'required|string|max:2|min:2',
         ]);
         try{
+
             if($request->NamaBuku)
                 $buku->NamaBuku = $request->NamaBuku;
             if($request->Deskripsi)
@@ -120,6 +139,24 @@ class BukuController extends Controller
                 $buku->Penulis = $request->Penulis;
             if($request->LetakRak)
                 $buku->LetakRak = $request->LetakRak;
+            if($request->file('Cover')){
+                $cover_name = $buku->Cover;
+                $cover_buku = null;
+                try{   
+                    unlink(public_path('images/buku/cover/'.$buku->Cover));
+                    $cover_buku= $request->file('Cover');
+                    $cover_name = $buku->IDBuku.'.'.$cover_buku->getClientOriginalExtension();
+                    $cover_buku->move(public_path('/images/buku/cover'), $cover_name);
+        
+                }catch(ErrorException $err){
+                    Log::error('Error in BukuController at store. Error : '.$err->getMessage());
+                    error_log($err->getMessage());
+                    return redirect()
+                        ->route('view_edit_buku')
+                        ->with('Error','Gagal Menyimpan Data Baru');
+                }
+                $buku->Cover = $cover_name;
+            }
             $buku->save();
             Log::info('Updated Data Buku : '.$buku->IDBuku);
             return redirect()
@@ -135,6 +172,10 @@ class BukuController extends Controller
     }
 
     public function delete(Buku $buku){
+        if($buku->Cover != 'default.jpg')
+            unlink(public_path('images/buku/cover/'.$buku->Cover));
+            
+        unlink(public_path('images/buku/qr_code/'.$buku->QRCode));
         $buku->delete();
         return redirect('/buku/all');
     }

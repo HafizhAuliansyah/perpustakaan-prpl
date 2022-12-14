@@ -27,8 +27,8 @@ class Member extends Model
     protected static $logFillable = true;
     protected static $logUnguarded = true;
     protected static $logOnlyDirty = true;
-    public function getDescriptionForEvent (string $eventName) : string
-    {
-        return $this->NIK." {$eventName} By : ".Auth::user()->name;
-    }
+    // public function getDescriptionForEvent (string $eventName) : string
+    // {
+    //     return $this->NIK." {$eventName} By : ".Auth::user()->name;
+    // }
 }

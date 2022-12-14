@@ -50,11 +50,12 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-
-                    <a href="{{route('peminjaman.create')}}" class="btn btn-primary mb-2">
-                        Tambah
-                    </a>
-
+                    <div class="row mb-3">
+                        <a href="{{route('peminjaman.create')}}" class="btn btn-primary mr-3" role="button">
+                            Tambah
+                        </a>
+                        <button type="button" class="btn btn-warning" role="button" data-toggle="modal" data-target="#modal_waning_mail"><i class="fa fa-bell mr-2"></i>Kirim mail peringatan</button>
+                    </div>
                     <table class="table table-hover table-bordered table-stripped" id="table-data">
                         <thead>
                         <tr>
@@ -74,6 +75,25 @@
                     </table>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal_waning_mail" tabindex="-1" role="dialog" aria-labelledby="modal_export" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modal_export">Mail Peringatan Peminjaman</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                Kirim email peringatan peminjaman ke {{ $count_send_warning }} user ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <a href="{{route('peminjaman.warningmail')}}" class="btn btn-primary">Kirim</a>
+            </div>
+          </div>
         </div>
     </div>
 @stop

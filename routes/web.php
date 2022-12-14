@@ -66,7 +66,7 @@ Route::middleware('auth')->group(function(){
     Route::controller(DendaController::class)->group(function(){
         Route::get('/denda/all', 'showPart')->name('all_denda');
         Route::get('/denda/all/part', 'showPart')->name('part-denda');
-        Route::get('/denda/add', 'addView')->name('view_add_denda');
+        Route::get('/denda/add/{IDPeminjaman}', 'addView')->name('view_add_denda');
         Route::post('/denda/add', 'store')->name('add_denda');
         Route::get('/denda/update/{denda}', 'editView')->name('view_edit_denda');
         Route::patch('/denda/update/{denda}', 'update')->name('edit_denda');
@@ -74,6 +74,19 @@ Route::middleware('auth')->group(function(){
     Route::resource('member', MemberController::class);
     // PDF Export
     Route::post('member/pdf', [MemberController::class, 'exportPDF'])->name('export_member');
+    Route::controller(PeminjamanController::class)->group(function(){
+        Route::prefix('peminjaman')->group(function(){
+            Route::get('/', 'index')->name('peminjaman.index');
+            Route::get('/create', 'create')->name('peminjaman.create');
+            Route::post('/store', 'store')->name('peminjaman.store');
+            Route::get('/show', 'show')->name('peminjaman.show');
+            Route::get('/edit/{id}', 'edit')->name('peminjaman.edit');
+            Route::put('/update/{id}', 'update')->name('peminjaman.update');
+            Route::delete('/delete', 'delete')->name('peminjaman.delete');
+            Route::get('/warningmail', 'warningmail')->name('peminjaman.warningmail');
+        });
+    });
+    // Route::resource('peminjaman', PeminjamanController::class);
 });
 
 // Route::middleware('auth')->group(function () {
@@ -82,7 +95,6 @@ Route::middleware('auth')->group(function(){
 //     });
 // });
 
-Route::resource('peminjaman', PeminjamanController::class)->middleware('auth');
 
 Route::get('/send-email-queue', function(){
     $details['email'] = 'williamshakespear000@gmail.com';

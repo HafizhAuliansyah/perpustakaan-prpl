@@ -38,23 +38,18 @@
                     </div>
                 @endif
                 @php
-                    $keterangan = [ 'Merusak Buku', 'Menghilangkan Buku', 'Tenggat Pengembalian'];
+                    $keterangan = [ 'merusak buku', 'menghilangkan buku', 'telat pengembalian'];
                 @endphp
 
                 <div class="card-body">
                     <form action={{ route('add_denda') }} method="post">
                         @csrf
                         <input type="hidden" name="IDDenda" value="{{ $new_id }}">
-                        <input type="hidden" name="Status" value="Belum Lunas">
+                        <input type="hidden" name="Status" value="belum lunas">
                         <div class="form-group">
                             <label for="Peminjaman" id="peminjamanLabel">Peminjaman</label>
-                            <input type="text" class="form-control @error('IDPeminjaman') is-invalid @enderror" datalist="dataListPeminjaman" class="form-control" id="IDPeminjaman" name="IDPeminjaman" placeholder="Masukkan IDPeminjaman">
+                            <input type="text" value="{{ $IDPeminjaman }}" readonly class="form-control @error('IDPeminjaman') is-invalid @enderror" datalist="dataListPeminjaman" class="form-control" id="IDPeminjaman" name="IDPeminjaman" placeholder="Masukkan IDPeminjaman">
                             @error('IDPeminjaman') <span class="text-danger">{{$message}}</span> @enderror
-                            <datalist id="dataListPeminjaman">
-                                @foreach ($peminjamans as $peminjaman)
-                                    <option value={{$peminjaman->IDPeminjaman}}>
-                                @endforeach
-                            </datalist>
                         </div>
                         <div class="form-group">
                             <label for="Keterangan">Keterangan</label>

@@ -20,8 +20,8 @@ class CreateDendasTable extends Migration
                   ->references('IDPeminjaman')
                   ->on('peminjaman')
                   ->restrictOnDelete();
-            $table->string('Keterangan');
-            $table->string('Status');
+            $table->enum('Keterangan', ['merusak buku', 'menghilangkan buku', 'telat pengembalian']);
+            $table->enum('Status', ['lunas', 'belum lunas']);
             $table->integer('Nominal');
             $table->timestamps();
         });

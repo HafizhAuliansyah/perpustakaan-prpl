@@ -31,7 +31,7 @@
                         $GenreBuku = ['Horror', 'Aksi', 'Fiksi', 'Drama', 'Romansa', 'Komedi', 'Sport', 'Teknologi', 'Sejarah', 'Politik'];
                         $StatusBuku = ['Tersedia', 'Rusak', 'Hilang'];
                     @endphp
-                    <form action={{ route('store_buku') }} method="post">
+                    <form action={{ route('store_buku') }} method="post" enctype="multipart/form-data">
                         @csrf
                         
                         <div class="form-group">
@@ -80,7 +80,10 @@
                             <label for="LetakRak">Letak Rak</label>
                             <input type="text" class="form-control" id="LetakRak" name="LetakRak" placeholder="Masukkan letak rak (Contoh : 'A1')">
                         </div>
-
+                        <div class="form-group">
+                            <label for="cover_buku">Cover Buku</label>
+                            <input type="file" class="form-control-file" id="cover_buku" name="Cover" accept=".jpg,.png">
+                          </div>
                         <button type="submit" class="btn btn-primary btn-block mb-2 p-2"><i class="fa fa-save mr-2"></i>Save</button>
                     </form>
                 </div>

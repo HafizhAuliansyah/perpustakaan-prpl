@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\PeringatanPeminjamanMail;
 use App\Models\Peminjaman;
 use App\Models\Member;
 use App\Models\Buku;
@@ -27,9 +28,12 @@ class PeminjamanController extends Controller
             $peminjaman = Peminjaman::all();
             return DataTables::of($peminjaman)
             ->addColumn('action', function ($row) {
-                $html = '<a href='.route('peminjaman.edit',$row->IDPeminjaman).' class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
+                $html = '<div class="row"><a href='.route('peminjaman.edit',$row->IDPeminjaman).' class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
                 <i class="fa fa-lg fa-fw fa-pen"></i>
-                </a>';
+                </a>
+                <a href='.route('view_add_denda',$row->IDPeminjaman).' class="btn btn-xs btn-default text-danger mx-1 shadow" title="Denda">
+                <i class="fas fa-lg fa-fw fa-file-invoice-dollar"></i>
+                </a></div>';
                 // $html.= '<a href='.route('peminjaman.destroy', $row->IDPeminjaman).' class="btn btn-xs btn-default text-success mx-1 shadow" title="Edit" onclick="notificationBeforeDelete(event, this)">
                 // <i class="fa fa-lg fa-fw fa-check"></i>
                 // </a>';
@@ -37,7 +41,8 @@ class PeminjamanController extends Controller
             })
             ->toJson();
         }
-        return view('peminjaman.index');
+        $count_send_warning = Peminjaman::where('StatusPeminjaman','belum kembali')->count();
+        return view('peminjaman.index',["count_send_warning" => $count_send_warning]);
     }
 
     /**
@@ -94,19 +99,14 @@ class PeminjamanController extends Controller
                     ->route('peminjaman.create')
                     ->with('Error','Kesalahan dalam pencarian data buku');
             }
-            $peminjaman->NIK = $request->NIK;
-            $peminjaman->TglPeminjaman = date('Y-m-d');
-            $peminjaman->StatusPeminjaman = 'belum kembali';
-            $peminjaman->TglPengembalian = Carbon::now()->addDays($request->hariPinjam)->format('Y-m-d');
-            $peminjaman->TglSelesai = NULL;
-            $peminjaman->save();
             $peminjam = Member::find($request->NIK);
             if($peminjam){
                 try{
                     $peminjaman->NIK = $request->NIK;
                     $peminjaman->TglPeminjaman = date('Y-m-d');
                     $peminjaman->StatusPeminjaman = 'belum kembali';
-                    $peminjaman->TglPengembalian = Carbon::now()->addDays($request->hariPinjam)->format('Y-m-d');
+                    $tglKembali = Carbon::now()->addDays((int)$request->hariPinjam)->format('Y-m-d');
+                    $peminjaman->TglPengembalian = $tglKembali;
                     $peminjaman->TglSelesai = NULL;
                     $peminjaman->save();
                 }catch(QueryException $err){
@@ -214,7 +214,8 @@ class PeminjamanController extends Controller
             $peminjaman->NIK = $request->NIK;
             $peminjaman->TglPeminjaman = date('Y-m-d');
             $peminjaman->StatusPeminjaman = $request->StatusPeminjaman;
-            $peminjaman->TglPengembalian = Carbon::now()->addDays($request->hariPinjam)->format('Y-m-d');
+            $tglKembali =Carbon::now()->addDays((int)$request->hariPinjam)->format('Y-m-d');
+            $peminjaman->TglPengembalian = $tglKembali;
             $peminjaman->TglSelesai = $request->TglSelesai;
             $peminjaman->save();
             if($request->StatusPeminjaman == 'belum kembali'){
@@ -270,4 +271,12 @@ class PeminjamanController extends Controller
     {
         //
     }
+    public function warningmail()
+    {
+        $job = new PeringatanPeminjamanMail();
+        $this->dispatch($job);
+        return redirect()->route('peminjaman.index')
+               ->with('success_message', 'Berhasil mengirim email peringatan');
+    }
+
 }
