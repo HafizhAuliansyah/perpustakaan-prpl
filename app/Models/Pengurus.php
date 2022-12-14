@@ -8,8 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class Pengurus extends Authenticatable
 {
     use LogsActivity;
     use HasFactory, Notifiable;
@@ -19,6 +20,7 @@ class User extends Authenticatable
      *
      * @var array
      */
+    protected $table = 'pengurus';
     protected $fillable = [
         'name',
         'email',
@@ -44,13 +46,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected static $logName = 'User';
+    protected static $logName = 'Pengurus';
     protected static $logFillable = true;
     protected static $logUnguarded = true;
     protected static $logOnlyDirty = true;
-    public function getDescriptionForEvent (string $eventName) : string
-    {
-        return $this->id." {$eventName}";
-    }
+
+    // public function getDescriptionForEvent (string $eventName) : string
+    // {
+    //     return $this->id." {$eventName}";
+    // }
 
 }

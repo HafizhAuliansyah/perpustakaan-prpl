@@ -32,8 +32,9 @@ class Denda extends Model
     protected static $logFillable = true;
     protected static $logUnguarded = true;
     protected static $logOnlyDirty = true;
-    public function getDescriptionForEvent (string $eventName) : string
-    {
-        return $this->IDDenda." {$eventName} By : ".Auth::user()->name;
-    }
+
+    // public function getDescriptionForEvent (string $eventName) : string
+    // {
+    //     return $this->IDDenda." {$eventName} By : ".Auth::user()->name;
+    // }
 }
