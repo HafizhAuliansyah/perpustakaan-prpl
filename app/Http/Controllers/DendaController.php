@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Denda;
 use App\Models\Peminjaman;
+use App\Models\Buku;
 use App\Helpers\DendaHelper;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\View;
@@ -47,11 +48,11 @@ class DendaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function addView()
+    public function addView($IDPeminjaman)
     {
         $new_id = DendaHelper::generateDendaID();
         $peminjamans = Peminjaman::where('StatusPeminjaman', 'belum kembali')->get();
-        return view('denda.add-denda', ['new_id' => $new_id, 'peminjamans' => $peminjamans]);
+        return view('denda.add-denda', ['new_id' => $new_id, 'IDPeminjaman' => $IDPeminjaman]);
     }
 
     /**
@@ -65,42 +66,48 @@ class DendaController extends Controller
         try{
             $denda = new Denda();
             $denda->IDDenda = $request->IDDenda;
-            if($request->Keterangan == "Tenggat Pengembalian"){
-                Log::info('Masuk ke if');
-                $peminjaman = Peminjaman::find($request->IDPeminjaman);
+            $peminjaman = Peminjaman::find($request->IDPeminjaman);
+            $buku = Buku::find($peminjaman->IDBuku);
+            if($request->Keterangan == "telat pengembalian"){
                 if($peminjaman){
                     $now = Carbon::now();
                     $pengembalian = Carbon::parse($peminjaman->TglPengembalian);
-                    $diff = $pengembalian->floatDiffInWeeks($now);
-                    Log::info('Diff in weeks :'.$diff);
+                    $diff = $pengembalian->floatDiffInDays($now);
+                    Log::info('Diff in days :'.$diff);
                     if($diff < 1){
                         return redirect()
-                            ->route('view_add_denda')
-                            ->with('Error', 'Tenggat Kurang Dari Seminggu!');
+                            ->route('view_add_denda', $request->IDPeminjaman)
+                            ->with('Error', 'Belum Lewat Tenggat Pengembalian!');
                     }
                     $denda->Nominal = ceil($diff*10000);
                     Log::info('Nominal : '.$denda->Nominal);
                     $denda->IDPeminjaman = $request->IDPeminjaman;
                 } else{
                     return redirect()
-                        ->route('view_add_denda')
+                        ->route('view_add_denda',$request->IDPeminjaman)
                         ->with('Error', 'Data Peminjaman Tidak Ada!');
                 }
-            }else {
-                $denda->IDPeminjaman = $request->IDPeminjaman;
+            }else if ($request->Keterangan == "menghilangkan buku") {
+                $buku->StatusBuku = 'Hilang';
                 $denda->Nominal = $request->Nominal;
+                $buku->save();
+            } else if ($request->Keterangan == "merusak buku"){
+                $buku->StatusBuku = 'Rusak';
+                $denda->Nominal = $request->Nominal;
+                $buku->save();
             }
+            $denda->IDPeminjaman = $request->IDPeminjaman;
             $denda->Keterangan = $request->Keterangan;
             $denda->Status = $request->Status;
             $denda->save();
             Log::info('Data Denda Created : '.$denda->IDDenda);
             return redirect()
-                ->route('view_add_denda')
+                ->route('all_denda')
                 ->with('Success','Berhasil Menyimpan Data Baru');
         }catch(QueryException $err){
             Log::error('Error in DendaController at store: '.$err->getMessage());
             return redirect()
-                ->route('view_add_denda')
+                ->route('view_add_denda', $request->IDPeminjaman)
                 ->with('Error', 'Gagal Menyimpan Data Baru');
         }
     }

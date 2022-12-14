@@ -14,7 +14,6 @@ class Denda extends Model
     use HasFactory;
     protected $table = 'denda';
     protected $fillable = [
-        'IDDenda',
         'IDPeminjaman',
         'Keterangan',
         'Status',
