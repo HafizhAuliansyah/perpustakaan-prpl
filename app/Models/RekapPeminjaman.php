@@ -12,31 +12,33 @@ class LaporanPeminjaman extends Model
     use LogsActivity;
 
     use HasFactory;
-    protected $table = 'laporan_peminjaman';
+    protected $table = 'rekap_peminjaman';
     protected $fillable = [
-        'IDLaporan',
+        'IDRekapPeminjaman',
         'TglDibentuk',
         'JumlahDataPeminjaman',
         'JumlahPeminjaman',
         'IDBukuFavorite',
         'NikTopMember',
-        'MeanRentangPinjam'
+        'MeanRentangPinjam',
     ];
     protected $guarded = [
-        'IDLaporan',
+        'IDRekapPeminjaman',
         'created_at',
         'updated_at'
     ];
 
-    protected  $primaryKey = 'IDLaporan';
+    protected  $primaryKey = 'IDRekapPeminjaman';
 
     public $incrementing = false;
-    protected static $logName = 'laporanPeminjaman';
+
+    protected static $logName = 'rekap_peminjaman';
     protected static $logFillable = true;
     protected static $logUnguarded = true;
     protected static $logOnlyDirty = true;
-    public function getDescriptionForEvent (string $eventName) : string
-    {
-        return $this->IDLaporan." {$eventName} By : ".Auth::user()->name;
-    }
+
+    // public function getDescriptionForEvent (string $eventName) : string
+    // {
+    //     return $this->IDRekapPeminjaman." {$eventName} By : ".Auth::user()->name;
+    // }
 }
