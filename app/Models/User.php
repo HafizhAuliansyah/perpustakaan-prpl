@@ -48,9 +48,9 @@ class User extends Authenticatable
     protected static $logFillable = true;
     protected static $logUnguarded = true;
     protected static $logOnlyDirty = true;
-    // public function getDescriptionForEvent (string $eventName) : string
-    // {
-    //     return $this->id." {$eventName}";
-    // }
+    public function getDescriptionForEvent (string $eventName) : string
+    {
+        return $this->id." {$eventName}";
+    }
 
 }
