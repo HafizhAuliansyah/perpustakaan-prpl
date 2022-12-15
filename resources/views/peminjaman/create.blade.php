@@ -54,7 +54,7 @@
                                     <option value={{$buku->IDBuku}}>
                                 @endforeach
                             </datalist>
-                            <div class="invalid-feedback" id="notFoundHint">
+                            <div class="invalid-feedback" id="notFoundHintBuku">
                                Buku Tidak Ditemukan, Periksa kesesuaian IDBuku !
                             </div>
                             <div class="collapse" id="collapseDataBuku">
@@ -90,13 +90,40 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInput">NIK</label>
-                            <input class="form-control @error('NIK') is-invalid @enderror" list="datalistMember" name="NIK" id="exampleDataList" placeholder="Cari NIK">
+                            <input class="form-control @error('NIK') is-invalid @enderror" list="datalistMember" name="NIK" id="inputNIK" placeholder="Cari NIK">
                             @error('NIK') <span class="text-danger">{{$message}}</span> @enderror
                             <datalist id="datalistMember">
                                 @foreach ($members as $member)
                                     <option value={{$member->NIK}}>
                                 @endforeach
                             </datalist>
+                            <div class="invalid-feedback" id="notFoundHintMember">
+                                Member Tidak Ditemukan, Periksa NIK atau Tambah Member Baru !
+                             </div>
+                             <div class="collapse" id="collapseDataMember">
+                                 <div class="card card-body text-white bg-success">
+                                     <div class="row" id="rowGetDataMember">
+                                         <div class="col-md-6 ">
+                                             <h5 class="font-weight-bold">NIK</h5>
+                                         </div>
+                                         <div class="col-md-6" id="getNIK">
+                                             -
+                                         </div>
+                                         <div class="col-md-6 ">
+                                             <h5 class="font-weight-bold">Nama</h5>
+                                          </div>
+                                          <div class="col-md-6" id="getName">
+                                              -
+                                          </div>
+                                          <div class="col-md-6 ">
+                                             <h5 class="font-weight-bold">Status</h5>
+                                          </div>
+                                          <div class="col-md-6" id="getStatus">
+                                              -
+                                          </div>
+                                     </div>
+                                 </div>
+                             </div>
                         </div>
                         <div class="form-group">
                             <label for="exampleTglPeminjaman">Tanggal Peminjaman</label>
@@ -167,10 +194,14 @@
 @push('js')
 <script>
     $(document).ready(function(){
-        $("#notFoundHint").hide();
+        $("#notFoundHintBuku").hide();
         $("#inputIDBuku").on('input',function(){
            var idBuku = $("#inputIDBuku").val();
            getDataBuku(idBuku);
+        });
+        $("#inputNIK").on('input', function(){
+            var NIK = $("#inputNIK").val();
+            getDataMember(NIK);
         });
         function getDataBuku(id){
             $.ajax({
@@ -178,7 +209,7 @@
                 type: 'get',
                 dataType: 'json',
                 success: function(response){
-                    $("#notFoundHint").hide();
+                    $("#notFoundHintBuku").hide();
                     $("#getNamaBuku").text(response.NamaBuku);
                     $("#getPenulis").text(response.Penulis);
                     $("#getPenerbit").text(response.Penerbit);
@@ -187,8 +218,28 @@
                 },
                 error: function(xhr, textStatus, errorThrown){
                     if(xhr.status == 404){
-                        $("#notFoundHint").show();
+                        $("#notFoundHintBuku").show();
                         $("#collapseDataBuku").collapse('hide');
+                    }
+                }
+            })
+        }
+        function getDataMember(NIK){
+            $.ajax({
+                url: "/member/get-ajax-member/" + NIK,
+                type: 'get',
+                dataType: 'json',
+                success: function(response){
+                    $("#notFoundHintMember").hide();
+                    $("#getNIK").text(response.NIK);
+                    $("#getName").text(response.Nama);
+                    $("#getStatus").text(response.StatusMember);
+                    $("#collapseDataMember").collapse('show');
+                },
+                error: function(xhr, textStatus, errorThrown){
+                    if(xhr.status == 404){
+                        $("#notFoundHintMember").show();
+                        $("#collapseDataMember").collapse('hide');
                     }
                 }
             })
