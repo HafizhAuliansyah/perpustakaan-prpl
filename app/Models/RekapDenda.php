@@ -32,8 +32,8 @@ class RekapDenda extends Model
     protected static $logUnguarded = true;
     protected static $logOnlyDirty = true;
 
-    // public function getDescriptionForEvent (string $eventName) : string
-    // {
-    //     return $this->IDRekapDenda." {$eventName} By : ".Auth::user()->name;
-    // }
+    public function getDescriptionForEvent (string $eventName) : string
+    {
+        return $this->IDRekapDenda." {$eventName} By : ".Auth::user()->name." with ID: ".Auth::user()->id;
+    }
 }

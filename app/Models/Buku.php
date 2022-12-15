@@ -47,6 +47,6 @@ class Buku extends Model
 
     public function getDescriptionForEvent (string $eventName) : string
     {
-        return $this->IDBuku." {$eventName} By : ".Auth::user()->id;
+        return $this->IDBuku." {$eventName} By : ".Auth::user()->name." with ID: ".Auth::user()->id;
     }
 }

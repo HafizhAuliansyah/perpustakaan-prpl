@@ -29,6 +29,6 @@ class Member extends Model
     protected static $logOnlyDirty = true;
     public function getDescriptionForEvent (string $eventName) : string
     {
-        return $this->NIK." {$eventName} By : ".Auth::user()->name;
+        return $this->NIK." {$eventName} By : ".Auth::user()->name." with ID: ".Auth::user()->id;
     }
 }
