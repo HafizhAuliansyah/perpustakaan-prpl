@@ -65,7 +65,7 @@ class DendaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'Nominal' => 'required|integer|min:1000',
+            'Nominal' => 'integer|min:1000',
             'Keterangan' => 'required|string|',
             'Status' => 'required|string|',
         ]);
