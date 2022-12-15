@@ -73,14 +73,14 @@ class DendaController extends Controller
                 if($peminjaman){
                     $now = Carbon::now();
                     $pengembalian = Carbon::parse($peminjaman->TglPengembalian);
-                    $diff = $pengembalian->floatDiffInDays($now);
+                    $diff = $now->floatDiffInDays($pengembalian, false);
                     Log::info('Diff in days :'.$diff);
-                    if($diff < 1){
+                    if($diff > 0){
                         return redirect()
                             ->route('view_add_denda', $request->IDPeminjaman)
                             ->with('Error', 'Belum Lewat Tenggat Pengembalian!');
                     }
-                    $denda->Nominal = ceil($diff*10000);
+                    $denda->Nominal = abs(ceil($diff*2000));
                     Log::info('Nominal : '.$denda->Nominal);
                     $denda->IDPeminjaman = $request->IDPeminjaman;
                 } else{

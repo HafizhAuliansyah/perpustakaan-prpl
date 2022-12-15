@@ -53,6 +53,8 @@ Route::middleware('auth')->group(function(){
             Route::get('/detail/{buku}', 'detail')->name('detail_buku');
             Route::patch('/update/{buku}', 'update')->name('edit_buku');
             Route::delete('/delete/{buku}', 'delete')->name('delete_buku');
+            // Get data buku as json
+            Route::get('/get-ajax-buku/{buku}', 'getAjaxBuku')->name('ajax_buku');
             // PDF Export
             Route::post('/pdf', 'exportPDF')->name('export_buku');
         });
@@ -72,6 +74,18 @@ Route::middleware('auth')->group(function(){
         Route::patch('/denda/update/{denda}', 'update')->name('edit_denda');
     });
     Route::resource('member', MemberController::class);
+    Route::controller(MemberController::class)->group(function(){
+        Route::prefix('member')->group(function(){
+            Route::get('/','index')->name('peminjaman.index');
+            Route::get('/create', 'create')->name('peminjaman.create');
+            Route::post('/store', 'store')->name('peminjaman.store');
+            Route::get('/edit/{id}','edit')->name('peminjaman.edit');
+            Route::put('/update/{id}','update')->name('peminjaman.update');
+            Route::delete('/delete','destroy')->name('peminjaman.destroy');
+            // Get data member as json
+            Route::get('/get-ajax-member/{member}', 'getAjaxMember')->name('ajax_member');
+        });
+    });
     // PDF Export
     Route::post('member/pdf', [MemberController::class, 'exportPDF'])->name('export_member');
     Route::controller(PeminjamanController::class)->group(function(){

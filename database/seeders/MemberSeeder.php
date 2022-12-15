@@ -19,7 +19,7 @@ class MemberSeeder extends Seeder
         $faker = Faker::create('id_ID');
         $min_date = strtotime("2021-01-01");
         $max_date = strtotime(date('Y-m-d'));
-        for($i = 1; $i <= 1000; $i++){
+        for($i = 1; $i <= 2000; $i++){
             $member = new Member();
             // $member->NIK = strval($faker->unique()->numberBetween(1000000000000001, 1000000000000010);
             $new_nik = "1000000000000000";

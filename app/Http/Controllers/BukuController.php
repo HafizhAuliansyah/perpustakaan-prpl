@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\View;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Log;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Response;
 
 class BukuController extends Controller
 {
@@ -104,6 +105,10 @@ class BukuController extends Controller
                 ->toJson();
             }
         return view('buku.all-buku');
+    }
+    public function getAjaxBuku(Buku $buku)
+    {
+        return response()->json($buku);
     }
     public function editView(Buku $buku){
         return view('buku.edit-buku', ['buku' => $buku]);
