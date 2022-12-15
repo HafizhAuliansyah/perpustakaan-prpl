@@ -73,16 +73,16 @@ class DendaController extends Controller
                     $now = Carbon::now();
                     $pengembalian = Carbon::parse($peminjaman->TglPengembalian);
                     $diff = $now->floatDiffInDays($pengembalian, false);
-                    Log::info('Diff in days :'.$diff);
                     if($diff > 0){
+                        Log::error('Error in DendaController at store: Data Peminjaman Tidak Ada');
                         return redirect()
                             ->route('view_add_denda', $request->IDPeminjaman)
                             ->with('Error', 'Belum Lewat Tenggat Pengembalian!');
                     }
                     $denda->Nominal = abs(ceil($diff*2000));
-                    Log::info('Nominal : '.$denda->Nominal);
                     $denda->IDPeminjaman = $request->IDPeminjaman;
                 } else{
+                    Log::error('Error in DendaController at store: Data Peminjaman Tidak Ada');
                     return redirect()
                         ->route('view_add_denda',$request->IDPeminjaman)
                         ->with('Error', 'Data Peminjaman Tidak Ada!');
@@ -100,7 +100,6 @@ class DendaController extends Controller
             $denda->Keterangan = $request->Keterangan;
             $denda->Status = $request->Status;
             $denda->save();
-            Log::info('Data Denda Created : '.$denda->IDDenda);
             return redirect()
                 ->route('all_denda')
                 ->with('Success','Berhasil Menyimpan Data Baru');
@@ -125,7 +124,6 @@ class DendaController extends Controller
             if($request->Nominal)
                 $denda->Nominal = $request->Nominal;
             $denda->save();
-            Log::info('Updated Data Denda : '.$denda->IDDenda);
             return redirect()
                 ->route('all_denda')
                 ->with('Success','Berhasil Mengubah Data denda');

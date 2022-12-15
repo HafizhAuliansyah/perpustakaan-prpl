@@ -23,7 +23,6 @@ class PeminjamanController extends Controller
      */
     public function index(Request $request)
     {
-        Log::info('Showing index of Data Peminjaman in PerminjamanController');
         if ($request->ajax()) {
             $peminjaman = Peminjaman::all();
             return DataTables::of($peminjaman)
@@ -132,7 +131,6 @@ class PeminjamanController extends Controller
                     ->route('peminjaman.create')
                     ->with('Error','Gagal mengupdate data buku');
             }
-            Log::info('Stored Peminjaman '.$peminjaman->IDPeminjaman);
             return redirect()->route('peminjaman.index')
                ->with('success_message', 'Berhasil melakukan peminjaman');
         }catch(QueryException $err){
@@ -249,7 +247,6 @@ class PeminjamanController extends Controller
                         ->with('Error','Gagal buku telah dipinjam');
                 }
             }
-            Log::info('Updated Data Peminjaman'.$peminjaman->IDPeminjaman);
             return redirect()->route('peminjaman.index')
                ->with('success_message', 'Berhasil mengubah data peminjaman');
         }catch(QueryException $err){

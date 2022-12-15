@@ -18,7 +18,6 @@ class MemberController extends Controller{
      */
     public function index(Request $request)
     {
-        Log::info('Showing all member');
         if ($request->ajax()) {
             $member = Member::all();
             return DataTables::of($member)
@@ -62,7 +61,6 @@ class MemberController extends Controller{
         // ]);
         try{
             Member::create($request->all());
-            Log::info('Created new member');
 
             $details['email'] = $request->Email;
             $details['name'] = $request->Nama;
@@ -128,7 +126,6 @@ class MemberController extends Controller{
                 $member->Email = $request->Email;
                 $member->updated_at = date("d-m-Y");
                 $member->save();
-                Log::info('Updated member : '.$id);
                 return redirect()->route('member.index')
                    ->with('success_message', 'Berhasil mengubah member');
             }catch(QueryException $err){
@@ -149,7 +146,6 @@ class MemberController extends Controller{
     public function destroy($id)
     {
         // $result = Member::find($member)->delete();
-        Log::info('Deleted member : '.$id);
         $result = Member::where('NIK', $id)->delete();
         // $member = DB::table('members')->where(['NIK', $id])->get();
         return redirect()->route('member.index')->with('success', 'Member deleted successfully');
