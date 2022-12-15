@@ -12,6 +12,11 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <div class="row mb-3">
+                        <a href="{{route('view_add_ulasan')}}" class="btn btn-primary mr-3" role="button">
+                            Tambah
+                        </a>
+                    </div>
                     <table class="table table-hover table-bordered table-stripped" id="table-data">
                         <thead>
                         <tr>

@@ -238,13 +238,17 @@ return [
             'url' => '/buku/all',
             'icon' => 'fa fa-book',
         ],
-        'Member',
+        [
+            'header' => 'MEMBER'
+        ],
         [
             'text' => 'Data Member',
             'url' => '/member',
             'icon' => 'fa fa-users',
         ],
-        'Peminjaman',
+        [
+            'header' => 'PEMINJAMAN'
+        ],
         [
             'text' => 'Data Peminjaman',
             'url' => '/peminjaman',
@@ -256,12 +260,11 @@ return [
         [
             'text' => 'Data Denda',
             'url' => '/denda/all',
+            'icon' => 'fa fa-file-invoice-dollar'
         ],
         [
-            'text' => 'Add Denda',
-            'url' => '/denda/add',
+            'header' => 'ULASAN',
         ],
-        'Ulasan',
         [
             'text' => 'Ulasan',
             'url' => '/ulasan/all',

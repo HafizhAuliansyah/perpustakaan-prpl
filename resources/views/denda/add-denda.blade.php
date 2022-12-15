@@ -82,7 +82,7 @@
         let keterangan = document.getElementById("Keterangan");
         let nominal = document.getElementById("Nominal");
         let nominalLabel = document.getElementById("nominalLabel");
-        if(keterangan.value === 'Tenggat Pengembalian'){
+        if(keterangan.value === 'telat pengembalian'){
             nominal.style.visibility = 'hidden';
             nominalLabel.style.visibility = 'hidden';
         } else{
