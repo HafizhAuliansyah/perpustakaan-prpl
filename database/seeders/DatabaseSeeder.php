@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             MemberSeeder::class,
             // PeminjamanSeeder::class
             PengurusSeeder::class,
+            UlasanSeeder::class,
         ]);
     }
 }
