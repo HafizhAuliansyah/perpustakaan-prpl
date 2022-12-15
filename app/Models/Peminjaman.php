@@ -22,6 +22,7 @@ class Peminjaman extends Model
         'TglPengembalian',
         'TglSelesai',
     ];
+
     protected $guarded = [
         'IDPeminjaman',
         'created_at',
@@ -36,8 +37,8 @@ class Peminjaman extends Model
     protected static $logFillable = true;
     protected static $logUnguarded = true;
     protected static $logOnlyDirty = true;
-    // public function getDescriptionForEvent (string $eventName) : string
-    // {
-    //     return $this->IDPeminjaman." {$eventName} By : ".Auth::user()->name;
-    // }
+    public function getDescriptionForEvent (string $eventName) : string
+    {
+        return $this->IDPeminjaman." {$eventName} By : ".Auth::user()->name;
+    }
 }

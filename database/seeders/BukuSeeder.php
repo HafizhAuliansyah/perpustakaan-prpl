@@ -41,27 +41,23 @@ class BukuSeeder extends Seeder
             // Random Created Date
             $rand_date = rand($min_date, $max_date);
             $TglMasukBuku = date('Y-m-d', $rand_date);
+            // Random Genre
             $Genre = $GenreBuku[array_rand($GenreBuku)];
-            for ($j=0; $j < 10; $j++) { 
+            // Random letak rak
+            $Rak = $LetakRak[array_rand($LetakRak)];
+            for ($j=0; $j < 20; $j++) { 
                 $buku = new Buku();
                 $newID = BukuHelper::generateBookID();
                 $buku->IDBuku = $newID;
                 $buku->NamaBuku = $data_buku[$i]['title'];
                 $buku->Deskripsi = $Deskripsi;
-                // Random Genre
-                
                 $buku->GenreBuku = $Genre;
-
                 $buku->Bahasa = $data_buku[$i]['language'];
                 $buku->JumlahHalaman = $data_buku[$i]['pages'];
                 $buku->StatusBuku = "Tersedia";
                 $buku->Penerbit = $data_buku[$i]['country'];
                 $buku->Penulis =  $data_buku[$i]['author'];
-
-                // Random letak rak
-                $Rak = $LetakRak[array_rand($LetakRak)];
                 $buku->LetakRak = $Rak;
-
                 $buku->TglMasukBuku = $TglMasukBuku;
                 $buku->Cover = 'default.jpg';
                 $qrPath = public_path('images/buku/qr_code/'.$newID.'.svg');

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\Models\User;
+use App\Models\Pengurus;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -51,9 +51,22 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:pengurus'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
+        // try {
+        //     return Validator::make($data, [
+        //         'name' => ['required', 'string', 'max:255'],
+        //         'email' => ['required', 'string', 'email', 'max:255', 'unique:pengurus'],
+        //         'password' => ['required', 'string', 'min:8', 'confirmed'],
+        //     ]);
+        // } catch (\Throwable $th) {
+        //     error_log($err->getMessage());
+        //     Log::error('Error in RegisterController at insert'.$err->getMessage());
+        //     return redirect()
+        //         ->route('register')
+        //         ->with('Error','Gagal Mengedit Data Peminjaman'.$err->getMessage());
+        // }
     }
 
     /**
@@ -64,7 +77,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        return Pengurus::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),

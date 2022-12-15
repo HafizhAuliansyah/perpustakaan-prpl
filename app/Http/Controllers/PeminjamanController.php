@@ -12,6 +12,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 
 class PeminjamanController extends Controller
@@ -102,6 +103,7 @@ class PeminjamanController extends Controller
             if($peminjam){
                 try{
                     $peminjaman->NIK = $request->NIK;
+                    $peminjaman->IDPengurus = Auth::user()->id;
                     $peminjaman->TglPeminjaman = date('Y-m-d');
                     $peminjaman->StatusPeminjaman = 'belum kembali';
                     $tglKembali = Carbon::now()->addDays((int)$request->hariPinjam)->format('Y-m-d');

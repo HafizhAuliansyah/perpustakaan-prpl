@@ -192,4 +192,8 @@ class MemberController extends Controller{
         $mpdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
         $mpdf->Output($file_name, 'I');
     }
+    public function getAjaxMember(Member $member)
+    {
+        return response()->json($member);
+    }
 }
