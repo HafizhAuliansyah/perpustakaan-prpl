@@ -39,6 +39,9 @@ class UlasanController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'masukan' => 'required|string|min:4'
+        ]);
         try{
             Ulasan::create($request->all());
             return redirect()->route('all_ulasan')

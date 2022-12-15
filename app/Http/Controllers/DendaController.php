@@ -64,6 +64,11 @@ class DendaController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'Nominal' => 'required|integer|min:1000',
+            'Keterangan' => 'required|string|',
+            'Status' => 'required|string|',
+        ]);
         try{
             $denda = new Denda();
             $denda->IDDenda = $request->IDDenda;
@@ -97,7 +102,7 @@ class DendaController extends Controller
                 $denda->Nominal = $request->Nominal;
                 $buku->save();
             }
-            $denda->IDPengurus = \Auth::user()->id;
+            $denda->IDPengurus = Auth::user()->id;
             $denda->IDPeminjaman = $request->IDPeminjaman;
             $denda->Keterangan = $request->Keterangan;
             $denda->Status = $request->Status;
