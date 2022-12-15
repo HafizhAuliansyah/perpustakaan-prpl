@@ -27,6 +27,11 @@ class Pengurus extends Authenticatable
         'password',
     ];
 
+    protected $guarded = [
+        'created_at',
+        'updated_at'
+    ];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -42,6 +47,7 @@ class Pengurus extends Authenticatable
      *
      * @var array
      */
+
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
@@ -51,9 +57,9 @@ class Pengurus extends Authenticatable
     protected static $logUnguarded = true;
     protected static $logOnlyDirty = true;
 
-    // public function getDescriptionForEvent (string $eventName) : string
-    // {
-    //     return $this->id." {$eventName}";
-    // }
+    public function getDescriptionForEvent (string $eventName) : string
+    {
+        return $this->id." {$eventName}";
+    }
 
 }

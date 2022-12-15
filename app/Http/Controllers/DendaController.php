@@ -11,6 +11,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\View;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 
@@ -96,6 +97,7 @@ class DendaController extends Controller
                 $denda->Nominal = $request->Nominal;
                 $buku->save();
             }
+            $denda->IDPengurus = \Auth::user()->id;
             $denda->IDPeminjaman = $request->IDPeminjaman;
             $denda->Keterangan = $request->Keterangan;
             $denda->Status = $request->Status;

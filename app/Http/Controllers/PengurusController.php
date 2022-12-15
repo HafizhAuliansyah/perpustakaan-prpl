@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Pengurus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
-class UserController extends Controller
+class PengurusController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +17,7 @@ class UserController extends Controller
     public function index()
     {
         Log::info('Show all user');
-        $users = User::all();
+        $users = Pengurus::all();
         return view('users.index', [
             'users' => $users
         ]);
@@ -40,16 +41,23 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        // $PengurusList = Pengurus::all();
+        // $PengurusCount = $PengurusList->count() + 1;
+
+        // if($PengurusCount < 10){
+        //     $peminjaman->id = 'P'.$PengurusCount;
+        // }
+
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email|unique:pengurus,email',
             'password' => 'required|confirmed'
         ]);
         $array = $request->only([
             'name', 'email', 'password'
         ]);
         $array['password'] = bcrypt($array['password']);
-        $user = User::create($array);
+        $user = Pengurus::create($array);
         return redirect()->route('users.index')
             ->with('success_message', 'Berhasil menambah user baru');
 
@@ -74,7 +82,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = Pengurus::find($id);
         if (!$user) return redirect()->route('users.index')
             ->with('error_message', 'User dengan id '.$id.' tidak ditemukan');
         return view('users.edit', [
@@ -93,10 +101,10 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
+            'email' => 'required|email|unique:pengurus,email,'.$id,
             'password' => 'sometimes|nullable|confirmed'
         ]);
-        $user = User::find($id);
+        $user = Pengurus::find($id);
         $user->name = $request->name;
         $user->email = $request->email;
         if ($request->password) $user->password = bcrypt($request->password);
@@ -113,7 +121,7 @@ class UserController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $user = User::find($id);
+        $user = Pengurus::find($id);
         if ($id == $request->user()->id) return redirect()->route('users.index')
             ->with('error_message', 'Anda tidak dapat menghapus diri sendiri.');
         if ($user) $user->delete();

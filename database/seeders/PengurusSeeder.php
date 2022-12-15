@@ -15,9 +15,10 @@ class PengurusSeeder extends Seeder
     public function run()
     {
         $pengurus = new Pengurus();
-        $pengurus->name = 'Admin';
-        $pengurus->email = 'admin@mail.com';
-        $pengurus->password = bcrypt('12345678');
-        $pengurus->save();
+        // $pengurus->id = 'P1';
+        $array['name'] = 'Admin';
+        $array['email'] = 'admin@mail.com';
+        $array['password'] = bcrypt('12345678');
+        $pengurus = Pengurus::create($array);
     }
 }

@@ -45,8 +45,8 @@ class Buku extends Model
     protected static $logUnguarded = true;
     protected static $logOnlyDirty = true;
 
-    // public function getDescriptionForEvent (string $eventName) : string
-    // {
-    //     return $this->IDBuku." {$eventName} By : ".Auth::user()->name;
-    // }
+    public function getDescriptionForEvent (string $eventName) : string
+    {
+        return $this->IDBuku." {$eventName} By : ".Auth::user()->id;
+    }
 }
