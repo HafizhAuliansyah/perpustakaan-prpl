@@ -98,6 +98,8 @@ Route::middleware('auth')->group(function(){
             Route::put('/update/{id}', 'update')->name('peminjaman.update');
             Route::delete('/delete', 'delete')->name('peminjaman.delete');
             Route::get('/warningmail', 'warningmail')->name('peminjaman.warningmail');
+            // PDF Export
+            Route::post('/pdf', 'exportPDF')->name('export_peminjaman');
         });
     });
     // Route::resource('peminjaman', PeminjamanController::class);

@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Index Peminjaman')
+@section('title', 'Data Peminjaman')
 
 @section('content_header')
-    <h1 class="m-0 text-dark">Index Peminjaman</h1>
+    <h1 class="m-0 text-dark">Data Peminjaman</h1>
 @stop
 
 @section('content')
@@ -54,6 +54,7 @@
                         <a href="{{route('peminjaman.create')}}" class="btn btn-primary mr-3" role="button">
                             Tambah
                         </a>
+                        <button type="button" class="btn btn-primary mr-3" role="button" data-toggle="modal" data-target="#modal_filter_pdf"><i class="fa fa-file-pdf mr-2"></i>Export to pdf</button>
                         <button type="button" class="btn btn-warning" role="button" data-toggle="modal" data-target="#modal_waning_mail"><i class="fa fa-bell mr-2"></i>Kirim mail peringatan</button>
                     </div>
                     <table class="table table-hover table-bordered table-stripped" id="table-data">
@@ -96,11 +97,77 @@
           </div>
         </div>
     </div>
+    <div class="modal fade" id="modal_filter_pdf" tabindex="-1" role="dialog" aria-labelledby="modal_export" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modal_export">Filter Export</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form action="{{ route('export_peminjaman') }}" method="post">
+                @csrf
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="GenreBuku">Status</label>
+                        <select class="form-control" id="status" name="status">
+                            <option value="" selected disabled>-- Pilih Filter Status --</option>
+                            <option value="belum kembali">belum kembali</option>
+                            <option value="sudah kembali">sudah kembali</option>
+                            <option value="batal">batal</option>
+                        </select>
+                    </div>
+                    <label class="col-form-label col-form-label-lg">Tanggal Peminjaman</label>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="fromTglPeminjaman" class="col-form-label col-form-label-sm">From</label>
+                            <input type="date" class="form-control" id="fromTglPeminjaman" name="PeminjamanFrom">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="untilTglPeminjaman" class="col-form-label col-form-label-sm">Until</label>
+                            <input type="date" class="form-control" id="untilTglPeminjaman" name="PeminjamanUntil">
+                        </div>
+                    </div>
+                    <label class="col-form-label col-form-label-lg">Tanggal Pengembalian</label>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="fromTglPengembalian" class="col-form-label col-form-label-sm">From</label>
+                            <input type="date" class="form-control" id="fromTglPengembalian" name="PengembalianFrom">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="untilTglPengembalian" class="col-form-label col-form-label-sm">Until</label>
+                            <input type="date" class="form-control" id="untilTglPengembalian" name="PengembalianUntil">
+                        </div>
+                    </div>
+                    <label class="col-form-label col-form-label-lg">Tanggal Selesai</label>
+                    <div class="form-row" id="filterTglSelesai">
+                        <div class="form-group col-md-6">
+                            <label for="fromTglSelesai" class="col-form-label col-form-label-sm">From</label>
+                            <input type="date" class="form-control" id="fromTglSelesai" name="SelesaiFrom" disabled>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="untilTglSelesai" class="col-form-label col-form-label-sm">Until</label>
+                            <input type="date" class="form-control" id="untilTglSelesai" name="SelesaiUntil" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                   
+                    <button type="submit" class="btn btn-primary">Export</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+          </div>
+        </div>
+    </div>
 @stop
 
 @push('js')
     <script>
        $(document).ready(function() {
+            var formSelesai = $("#fromTglSelesai");
+            var untilSelesai = $("#untilTglSelesai");
             $('#table-data').DataTable({
                 ajax: '',
                 serverSide: true,
@@ -120,6 +187,18 @@
                     {data: 'action', name: 'action'},
                 ],
                 lengthMenu: [10, 25, 50, 75, 100],
+            });
+            $("#status").on('change', function(){
+                
+                var status = $("#status").val();
+                if(status !== "sudah kembali"){
+                    formSelesai.prop('disabled', true);
+                    untilSelesai.prop('disabled', true);
+                    
+                }else{
+                    formSelesai.prop('disabled', false);
+                    untilSelesai.prop('disabled', false);
+                }
             });
         });
 

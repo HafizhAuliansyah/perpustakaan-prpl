@@ -277,5 +277,50 @@ class PeminjamanController extends Controller
         return redirect()->route('peminjaman.index')
                ->with('success_message', 'Berhasil mengirim email peringatan');
     }
-
+    public function exportPDF(Request $request)
+    {
+        $datas = Peminjaman::select(
+            '*',
+            DB::raw("to_char(\"TglPeminjaman\", 'DD-MM-YYYY') as tgl_pinjam"),
+            );
+        if(!empty($request->status)){
+            $datas->where('StatusPeminjaman',$request->status);
+        }
+        if(!empty($request->PeminjamanFrom) && !empty($request->PeminjamanUntil)){
+            $from = date($request->PeminjamanFrom);
+            $to = date($request->PeminjamanUntil);
+            $datas->whereBetween('TglPeminjaman', [$from, $to]);
+        }
+        if(!empty($request->PengembalianFrom) && !empty($request->PengembalianUntil)){
+            $from = date($request->PeminjamanFrom);
+            $to = date($request->PeminjamanUntil);
+            $datas->whereBetween('TglPengembalian', [$from, $to]);
+        }
+        if(!empty($request->SelesaiFrom) && !empty($request->SelesaiUntil)){
+            $from = date($request->SelesaiFrom);
+            $to = date($request->SelesaiUntil);
+            $datas->whereBetween('TglSelesai', [$from, $to]);
+        }
+        $datas = $datas->get();
+        $count_datas = $datas->count();
+        $file_name = 'ListPeminjaman.pdf';
+        ini_set("pcre.backtrack_limit", "5000000");
+        $mpdf = new \Mpdf\Mpdf([
+            'margin_left' => 10,
+            'margin_right' => 10,
+            'margin_top' => 15,
+            'margin_bottom' => 20,
+            'margin_header' => 10,
+            'margin_footer' => 10,
+            'format' => 'A4-L',
+            'orientation' => 'L'
+        ]);
+        $html = \view('peminjaman.pdf', ['datas' => $datas, 'jumlah'=> $count_datas]);
+        $style2 = file_get_contents(public_path('css\peminjaman_pdf.css'));
+        $mpdf->SetTitle('List Peminjaman');
+        $mpdf->WriteHTML($style2, \Mpdf\HTMLParserMode::HEADER_CSS);
+        $html = $html->render();
+        $mpdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
+        $mpdf->Output($file_name, 'I');
+    }
 }
