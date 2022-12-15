@@ -37,16 +37,8 @@ class Peminjaman extends Model
     protected static $logFillable = true;
     protected static $logUnguarded = true;
     protected static $logOnlyDirty = true;
-<<<<<<< HEAD
-
-    // public function getDescriptionForEvent (string $eventName) : string
-    // {
-    //     return $this->IDPeminjaman." {$eventName} By : ".Auth::user()->name;
-    // }
-=======
     public function getDescriptionForEvent (string $eventName) : string
     {
         return $this->IDPeminjaman." {$eventName} By : ".Auth::user()->name;
     }
->>>>>>> 73c5783c6074006ffd8d7f5a62de8e7ec33eba4b
 }
