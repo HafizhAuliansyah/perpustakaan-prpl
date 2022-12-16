@@ -32,7 +32,6 @@ class BukuController extends Controller
             'LetakRak' => 'required|string|max:2|min:2',
         ]);
         $new_id = BukuHelper::generateBookID();
-        Log::info('Auto incement for IDBuku Success');
 
         $cover_name = 'default.jpg';
         $cover_buku = null;
@@ -68,7 +67,6 @@ class BukuController extends Controller
             QrCode::format('svg')->backgroundColor(255,255,255)->size(200)->generate($new_id, $qrPath);
             $buku->QRCode = $new_id.'.svg';
             $buku->save();
-            Log::info('Data Buku Created : '.$buku->IDBuku);
             return redirect()
                 ->route('detail_buku', $new_id)
                 ->with('success_message','Berhasil Menyimpan Data Baru');
@@ -82,7 +80,6 @@ class BukuController extends Controller
 
     }
     public function showAll(){
-        Log::info('Showed all Data Buku');
         return view('buku.all-buku', [
             'datas' =>Buku::orderBy('IDBuku')->get()
         ]);
@@ -90,7 +87,6 @@ class BukuController extends Controller
     public function showPart(Request $request){
         if ($request->ajax()) {
             $buku = Buku::orderBy('IDBuku')->get();
-            Log::info('Showed part Data Buku');
             return DataTables::of($buku)
                 ->addColumn('action', function ($row) {
                     $html = '<a href='.route('detail_buku', $row->IDBuku).' class="btn btn-xs btn-default text-primary mx-1 shadow" title="Detail"><i class="fa fa-lg fa-fw fa-eye"></i></a>';
@@ -163,7 +159,6 @@ class BukuController extends Controller
                 $buku->Cover = $cover_name;
             }
             $buku->save();
-            Log::info('Updated Data Buku : '.$buku->IDBuku);
             return redirect()
                 ->route('all_buku')
                 ->with('Success','Berhasil Mengubah Data Buku');

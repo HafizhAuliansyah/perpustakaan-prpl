@@ -75,12 +75,12 @@ Route::middleware('auth')->group(function(){
     });
     Route::controller(MemberController::class)->group(function(){
         Route::prefix('member')->group(function(){
-            Route::get('/','index')->name('peminjaman.index');
-            Route::get('/create', 'create')->name('peminjaman.create');
-            Route::post('/store', 'store')->name('peminjaman.store');
-            Route::get('/edit/{id}','edit')->name('peminjaman.edit');
-            Route::put('/update/{id}','update')->name('peminjaman.update');
-            Route::delete('/delete','destroy')->name('peminjaman.destroy');
+            Route::get('/','index')->name('member.index');
+            Route::get('/create', 'create')->name('member.create');
+            Route::post('/store', 'store')->name('member.store');
+            Route::get('/edit/{id}','edit')->name('member.edit');
+            Route::put('/update/{id}','update')->name('member.update');
+            Route::delete('/delete','destroy')->name('member.destroy');
             // Get data member as json
             Route::get('/get-ajax-member/{member}', 'getAjaxMember')->name('ajax_member');
         });
@@ -97,6 +97,8 @@ Route::middleware('auth')->group(function(){
             Route::put('/update/{id}', 'update')->name('peminjaman.update');
             Route::delete('/delete', 'delete')->name('peminjaman.delete');
             Route::get('/warningmail', 'warningmail')->name('peminjaman.warningmail');
+            // PDF Export
+            Route::post('/pdf', 'exportPDF')->name('export_peminjaman');
         });
     });
     // Route::resource('peminjaman', PeminjamanController::class);

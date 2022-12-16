@@ -107,9 +107,9 @@
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="GenreBuku">Status</label>
+                        <label for="status">Status</label>
                         <select class="form-control" id="status" name="status">
-                            <option value="">-- Pilih Genre --</option>
+                            <option value="">-- Pilih Filter Status --</option>
                             <option value="active">Active</option>
                             <option value="non-active">Non Active</option>
                         </select>

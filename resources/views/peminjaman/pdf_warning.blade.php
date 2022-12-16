@@ -18,15 +18,20 @@
         </div>
         @foreach ($datas as $data)
             @php
-                $sisaHari = strtotime($data->TglPengembalian) - strtotime($data->TglPeminjaman);
+                $sisaHari = strtotime($data->TglPeminjaman) - strtotime(date('Y-m-d'));
                 $sisaHari = round($sisaHari / (60*60*24));
 
                 $colorHeader = "#264653";
-                if($sisaHari == 1){
-                    $colorHeader = "#dc3545";
-                }elseif($sisaHari > 1 && $sisaHari < 6){
-                    $colorHeader = "#ffc107";
+                if($data->StatusPeminjaman == "belum kembali"){
+                    if($sisaHari == 0 || $sisaHari == 1){
+                        $colorHeader = "#dc3545";
+                    }elseif($sisaHari > 1 && $sisaHari < 6){
+                        $colorHeader = "#ffc107";
+                    }elseif ($sisaHari < 0) {
+                        $colorHeader = "#a52532";
+                    }
                 }
+                
             @endphp 
             <div class="book-card" >
                 <div class="book-data id-buku" style="background-color: {{ $colorHeader }}">#{{ $data->IDBuku }}</div>
@@ -49,10 +54,6 @@
                         <td class="data-content">{{ $data->JumlahHalaman }}</td>
                     </tr>
                     <tr>
-                        <td class="data-title">Status</td>
-                        <td class="data-content">{{ $data->StatusBuku }}</td>
-                    </tr>
-                    <tr>
                         <td class="data-title">Penerbit : </td>
                         <td class="data-content">{{ $data->Penerbit }}</td>
                     </tr>
@@ -65,10 +66,15 @@
                         <td class="data-content">{{ $data->TglPeminjaman }}</td>
                     </tr>
                     <tr>
-                        
-                        <td class="data-title">Sisa Hari</td>
-                        <td class="data-content">{{ $sisaHari}}</td>
+                        <td class="data-title">Status Peminjaman</td>
+                        <td class="data-content" style="color: {{ $colorHeader }}">{{ $data->StatusPeminjaman }}</td>
                     </tr>
+                    @if ($data->StatusPeminjaman == "belum kembali")
+                        <tr>
+                            <td class="data-title">{{ $sisaHari < 0 ? "Lama Keterlambatan" : "Sisa Hari" }} hari</td>
+                            <td class="data-content">{{ $sisaHari < 0 ? abs($sisaHari) : $sisaHari}}</td>
+                        </tr>
+                    @endif
                 </table>
             </div>
         @endforeach

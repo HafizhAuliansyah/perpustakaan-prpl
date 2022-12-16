@@ -23,6 +23,6 @@ class Ulasan extends Model
 
     // public function getDescriptionForEvent (string $eventName) : string
     // {
-    //     return "ID : ".$this->id." {$eventName} By : ".Auth::user()->name;
+    //     return "ID : ".$this->id." {$eventName} By : ".Auth::user()->name." with ID: ".Auth::user()->id;
     // }
 }

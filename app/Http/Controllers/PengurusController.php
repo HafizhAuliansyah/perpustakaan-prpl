@@ -16,8 +16,7 @@ class PengurusController extends Controller
      */
     public function index()
     {
-        Log::info('Show all user');
-        $users = Pengurus::all();
+        $users = User::all();
         return view('users.index', [
             'users' => $users
         ]);
