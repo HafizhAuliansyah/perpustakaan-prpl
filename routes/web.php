@@ -73,7 +73,6 @@ Route::middleware('auth')->group(function(){
         Route::get('/denda/update/{denda}', 'editView')->name('view_edit_denda');
         Route::patch('/denda/update/{denda}', 'update')->name('edit_denda');
     });
-    Route::resource('member', MemberController::class);
     Route::controller(MemberController::class)->group(function(){
         Route::prefix('member')->group(function(){
             Route::get('/','index')->name('peminjaman.index');
@@ -101,6 +100,7 @@ Route::middleware('auth')->group(function(){
         });
     });
     // Route::resource('peminjaman', PeminjamanController::class);
+    Route::get('/rekap-peminjaman', [PerpustakaanController::class, 'createRekapPeminjaman'])->name('rekap_peminjaman.create');
 });
 
 // Route::middleware('auth')->group(function () {
@@ -108,7 +108,6 @@ Route::middleware('auth')->group(function(){
 //         Route::get('member/index', 'index')->name('index_member');
 //     });
 // });
-
 
 Route::get('/send-email-queue', function(){
     $details['email'] = 'williamshakespear000@gmail.com';

@@ -51,10 +51,24 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-3">
-                        <a href="{{route('peminjaman.create')}}" class="btn btn-primary mr-3" role="button">
-                            Tambah
-                        </a>
-                        <button type="button" class="btn btn-warning" role="button" data-toggle="modal" data-target="#modal_waning_mail"><i class="fa fa-bell mr-2"></i>Kirim mail peringatan</button>
+                        <div class="px-2">
+                            <a href="{{route('peminjaman.create')}}" class="btn btn-primary" role="button">
+                                <i class="fa fa-plus pr-2" aria-hidden="true"></i>
+                                Tambah
+                            </a>
+                        </div>
+                        <div class="px-2">
+                            <button type="button" class="btn btn-warning" role="button" data-toggle="modal" data-target="#modal_waning_mail">
+                                <i class="fa fa-bell pr-2"></i>
+                                Kirim mail peringatan
+                            </button>
+                        </div>
+                        <div class="px-2">
+                            <a href="{{route('rekap_peminjaman.create')}}" class="btn btn-success px-6" role="button">
+                                <i class="fa fa-book pr-2" aria-hidden="true"></i>
+                                Rekap Bulanan
+                            </a>
+                        </div>
                     </div>
                     <table class="table table-hover table-bordered table-stripped" id="table-data">
                         <thead>
