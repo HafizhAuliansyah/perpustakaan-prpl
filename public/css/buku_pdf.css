@@ -99,3 +99,20 @@ body {
     height: 30px;
     color: #474747;
 }
+.qr-buku {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 5px;
+}
+.content.qr {
+    font-family: "Consolas", "Calibri";
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    text-align: center;
+}
+.id-text {
+    margin-top: 0;
+    font-size: 18px;
+}
