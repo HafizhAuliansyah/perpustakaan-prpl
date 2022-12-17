@@ -64,7 +64,7 @@
                             </button>
                         </div>
                         <div class="px-2">
-                            <a href="{{route('rekap_peminjaman.create')}}" class="btn btn-success px-6" role="button">
+                            <a href="{{route('rekap_peminjaman.store')}}" class="btn btn-success px-6" role="button">
                                 <i class="fa fa-book pr-2" aria-hidden="true"></i>
                                 Rekap Bulanan
                             </a>
