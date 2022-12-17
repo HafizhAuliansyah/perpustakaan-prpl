@@ -255,6 +255,14 @@ return [
             'icon' => 'fa fa-book',
         ],
         [
+            'header' => 'REKAP PEMINJAMAN',
+        ],
+        [
+            'text' => 'Data Rekap Peminjaman',
+            'url' => '/rekap-peminjaman',
+            'icon' => 'fa fa-address-book',
+        ],
+        [
             'header' => 'DENDA',
         ],
         [
@@ -270,7 +278,7 @@ return [
             'url' => '/ulasan/all',
             'icon' => 'fa fa-comment',
         ],
-    
+
     ],
 
     /*
