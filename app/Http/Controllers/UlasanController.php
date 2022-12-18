@@ -43,7 +43,7 @@ class UlasanController extends Controller
             'masukan' => 'required|string|min:4'
         ]);
         try{
-            Ulasan::create($request->all());
+            Ulasan::create($request->masukan);
             return redirect()->route('all_ulasan')
                             ->with('success','Ulasan Created Successfully!');
         } catch(QueryException $err){

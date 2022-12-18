@@ -123,6 +123,11 @@ class DendaController extends Controller
     }
 
     public function update(Denda $denda, Request $request){
+        $request->validate([
+            'Nominal' => 'integer|min:1000',
+            'Keterangan' => 'required|string|',
+            'Status' => 'required|string|',
+        ]);
         try{
             if($request->Keterangan)
                 $denda->Keterangan = $request->Keterangan;
