@@ -25,8 +25,6 @@ class RekapDenda extends Model
 
     protected  $primaryKey = 'IDRekapDenda';
 
-    public $incrementing = false;
-
     protected static $logName = 'rekap_denda';
     protected static $logFillable = true;
     protected static $logUnguarded = true;

@@ -57,10 +57,10 @@ class RekapPeminjamanController extends Controller
                 $array['JumlahDataPeminjaman'] = Peminjaman::where('TglPeminjaman', 'LIKE', '%'.date('Y-m').'%')->count();
             } catch (QueryException $err) {
                 error_log($err->getMessage());
-                Log::error('Error at PerpustakaanController@RekapPeminjaman :'.$err);
+                Log::error('Error at RekapPeminjamanController@store :'.$err);
                 return redirect()
                     ->route('rekap_peminjaman.index')
-                     ->with('Error','Gagal Menemukan Data Peminjaman');
+                    ->with('Error','Gagal Menemukan Data Peminjaman');
             }
             $jmlpeminjam = Peminjaman::select('NIK')->where('TglPeminjaman', 'LIKE', '%'.date('Y-m').'%')->groupBy('NIK')->orderByRaw('COUNT(*) DESC')->get();
             $array['JumlahPeminjam'] = $jmlpeminjam->count();

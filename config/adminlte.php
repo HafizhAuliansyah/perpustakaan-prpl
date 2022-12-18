@@ -271,6 +271,14 @@ return [
             'icon' => 'fa fa-file-invoice-dollar'
         ],
         [
+            'header' => 'REKAP DENDA',
+        ],
+        [
+            'text' => 'Data Rekap Denda',
+            'url' => '/rekap-denda',
+            'icon' => 'fa fa-address-book',
+        ],
+        [
             'header' => 'ULASAN',
         ],
         [

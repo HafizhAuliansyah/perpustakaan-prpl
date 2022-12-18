@@ -10,6 +10,7 @@ use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\DendaController;
 use App\Http\Controllers\PerpustakaanController;
 use App\Http\Controllers\RekapPeminjamanController;
+use App\Http\Controllers\RekapDendaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -112,6 +113,15 @@ Route::middleware('auth')->group(function(){
             Route::get('/store', 'store')->name('rekap_peminjaman.store');
         });
     });
+
+    Route::controller(RekapDendaController::class)->group(function(){
+        Route::prefix('rekap-denda')->group(function(){
+            Route::get('/','index')->name('rekap_denda.index');
+            Route::get('/part','showPart')->name('rekap_denda.part');
+            Route::get('/store', 'store')->name('rekap_denda.store');
+        });
+    });
+
 });
 
 // Route::middleware('auth')->group(function () {
