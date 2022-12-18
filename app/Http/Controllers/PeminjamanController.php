@@ -66,6 +66,10 @@ class PeminjamanController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
+        $request->validate([
+            'NIK' => 'required|string|max:16|min:16',
+            'hariPinjam' => 'required|integer|between:0,8',
+        ]);
         try{
             $peminjaman = new Peminjaman();
             try{
@@ -187,6 +191,20 @@ class PeminjamanController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if($request->StatusPeminjaman == 'sudah kembali'){
+            $request->validate([
+                'NIK' => 'required|string|max:16|min:16',
+                'hariPinjam' => 'required|integer|between:0,8',
+                'TglSelesai' => 'required|date'
+            ]);
+        } else {
+            $request->validate([
+                'NIK' => 'required|string|max:16|min:16',
+                'hariPinjam' => 'required|integer|between:0,8',
+                'TglSelesai' => 'nullable|date'
+            ]);
+            $request->TglSelesai = null;
+        }
         try{
             $peminjaman = Peminjaman::find($id);
             try{
@@ -212,7 +230,6 @@ class PeminjamanController extends Controller
                     ->with('Error','Data Buku Error');
             }
             $peminjaman->NIK = $request->NIK;
-            $peminjaman->TglPeminjaman = date('Y-m-d');
             $peminjaman->StatusPeminjaman = $request->StatusPeminjaman;
             $tglKembali =Carbon::now()->addDays((int)$request->hariPinjam)->format('Y-m-d');
             $peminjaman->TglPengembalian = $tglKembali;
