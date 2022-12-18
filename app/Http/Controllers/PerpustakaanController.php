@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Buku;
 use App\Models\Ulasan;
+use App\Models\Peminjaman;
+use App\Models\RekapPeminjaman;
 use Illuminate\Http\Request;
-use Yajra\DataTables\DataTables;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
+use Yajra\DataTables\DataTables;
 
 class PerpustakaanController extends Controller
 {
@@ -15,6 +19,7 @@ class PerpustakaanController extends Controller
         $title = "Cari Buku";
         return view('perpustakaan_cari', ['title' => $title]);
     }
+
     public function showAll(Request $request){
         if ($request->ajax()) {
             $buku = Buku::orderBy('IDBuku')->get();
@@ -22,18 +27,22 @@ class PerpustakaanController extends Controller
                 ->toJson();
             }
     }
+
     public function ulasan(){
         $title = "Ulasan";
         return view('perpustakaan_ulasan', ['title' => $title]);
     }
+
     public function saveUlasan(Request $request){
         try{
             Ulasan::create($request->all());
-            return redirect()->route('pengunjung.ulasan')
-                            ->with('success','Ulasan Created Successfully!');
+            Log::info('Store ulasan success');
+            return redirect()
+                ->route('pengunjung.ulasan')
+                ->with('Success','Ulasan Created Successfully!');
         } catch(QueryException $err){
             error_log($err->getMessage());
-            Log::error('Error at UlasanController :'.$err);
+            Log::error('Error at PerpustakaanController@Ulasan :'.$err);
             return redirect()
                 ->route('pengunjung.ulasan')
                 ->with('Error','Gagal Menyimpan Data Baru');

@@ -185,11 +185,12 @@
 
             let html5QrcodeScanner = new Html5QrcodeScanner(
             "reader",
-            { fps: 30, qrbox: {width: 300, height: 300} },
+            { fps: 30, qrbox: {width: 500, height: 500} },
             /* verbose= */ false);
             html5QrcodeScanner.render(onScanSuccess, onScanFailure);
                 
         </script>
+        
 @stop
 @push('js')
 <script>

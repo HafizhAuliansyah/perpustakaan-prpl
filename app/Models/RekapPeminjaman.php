@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Support\Facades\Auth;
 
-class LaporanPeminjaman extends Model
+class RekapPeminjaman extends Model
 {
     use LogsActivity;
 
@@ -17,7 +17,7 @@ class LaporanPeminjaman extends Model
         'IDRekapPeminjaman',
         'TglDibentuk',
         'JumlahDataPeminjaman',
-        'JumlahPeminjaman',
+        'JumlahPeminjam',
         'IDBukuFavorite',
         'NikTopMember',
         'MeanRentangPinjam',
@@ -29,8 +29,6 @@ class LaporanPeminjaman extends Model
     ];
 
     protected  $primaryKey = 'IDRekapPeminjaman';
-
-    public $incrementing = false;
 
     protected static $logName = 'rekap_peminjaman';
     protected static $logFillable = true;

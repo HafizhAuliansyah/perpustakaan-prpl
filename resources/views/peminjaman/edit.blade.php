@@ -84,7 +84,7 @@
                         <div class="form-group">
                             <label for="exampleHariPinjam">Hari Peminjaman</label>
                             {{-- <input type="date" class="form-control @error('TglPengembalian') is-invalid @enderror" id="exampleTglPengembalian" name="TglPengembalian" value="{{old('TglPengembalian')}}" min="{{Carbon\Carbon::now()->format('Y-m-d')}}" max="{{Carbon\Carbon::now()->addWeek()->format('Y-m-d')}}"> --}}
-                            <select class="form-control" id="exampleHariPinjam" name="hariPinjam" onchange="updateTglPengembalian(event)">
+                            <select class="form-control" id="exampleHariPinjam" name="hariPinjam" onchange="updateTglPengembalian(event)" {{ $data->StatusPeminjaman=="sudah kembali" ? "disabled" : "" }}>
                                 @php
                                     $interval = strtotime($data->TglPengembalian) - strtotime($data->TglPeminjaman);
                                     $interval = round($interval / (60*60*24));
@@ -104,7 +104,7 @@
 
                         <div class="form-group">
                             <label for="exampleTglSelesai">Tanggal Selesai Peminjaman</label>
-                            <input type="date" class="form-control @error('TglSelesai') is-invalid @enderror" id="exampleTglSelesai" name="TglSelesai" value="default" min="{{$data->TglSelesai}}">
+                            <input type="date" class="form-control @error('TglSelesai') is-invalid @enderror" id="exampleTglSelesai" name="TglSelesai" value="{{ $data->TglSelesai==null ? "" : $data->TglSelesai }}">
                         </div>
 
                     </div>

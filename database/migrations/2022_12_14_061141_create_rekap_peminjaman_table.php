@@ -14,13 +14,13 @@ class CreateRekapPeminjamanTable extends Migration
     public function up()
     {
         Schema::create('rekap_peminjaman', function (Blueprint $table) {
-            $table->string("IDRekapPeminjaman")->primary();
+            $table->id('IDRekapPeminjaman');
             $table->date("TglDibentuk");
             $table->integer("JumlahDataPeminjaman");
-            $table->integer("JumlahPeminjaman");
+            $table->integer("JumlahPeminjam");
             $table->string("IDBukuFavorite");
             $table->string("NikTopMember");
-            $table->float("MeanRentangPinjam");
+            $table->double("MeanRentangPinjam");
             $table->timestamps();
         });
     }

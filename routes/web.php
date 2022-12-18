@@ -9,6 +9,7 @@ use App\Http\Controllers\UlasanController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\DendaController;
 use App\Http\Controllers\PerpustakaanController;
+use App\Http\Controllers\RekapPeminjamanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,15 +74,14 @@ Route::middleware('auth')->group(function(){
         Route::get('/denda/update/{denda}', 'editView')->name('view_edit_denda');
         Route::patch('/denda/update/{denda}', 'update')->name('edit_denda');
     });
-    Route::resource('member', MemberController::class);
     Route::controller(MemberController::class)->group(function(){
         Route::prefix('member')->group(function(){
-            Route::get('/','index')->name('peminjaman.index');
-            Route::get('/create', 'create')->name('peminjaman.create');
-            Route::post('/store', 'store')->name('peminjaman.store');
-            Route::get('/edit/{id}','edit')->name('peminjaman.edit');
-            Route::put('/update/{id}','update')->name('peminjaman.update');
-            Route::delete('/delete','destroy')->name('peminjaman.destroy');
+            Route::get('/','index')->name('member.index');
+            Route::get('/create', 'create')->name('member.create');
+            Route::post('/store', 'store')->name('member.store');
+            Route::get('/edit/{id}','edit')->name('member.edit');
+            Route::put('/update/{id}','update')->name('member.update');
+            Route::delete('/delete','destroy')->name('member.destroy');
             // Get data member as json
             Route::get('/get-ajax-member/{member}', 'getAjaxMember')->name('ajax_member');
         });
@@ -98,9 +98,20 @@ Route::middleware('auth')->group(function(){
             Route::put('/update/{id}', 'update')->name('peminjaman.update');
             Route::delete('/delete', 'delete')->name('peminjaman.delete');
             Route::get('/warningmail', 'warningmail')->name('peminjaman.warningmail');
+            // PDF Export
+            Route::post('/pdf', 'exportPDF')->name('export_peminjaman');
         });
     });
     // Route::resource('peminjaman', PeminjamanController::class);
+    // Route::get('/rekap-peminjaman', [PerpustakaanController::class, 'createRekapPeminjaman'])->name('rekap_peminjaman.create');
+
+    Route::controller(RekapPeminjamanController::class)->group(function(){
+        Route::prefix('rekap-peminjaman')->group(function(){
+            Route::get('/','index')->name('rekap_peminjaman.index');
+            Route::get('/part','showPart')->name('rekap_peminjaman.part');
+            Route::get('/store', 'store')->name('rekap_peminjaman.store');
+        });
+    });
 });
 
 // Route::middleware('auth')->group(function () {
@@ -109,7 +120,6 @@ Route::middleware('auth')->group(function(){
 //     });
 // });
 
-
 Route::get('/send-email-queue', function(){
     $details['email'] = 'williamshakespear000@gmail.com';
     $details['name'] = 'William Shakespear';
@@ -117,3 +127,4 @@ Route::get('/send-email-queue', function(){
     dispatch(new App\Jobs\WelcomeEmailJob($details));
     return response()->json(['message' => 'Mail Send Successfully!!']);
 });
+
