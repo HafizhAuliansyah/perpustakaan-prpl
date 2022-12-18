@@ -29,7 +29,7 @@ class Peminjaman extends Model
         'updated_at'
     ];
 
-    protected  $primaryKey = 'IDPeminjaman';
+    protected $primaryKey = 'IDPeminjaman';
 
     public $incrementing = false;
 
