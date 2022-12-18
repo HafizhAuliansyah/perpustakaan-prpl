@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\BukuHelper;
+use App\Jobs\DownloadAllQR;
 use App\Models\Buku;
 use ErrorException;
 use Exception;
@@ -101,7 +102,8 @@ class BukuController extends Controller
                 })
                 ->toJson();
             }
-        return view('buku.all-buku');
+        $jumlah_buku = Buku::count();
+        return view('buku.all-buku', ['jumlah_buku' => $jumlah_buku]);
     }
     public function getAjaxBuku(Buku $buku)
     {
@@ -271,5 +273,11 @@ class BukuController extends Controller
     {
         $path = public_path("/images/buku/qr_code/".$buku->QRCode);
         return response()->download($path, "QR-".$buku->IDBuku.".svg");
+    }
+    public function exportAllQR()
+    {
+       $job = new DownloadAllQR();
+       $this->dispatch($job);
+       return redirect()->route("all_buku")->with('success_message', 'Proses download sedang berjalan');
     }
 }

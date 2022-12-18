@@ -7,7 +7,10 @@
 </head>
 <body>
     <section class="content qr">
-        <img src="images/buku/qr_code/{{ $data->QRCode }}" class="qr-buku">
+        @php
+            $path = public_path('images/buku/qr_code/').$data->QRCode;
+        @endphp
+        <img src="{{ $path }}" class="qr-buku">
         <p class="id-text">
             {{ $data->IDBuku }}
         </p>
