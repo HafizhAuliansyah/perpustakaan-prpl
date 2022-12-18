@@ -27,7 +27,8 @@
                     @endif
                     <div class="row mb-3">
                         <a href="{{ route('view_add_buku') }}" class="btn btn-success mr-3" role="button"><i class="fa fa-plus mr-2"></i>Tambah Buku</a>
-                        <button type="button" class="btn btn-primary" role="button" data-toggle="modal" data-target="#modal_filter_pdf"><i class="fa fa-file-pdf mr-2"></i>Export to pdf</button>
+                        <button type="button" class="btn btn-primary mr-3" role="button" data-toggle="modal" data-target="#modal_filter_pdf"><i class="fa fa-file-pdf mr-2"></i>Export to pdf</button>
+                        <button type="button" class="btn btn-primary" role="button" data-toggle="modal" data-target="#modal_download_qr"><i class="fa fa-qrcode mr-2"></i>Download All QR</button>
                     </div>
                     <table id="table-data" class="table display table-hover table-striped display">
                         <thead>
@@ -143,6 +144,26 @@
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                 </div>
             </form>
+          </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal_download_qr" tabindex="-1" role="dialog" aria-labelledby="modal_export" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modal_export">Download Semua QR</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                Download QR Code untuk {{ $jumlah_buku }} buku ?<br>
+                QR akan diunduh dalam format PDF dalam folder storage
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <a href="{{route('buku.download-all-qr')}}" class="btn btn-primary">Download</a>
+            </div>
           </div>
         </div>
     </div>

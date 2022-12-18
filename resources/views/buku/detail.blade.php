@@ -14,6 +14,21 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    @if (session('Success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('Success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @elseif(session('Error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('Error') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
                     @if (empty($buku))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         Buku Tidak Ditemukan !!
@@ -92,8 +107,15 @@
                             <div class="col-md-6">
                                 <h5 class="font-weight-bold">QR Code</h5>
                             </div>
-                            <div class="col-md-6">
-                                <img src="{{url('/images/buku/qr_code/'. $buku->QRCode )}}" class="qr_buku">
+                            <div class="col-md-6" >
+                                <div class="col-md-12 mb-2">
+                                    <img src="{{url('/images/buku/qr_code/'. $buku->QRCode )}}" class="qr_buku">
+
+                                </div>
+                                <div class="col-md-12">
+                                    <a href="{{ route('buku.export-qr-buku', $buku->IDBuku) }}" class="btn btn-primary btn-cetak mr-3" role="button"><i class="fas fa-print mr-2"></i>Cetak Label PDF</a>
+                                    <a href="{{ route('buku.download-qr-buku', $buku->IDBuku) }}" class="btn btn-primary btn-cetak mr-3" role="button"><i class="fas fa-download mr-2"></i>Unduh QR</a>
+                                </div>
                             </div>
                         </div>
                     @endif

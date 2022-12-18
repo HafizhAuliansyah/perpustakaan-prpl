@@ -54,22 +54,22 @@ class RekapPeminjamanController extends Controller
         }else{
             $array['TglDibentuk'] = date('Y-m-d');
             try {
-                $array['JumlahDataPeminjaman'] = Peminjaman::count();
+                $array['JumlahDataPeminjaman'] = Peminjaman::where('TglPeminjaman', 'LIKE', '%'.date('Y-m').'%')->count();
             } catch (QueryException $err) {
                 error_log($err->getMessage());
-                Log::error('Error at PerpustakaanController@RekapPeminjaman :'.$err);
+                Log::error('Error at RekapPeminjamanController@store :'.$err);
                 return redirect()
                     ->route('rekap_peminjaman.index')
-                     ->with('Error','Gagal Menemukan Data Peminjaman');
+                    ->with('Error','Gagal Menemukan Data Peminjaman');
             }
-            $jmlpeminjam = Peminjaman::select('NIK')->groupBy('NIK')->orderByRaw('COUNT(*) DESC')->get();
+            $jmlpeminjam = Peminjaman::select('NIK')->where('TglPeminjaman', 'LIKE', '%'.date('Y-m').'%')->groupBy('NIK')->orderByRaw('COUNT(*) DESC')->get();
             $array['JumlahPeminjam'] = $jmlpeminjam->count();
-            $idbukufav = Peminjaman::select('IDBuku')->groupBy('IDBuku')->orderByRaw('COUNT(*) DESC')->limit(1)->first();
+            $idbukufav = Peminjaman::select('IDBuku')->where('TglPeminjaman', 'LIKE', '%'.date('Y-m').'%')->groupBy('IDBuku')->orderByRaw('COUNT(*) DESC')->limit(1)->first();
             $array['IDBukuFavorite'] = $idbukufav->IDBuku;
-            $idtopmember = Peminjaman::select('NIK')->groupBy('NIK')->orderByRaw('COUNT(*) DESC')->limit(1)->first();
+            $idtopmember = Peminjaman::select('NIK')->where('TglPeminjaman', 'LIKE', '%'.date('Y-m').'%')->groupBy('NIK')->orderByRaw('COUNT(*) DESC')->limit(1)->first();
             $array['NikTopMember'] = $idtopmember->NIK;
-            $arr = Peminjaman::select('TglPeminjaman', 'TglPengembalian')->get();
-            $bagi = Peminjaman::count();
+            $arr = Peminjaman::select('TglPeminjaman', 'TglPengembalian')->where('TglPeminjaman', 'LIKE', '%'.date('Y-m').'%')->get();
+            $bagi = Peminjaman::where('TglPeminjaman', 'LIKE', '%'.date('Y-m').'%')->count();
 
             $sa = 0;
             foreach($arr as $ar){

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\BukuHelper;
+use App\Jobs\DownloadAllQR;
 use App\Models\Buku;
 use ErrorException;
 use Exception;
+use Facade\FlareClient\Http\Response as HttpResponse;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -100,7 +102,8 @@ class BukuController extends Controller
                 })
                 ->toJson();
             }
-        return view('buku.all-buku');
+        $jumlah_buku = Buku::count();
+        return view('buku.all-buku', ['jumlah_buku' => $jumlah_buku]);
     }
     public function getAjaxBuku(Buku $buku)
     {
@@ -238,5 +241,43 @@ class BukuController extends Controller
     }
     public function detail(Buku $buku){
         return view('buku.detail',['buku' => $buku]);
+    }
+    public function exportQRPDF(Buku $buku)
+    {
+        try{
+            $data = $buku;
+            $file_name = 'QR-'.$buku->IDBuku.".pdf";
+            $mpdf = new \Mpdf\Mpdf([
+                'margin_left' => 3,
+                'margin_right' => 3,
+                'margin_top' => 3,
+                'margin_bottom' => 3,
+                'format' => [50, 60],
+                'orientation' => 'P'
+            ]);
+            $html = \view('buku.qr_pdf', ['data' => $data]);
+            $style2 = file_get_contents(public_path('css\buku_pdf.css'));
+            $mpdf->WriteHTML($style2, \Mpdf\HTMLParserMode::HEADER_CSS);
+            $html = $html->render();
+            $mpdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
+            $mpdf->debug = true;
+            $mpdf->Output($file_name, 'I');
+        }catch(Exception $e){
+            Log::error('Error in BukuController at exportQRPDF : '.$e->getMessage());
+            return redirect()
+                ->route('detail_buku', $buku->IDBuku)
+                ->with('Error','Gagal Export PDF');
+        }
+    }
+    public function donwloadQR(Buku $buku)
+    {
+        $path = public_path("/images/buku/qr_code/".$buku->QRCode);
+        return response()->download($path, "QR-".$buku->IDBuku.".svg");
+    }
+    public function exportAllQR()
+    {
+       $job = new DownloadAllQR();
+       $this->dispatch($job);
+       return redirect()->route("all_buku")->with('success_message', 'Proses download sedang berjalan');
     }
 }

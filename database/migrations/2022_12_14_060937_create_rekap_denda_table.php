@@ -14,7 +14,7 @@ class CreateRekapDendaTable extends Migration
     public function up()
     {
         Schema::create('rekap_denda', function (Blueprint $table) {
-            $table->string("IDRekapDenda")->primary();
+            $table->id("IDRekapDenda");
             $table->date("TglDibentuk");
             $table->integer("JumlahDataDenda");
             $table->integer("JumlahNominal");

@@ -10,6 +10,7 @@ use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\DendaController;
 use App\Http\Controllers\PerpustakaanController;
 use App\Http\Controllers\RekapPeminjamanController;
+use App\Http\Controllers\RekapDendaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +59,9 @@ Route::middleware('auth')->group(function(){
             Route::get('/get-ajax-buku/{buku}', 'getAjaxBuku')->name('ajax_buku');
             // PDF Export
             Route::post('/pdf', 'exportPDF')->name('export_buku');
+            Route::get('/qr-pdf/{buku}', 'exportQRPDF')->name('buku.export-qr-buku');
+            Route::get('/qr-download/{buku}', 'donwloadQR')->name('buku.download-qr-buku');
+            Route::get('/all-qr-download', 'exportAllQR')->name("buku.download-all-qr");
         });
     });
     Route::controller(UlasanController::class)->group(function(){
@@ -112,6 +116,15 @@ Route::middleware('auth')->group(function(){
             Route::get('/store', 'store')->name('rekap_peminjaman.store');
         });
     });
+
+    Route::controller(RekapDendaController::class)->group(function(){
+        Route::prefix('rekap-denda')->group(function(){
+            Route::get('/','index')->name('rekap_denda.index');
+            Route::get('/part','showPart')->name('rekap_denda.part');
+            Route::get('/store', 'store')->name('rekap_denda.store');
+        });
+    });
+
 });
 
 // Route::middleware('auth')->group(function () {

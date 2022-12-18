@@ -255,13 +255,11 @@ return [
             'icon' => 'fa fa-book',
         ],
         [
-            'header' => 'REKAP PEMINJAMAN',
-        ],
-        [
             'text' => 'Data Rekap Peminjaman',
             'url' => '/rekap-peminjaman',
             'icon' => 'fa fa-address-book',
         ],
+
         [
             'header' => 'DENDA',
         ],
@@ -269,6 +267,11 @@ return [
             'text' => 'Data Denda',
             'url' => '/denda/all',
             'icon' => 'fa fa-file-invoice-dollar'
+        ],
+        [
+            'text' => 'Data Rekap Denda',
+            'url' => '/rekap-denda',
+            'icon' => 'fa fa-address-book',
         ],
         [
             'header' => 'ULASAN',
