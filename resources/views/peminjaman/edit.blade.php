@@ -104,7 +104,7 @@
 
                         <div class="form-group">
                             <label for="exampleTglSelesai">Tanggal Selesai Peminjaman</label>
-                            <input type="date" class="form-control @error('TglSelesai') is-invalid @enderror" id="exampleTglSelesai" name="TglSelesai" value="" min="{{$data->TglSelesai}}">
+                            <input type="date" class="form-control @error('TglSelesai') is-invalid @enderror" id="exampleTglSelesai" name="TglSelesai" value="default" min="{{$data->TglSelesai}}">
                         </div>
 
                     </div>
