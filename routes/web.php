@@ -59,6 +59,9 @@ Route::middleware('auth')->group(function(){
             Route::get('/get-ajax-buku/{buku}', 'getAjaxBuku')->name('ajax_buku');
             // PDF Export
             Route::post('/pdf', 'exportPDF')->name('export_buku');
+            Route::get('/qr-pdf/{buku}', 'exportQRPDF')->name('buku.export-qr-buku');
+            Route::get('/qr-download/{buku}', 'donwloadQR')->name('buku.download-qr-buku');
+            Route::get('/all-qr-download', 'exportAllQR')->name("buku.download-all-qr");
         });
     });
     Route::controller(UlasanController::class)->group(function(){

@@ -103,8 +103,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="exampleTglSelesai">Tanggal Selesai Peminjaman</label>
-                            <input type="date" class="form-control @error('TglSelesai') is-invalid @enderror" id="exampleTglSelesai" name="TglSelesai" value="{{ $data->TglSelesai==null ? "" : $data->TglSelesai }}">
+                            <label for="TglSelesaiInput">Tanggal Selesai Peminjaman</label>
+                            <input type="date" class="form-control @error('TglSelesai') is-invalid @enderror" id="TglSelesaiInput" name="TglSelesai" value="{{ $data->TglSelesai==null ? "" : $data->TglSelesai }}">
                         </div>
 
                     </div>
@@ -130,5 +130,22 @@
             let borrowingLimitDay = moment(borrowingDay).add(day, 'days').format('yyyy-MM-DD');
             document.getElementById("exampleTglPengembalian").value = borrowingLimitDay;
         }
+       
     </script>
 @stop
+@push('js')
+    <script>
+        $(document).ready(function(){
+        var tglSelesaiInput = $("#TglSelesaiInput");
+        $("#StatusPeminjamanInput").on("change", function(){
+            var status = $("#StatusPeminjamanInput").val();
+            if(status === "sudah kembali"){
+                tglSelesaiInput.prop("disabled", false);
+
+            }else{
+                tglSelesaiInput.prop("disabled", true);
+            }
+        });
+    });
+    </script>
+@endpush

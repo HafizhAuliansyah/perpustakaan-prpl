@@ -92,3 +92,6 @@
     text-transform: uppercase;
     font-weight: 400 !important;
 }
+.btn-cetak {
+    width: 200px;
+}
