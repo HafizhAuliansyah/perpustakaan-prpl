@@ -259,7 +259,7 @@ return [
             'url' => '/rekap-peminjaman',
             'icon' => 'fa fa-address-book',
         ],
-        
+
         [
             'header' => 'DENDA',
         ],
@@ -267,9 +267,6 @@ return [
             'text' => 'Data Denda',
             'url' => '/denda/all',
             'icon' => 'fa fa-file-invoice-dollar'
-        ],
-        [
-            'header' => 'REKAP DENDA',
         ],
         [
             'text' => 'Data Rekap Denda',
